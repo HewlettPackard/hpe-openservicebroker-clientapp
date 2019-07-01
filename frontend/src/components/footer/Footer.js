@@ -3,7 +3,7 @@ import { Box, Text } from "grommet";
 import { Hpe } from "grommet-icons";
 
 
-c//========================================= Footer
+//========================================= Footer
 const Footer = () => (
   <Box 
     fill='horizontal' 

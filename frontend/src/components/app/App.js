@@ -3,6 +3,7 @@ import { Box, Grommet, Grid } from "grommet";
 import { hpe } from "grommet-theme-hpe";
 import AppBar from "../app-bar/AppBar";
 import Footer from "../footer/Footer";
+import Card from "../card/Card";
 import "../app/App.css";
 
 
