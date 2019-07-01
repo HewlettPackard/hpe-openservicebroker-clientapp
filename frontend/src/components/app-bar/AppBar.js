@@ -3,6 +3,9 @@ import { Box, Button } from "grommet";
 import { LinkPrevious } from "grommet-icons";
 import LogoAndTitle from "../Logo-Title/LogoTitle";
 import PropTypes from "prop-types";
+
+
+//========================================= AppBar
 class AppBar extends Component {
 	static propTypes = {
 		text: PropTypes.string.isRequired
