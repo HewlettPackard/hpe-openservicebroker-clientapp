@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Box, Button } from "grommet";
 import { LinkPrevious } from "grommet-icons";
-import LogoAndTitle from "../Logo-Title/LogoTitle";
+import LogoAndTitle from "../logo-title/LogoTitle";
 import PropTypes from "prop-types";
 
 
@@ -22,13 +23,15 @@ class AppBar extends Component {
 				pad={{ left: "small", top: "small" }}
 				flex="false"
 			>
-				<Button
-					plain
-					color="brand"
-					label="Catalog"
-					gap="xsmall"
-					icon={<LinkPrevious size="medium" color="brand" />}
-				/>
+				<Link to='/'>
+					<Button
+						plain
+						color="brand"
+						label="Catalog"
+						gap="xsmall"
+						icon={<LinkPrevious size="medium" color="brand" />}
+					/>
+				</Link>
 				<LogoAndTitle text={this.props.text} />
 			</Box>
 		);
