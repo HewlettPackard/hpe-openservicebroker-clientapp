@@ -58,6 +58,7 @@ export default class App extends Component {
                   <Route exact path='/' component={CatalogResults} />
                   <Route path='/catalog' component={CatalogResults} />
                   <Route path='/home' component={CatalogResults} />
+                  <Route path='/login' component={LoginForm} />
                   <Route path='/deploy' component={DeployForm} />
                   <Route path='/login' component={LoginForm} />
                   <Route path='/register' component={RegisterForm} />
