@@ -14,10 +14,11 @@ import '../app/App.css';
 
 //========================================= App
 export default class App extends Component {
+
     //set initial state
-  // state = {
-  //   isCatalog: true;
-  // };
+  state = {
+    pageName: 'Login'   //start at the login page
+  };
 
     //request catalog from the broker API
   // async componentDidMount() {
@@ -38,13 +39,14 @@ export default class App extends Component {
   // }
 
 
-    //render the app
+  //render the app
 	render() {
+    let { pageName } = this.state;
 		return (
       <Router>
         <Grommet theme={hpe} full>
           <Box fill>
-            <AppBar text='Heading Here' />
+            <AppBar text={pageName} />
             <Box className='body-and-footer' flex>
               <Box 
                 className='main-content' 
