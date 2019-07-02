@@ -17,7 +17,7 @@ export default class App extends Component {
 
     //set initial state
   state = {
-    pageName: 'Login'   //start at the login page
+
   };
 
     //request catalog from the broker API
@@ -46,7 +46,15 @@ export default class App extends Component {
       <Router>
         <Grommet theme={hpe} full>
           <Box fill background={{ color: 'light-4' }}>
-            <AppBar text={pageName} />
+          <Switch>  //Routing - Catalog is the home route
+            <Route exact path='/' render={() => <AppBar text='Catalog' />} />
+            <Route path='/home' render={() => <AppBar text='Catalog' />} />
+            <Route path='/catalog' render={() => <AppBar text='Catalog' />} />
+            <Route path='/login' render={() => <AppBar text='Login' />} />
+            <Route path='/deploy' render={() => <AppBar text='Deploy Service' />} />
+            <Route path='/register' render={() => <AppBar text='Register Broker' />} />
+          </Switch>
+            
             <Box 
               className='body-and-footer' 
               align='center' 
@@ -67,7 +75,6 @@ export default class App extends Component {
                   <Route path='/catalog' component={CatalogResults} />
                   <Route path='/login' component={LoginForm} />
                   <Route path='/deploy' component={DeployForm} />
-                  <Route path='/login' component={LoginForm} />
                   <Route path='/register' component={RegisterForm} />
                 </Switch>
               </Box>
