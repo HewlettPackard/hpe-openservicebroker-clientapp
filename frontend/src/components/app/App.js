@@ -22,16 +22,13 @@ export default class App extends Component {
 
     //request catalog from the broker API
   // async componentDidMount() {
-
   //   try {
-  //     //let result = await fetch('https://randomuser.me/api/?results=10');
-  //     // console.log(result.map(person => person.name));
-  //     let result = await fetch('http://54.197.219.166:7099/v2/catalog',{
-  //         headers: new Headers({
-  //             'X-Broker-API-Version': '2.13',
-  //             'Authorization': 'Basic dWJ1bnR1OnVidW50dQ==' 
-  //           })});
-  //     result = await result.json();
+  //     // let result = await fetch('http://54.197.219.166:7099/v2/catalog',{
+  //     //     headers: new Headers({
+  //     //         'X-Broker-API-Version': '2.13',
+  //     //         'Authorization': 'Basic dWJ1bnR1OnVidW50dQ==' 
+  //     //       })});
+  //     let result = await fetch('http://localhost:8000/api/');
   //     console.log(result);
   //   } catch(e) {
   //     console.log(e);
