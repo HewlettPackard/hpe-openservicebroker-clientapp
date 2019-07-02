@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Box, Grid } from "grommet";
+import React, { Component } from 'react';
+import { Box, Grid } from 'grommet';
 
 
 //========================================= Deploy Form
@@ -9,6 +9,6 @@ const DeployForm = () => (
   > 
     deploy
   </Box>
-);
+)
 
 export default DeployForm;

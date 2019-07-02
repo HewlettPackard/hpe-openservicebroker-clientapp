@@ -1,19 +1,44 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { BrowserRouter as Router,
-         Link, Route, Switch } from "react-router-dom";
-import { Box, Grommet, Grid } from "grommet";
-import { hpe } from "grommet-theme-hpe";
-import AppBar from "../app-bar/AppBar";
-import Footer from "../footer/Footer";
-import CatalogResults from "../catalog-results/CatalogResults";
-import DeployForm from "../forms/DeployForm";
-import LoginForm from "../forms/LoginForm";
-import RegisterForm from "../forms/RegisterForm";
-import "../app/App.css";
+         Link, Route, Switch } from 'react-router-dom';
+import { Box, Grommet, Grid } from 'grommet';
+import { hpe } from 'grommet-theme-hpe';
+import AppBar from '../app-bar/AppBar';
+import Footer from '../footer/Footer';
+import CatalogResults from '../catalog-results/CatalogResults';
+import DeployForm from '../forms/DeployForm';
+import LoginForm from '../forms/LoginForm';
+import RegisterForm from '../forms/RegisterForm';
+import '../app/App.css';
 
 
 //========================================= App
 export default class App extends Component {
+    //set initial state
+  // state = {
+  //   isCatalog: true;
+  // };
+
+    //request catalog from the broker API
+  // async componentDidMount() {
+
+  //   try {
+  //     //let result = await fetch('https://randomuser.me/api/?results=10');
+  //     // console.log(result.map(person => person.name));
+  //     let result = await fetch('http://54.197.219.166:7099/v2/catalog',{
+  //         headers: new Headers({
+  //             'X-Broker-API-Version': '2.13',
+  //             'Authorization': 'Basic dWJ1bnR1OnVidW50dQ==' 
+  //           })});
+  //     result = await result.json();
+  //     console.log(result);
+  //   } catch(e) {
+  //     console.log(e);
+  //   }
+  // }
+
+
+    //render the app
 	render() {
 		return (
       <Router>
@@ -29,7 +54,7 @@ export default class App extends Component {
                 flex
                 overflow={{vertical: 'scroll'}}
                 >
-                <Switch> //Routing - Catalog is the home route
+                <Switch>  //Routing - Catalog is the home route
                   <Route exact path='/' component={CatalogResults} />
                   <Route path='/catalog' component={CatalogResults} />
                   <Route path='/home' component={CatalogResults} />
@@ -44,5 +69,5 @@ export default class App extends Component {
         </Grommet>
       </Router>
     );
-  };
+  }
 };

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Box } from "grommet";
+import React, { Component } from 'react';
+import { Box } from 'grommet';
 
 
 //========================================= Card
@@ -12,14 +12,14 @@ class Card extends Component {
     return (
       <Box 
         elevation='medium' 
-        background={{color: 'light-3'}}
-        border={{color: 'light-5'}}
+        background={{ color: 'light-3' }}
+        border={{ color: 'light-5' }}
         round='xsmall'
         width='small'
       >
       </Box>
     );
-  };
+  }
 };
 
 export default Card;

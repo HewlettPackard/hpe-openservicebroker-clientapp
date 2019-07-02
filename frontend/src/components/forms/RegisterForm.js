@@ -9,6 +9,6 @@ const RegisterForm = () => (
   > 
     register
   </Box>
-);
+)
 
 export default RegisterForm;

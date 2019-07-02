@@ -17,6 +17,6 @@ const CatalogResults = () => (
     <Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card />
     <Card /><Card /><Card /><Card /><Card />
   </Grid>
-);
+)
 
 export default CatalogResults;
