@@ -8,16 +8,15 @@ const Footer = () => (
   <Box 
     fill='horizontal' 
     background={{ color: 'neutral-1' }} 
-    height='xsmall' 
+    height='50px' 
     direction='row'
     align='center'
     gap='large'
     pad={{ horizontal: 'large' }}
-    flex={false}
   >
-    <Box direction='row' gap='xsmall'>
+    <Box direction='row' gap='small' align='center'>
       <Hpe color='brand' size='medium' />
-      <Text color='brand' >Hewlett-Packard Enterprise</Text>
+      <Text size='large' color='brand' >Hewlett-Packard Enterprise</Text>
     </Box>
   </Box>
 )

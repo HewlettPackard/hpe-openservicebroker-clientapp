@@ -12,7 +12,7 @@ class Card extends Component {
     return (
       <Box 
         elevation='medium' 
-        background={{ color: 'light-3' }}
+        background={{ color: 'light-1' }}
         border={{ color: 'light-5' }}
         round='xsmall'
         width='small'

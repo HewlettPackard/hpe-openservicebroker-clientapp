@@ -17,15 +17,20 @@ class AppBar extends Component {
 			<Box
 				direction='row'
 				align='center'
-				justify='start'
+				justify='center'
 				pad={{ left: 'small' }}
+				border={{ color: 'dark-1', side: 'bottom' }}
+				background={{ color: 'white' }}
 			>
+				<Box width='5%'/>
 				<Box
+					width='45%'
 					direction='column'
 					align='start'
 					justify='center'
-					flex
 					pad={{ left: 'small', top: 'small' }}
+					margin={{ bottom: 'small' }}
+					//border={{ color: 'red' }}
 				>
 					<Link to='/'>
 						<Button
@@ -42,9 +47,10 @@ class AppBar extends Component {
 					direction='column'
 					align='end'
 					justify='center'
-					flex
+					width='50%'
 					gap='medium'
-					pad={{ right: 'xlarge' }}
+					pad={{ right: '10%' }}
+					//border={{ color: 'red' }}
 				>
 					<Link to='/register'>
 						<Button

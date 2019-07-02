@@ -45,21 +45,26 @@ export default class App extends Component {
 		return (
       <Router>
         <Grommet theme={hpe} full>
-          <Box fill>
+          <Box fill background={{ color: 'light-4' }}>
             <AppBar text={pageName} />
-            <Box className='body-and-footer' flex>
+            <Box 
+              className='body-and-footer' 
+              align='center' 
+              flex 
+            >
               <Box 
+                width='110rem'
                 className='main-content' 
-                background={{color: 'light-1'}}
+                background={{color: 'white'}}
                 border={{color: 'light-5', size: 'xsmall'}}
                 pad='large'  
                 flex
                 overflow={{vertical: 'scroll'}}
-                >
+              >
                 <Switch>  //Routing - Catalog is the home route
                   <Route exact path='/' component={CatalogResults} />
-                  <Route path='/catalog' component={CatalogResults} />
                   <Route path='/home' component={CatalogResults} />
+                  <Route path='/catalog' component={CatalogResults} />
                   <Route path='/login' component={LoginForm} />
                   <Route path='/deploy' component={DeployForm} />
                   <Route path='/login' component={LoginForm} />
