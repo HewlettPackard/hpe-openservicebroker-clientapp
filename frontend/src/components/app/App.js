@@ -8,7 +8,10 @@ import Footer from '../footer/Footer';
 import CatalogResults from '../catalog-results/CatalogResults';
 import DeployForm from '../forms/DeployForm';
 import LoginForm from '../forms/LoginForm';
+import Details from '../details/Details';
+import UndeployForm from '../forms/UndeployForm';
 import RegisterForm from '../forms/RegisterForm';
+import UnregisterForm from '../forms/UnregisterForm';
 import '../app/App.css';
 
 
@@ -49,8 +52,11 @@ export default class App extends Component {
             <Route path='/home' render={() => <AppBar text='Catalog' />} />
             <Route path='/catalog' render={() => <AppBar text='Catalog' />} />
             <Route path='/login' render={() => <AppBar text='Login' />} />
+            <Route path='/details' render={() => <AppBar text='Details' />} />
             <Route path='/deploy' render={() => <AppBar text='Deploy Service' />} />
+            <Route path='/undeploy' render={() => <AppBar text='Undeploy Service' />} />
             <Route path='/register' render={() => <AppBar text='Register Broker' />} />
+            <Route path='/unregister' render={() => <AppBar text='Unregister Broker' />} />
           </Switch>
             
             <Box 
@@ -72,8 +78,11 @@ export default class App extends Component {
                   <Route path='/home' component={CatalogResults} />
                   <Route path='/catalog' component={CatalogResults} />
                   <Route path='/login' component={LoginForm} />
+                  <Route path='/details' component={Details} />
                   <Route path='/deploy' component={DeployForm} />
+                  <Route path='/undeploy' component={UndeployForm} />
                   <Route path='/register' component={RegisterForm} />
+                  <Route path='/unregister' component={UnregisterForm} />
                 </Switch>
               </Box>
               <Footer />

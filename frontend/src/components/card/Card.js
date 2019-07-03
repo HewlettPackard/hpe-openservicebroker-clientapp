@@ -10,11 +10,21 @@ class Card extends Component {
   // };
 
   state = {
+    borderColor: 'light-5',
+    hovering: false,
     service: this.props.service
   };
 
+  setBorder = () => {
+    if (!this.state.hovering)
+      this.setState({ borderColor: 'accent-1', hovering: true })
+    else 
+      this.setState({ borderColor: 'light-5', hovering: false })
+    
+  }
+
   render() {
-    const { service } = this.state;
+    const { borderColor, service } = this.state;
     const plans = [];
 
     service.plans.forEach(plan => 
@@ -26,12 +36,14 @@ class Card extends Component {
         <Box 
           elevation='medium' 
           background={{ color: 'white' }}
-          border={{ color: 'light-5' }}
+          border={{ color: borderColor }}
           round='xsmall'
           justify='start'
           align='center'
           width='small'
           height='small'
+          onMouseOver={this.setBorder}
+          onMouseOut={this.setBorder}
         >
           <Box flex fill='horizontal' pad={{ left: 'medium' }}>
             <Heading level='2' color='brand' size='medium' truncate>

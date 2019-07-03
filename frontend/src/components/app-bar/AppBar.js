@@ -46,6 +46,7 @@ class AppBar extends Component {
             /> 
           </Box>
         break;
+      case 'Details': 
       case 'Register Broker': 
       case 'Unregister Broker': 
       case 'Deploy Service': 
