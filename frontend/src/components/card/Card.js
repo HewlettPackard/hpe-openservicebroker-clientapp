@@ -11,7 +11,7 @@ class Card extends Component {
 
   state = {
     service: this.props.service
-  }
+  };
 
   render() {
     const { service } = this.state;
@@ -25,7 +25,7 @@ class Card extends Component {
       <Link to='/deploy' style={{ textDecoration: 'none' }}>
         <Box 
           elevation='medium' 
-          background={{ color: 'light-1' }}
+          background={{ color: 'white' }}
           border={{ color: 'light-5' }}
           round='xsmall'
           justify='start'

@@ -59,7 +59,7 @@ export default class App extends Component {
               flex 
             >
               <Box 
-                width='110rem'
+                width='100rem'
                 className='main-content' 
                 background={{color: 'white'}}
                 border={{color: 'light-5', size: 'xsmall'}}

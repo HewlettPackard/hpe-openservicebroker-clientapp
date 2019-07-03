@@ -72,7 +72,7 @@ class AppBar extends Component {
 				justify='center'
 				pad={{ left: 'small' }}
 				border={{ color: 'dark-1', side: 'bottom' }}
-				background={{ color: 'white' }}
+        background={{ color: 'white' }}
 			>
 				<Box width='5%'/>
 				<Box
