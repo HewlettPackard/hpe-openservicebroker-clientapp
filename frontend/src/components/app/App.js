@@ -17,18 +17,20 @@ export default class App extends Component {
 
     //set initial state
   state = {
-
+   
   };
 
+  
     //request catalog from the broker API
   // async componentDidMount() {
   //   try {
-  //     // let result = await fetch('http://54.197.219.166:7099/v2/catalog',{
-  //     //     headers: new Headers({
-  //     //         'X-Broker-API-Version': '2.13',
-  //     //         'Authorization': 'Basic dWJ1bnR1OnVidW50dQ==' 
-  //     //       })});
-  //     let result = await fetch('http://localhost:8000/api/');
+  //     var request = new Request('http://54.197.219.166:7099/v2/catalog', {
+	//       headers: new Headers({
+  //         'X-Broker-API-Version': '2.13',
+  //         'X-Broker-API-Originating-Identity': 'user1 password'
+  //       })
+  //     });
+  //     let result = await fetch(request);
   //     console.log(result);
   //   } catch(e) {
   //     console.log(e);
