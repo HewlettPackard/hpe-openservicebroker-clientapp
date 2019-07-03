@@ -13,6 +13,57 @@ class AppBar extends Component {
 	};
 
 	render() {
+    const { text } = this.props;
+    let back = <Box />;
+    let buttons = <Box width='50%' />;
+
+    switch (text) {
+      case 'Login': 
+        break;
+      case 'Catalog':
+        buttons =
+          <Box
+            direction='column'
+            align='end'
+            justify='center'
+            width='50%'
+            gap='medium'
+            pad={{ right: '10%' }}
+          >
+            <Link to='/register'>
+              <Button
+                color='brand'
+                label='Register Broker'
+                gap='xsmall'
+                icon={<Add size='medium' color='brand' />}
+              />
+            </Link>
+            <Button
+              color='brand'
+              label='Update Catalog'
+              gap='xsmall'
+              icon={<Sync size='medium' color='brand' />}
+            /> 
+          </Box>
+        break;
+      case 'Register Broker': 
+      case 'Unregister Broker': 
+      case 'Deploy Service': 
+      case 'Undeploy Service': 
+        back = 
+          <Link to='/'>
+            <Button
+              plain
+              color='brand'
+              label='Catalog'
+              margin={{ top: 'small' }}
+              gap='xsmall'
+              icon={<LinkPrevious size='medium' color='brand' />}
+            />
+          </Link> 
+        break;
+    }
+
 		return (
 			<Box
 				direction='row'
@@ -30,43 +81,11 @@ class AppBar extends Component {
 					justify='center'
 					pad={{ left: 'small', top: 'small' }}
 					margin={{ bottom: 'small' }}
-					//border={{ color: 'red' }}
 				>
-					<Link to='/'>
-						<Button
-							plain
-							color='brand'
-							label='Catalog'
-							gap='xsmall'
-							icon={<LinkPrevious size='medium' color='brand' />}
-						/>
-					</Link>
+          {back}
 					<LogoAndTitle text={this.props.text} />
 				</Box>
-				<Box
-					direction='column'
-					align='end'
-					justify='center'
-					width='50%'
-					gap='medium'
-					pad={{ right: '10%' }}
-					//border={{ color: 'red' }}
-				>
-					<Link to='/register'>
-						<Button
-							color='brand'
-							label='Register Broker'
-							gap='xsmall'
-							icon={<Add size='medium' color='brand' />}
-						/>
-					</Link>
-					<Button
-						color='brand'
-						label='Update Catalog'
-						gap='xsmall'
-						icon={<Sync size='medium' color='brand' />}
-					/>
-				</Box>
+					{buttons}
 			</Box>
 		);
 	}
