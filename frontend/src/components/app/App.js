@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router,
-         Link, Route, Switch } from 'react-router-dom';
-import { Box, Grommet, Grid } from 'grommet';
+         Route, Switch } from 'react-router-dom';
+import { Box, Grommet } from 'grommet';
 import { hpe } from 'grommet-theme-hpe';
 import AppBar from '../app-bar/AppBar';
 import Footer from '../footer/Footer';
@@ -40,12 +40,11 @@ export default class App extends Component {
 
   //render the app
 	render() {
-    let { pageName } = this.state;
 		return (
       <Router>
         <Grommet theme={hpe} full>
           <Box fill background={{ color: 'light-4' }}>
-          <Switch>  //Routing - Catalog is the home route
+          <Switch>  {/*Pass text to AppBar heading based on route*/}
             <Route exact path='/' render={() => <AppBar text='Catalog' />} />
             <Route path='/home' render={() => <AppBar text='Catalog' />} />
             <Route path='/catalog' render={() => <AppBar text='Catalog' />} />
@@ -68,7 +67,7 @@ export default class App extends Component {
                 flex
                 overflow={{vertical: 'scroll'}}
               >
-                <Switch>  //Routing - Catalog is the home route
+                <Switch>  {/*Routing - Catalog is the home route*/}
                   <Route exact path='/' component={CatalogResults} />
                   <Route path='/home' component={CatalogResults} />
                   <Route path='/catalog' component={CatalogResults} />

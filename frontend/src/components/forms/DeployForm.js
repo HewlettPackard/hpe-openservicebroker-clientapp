@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Box, Grid } from 'grommet';
+import React from 'react';
+import { Box, Text } from 'grommet';
 
 
 //========================================= Deploy Form
 const DeployForm = () => (
-  <Box 
-
-  > 
-    deploy
+  <Box flex justify='start' align='center'>  
+    <Text>
+      {/*service.plans.map( plan => plan.name)*/}
+    </Text>
   </Box>
 )
 

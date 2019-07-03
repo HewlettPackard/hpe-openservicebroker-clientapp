@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Form, FormField, Grid, TextInput } from 'grommet';
+import { Box, Button, Form, FormField, TextInput } from 'grommet';
 import { Login } from 'grommet-icons';
 
 

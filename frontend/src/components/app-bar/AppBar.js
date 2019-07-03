@@ -62,6 +62,7 @@ class AppBar extends Component {
             />
           </Link> 
         break;
+      default:
     }
 
 		return (
