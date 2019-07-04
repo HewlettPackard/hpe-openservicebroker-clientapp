@@ -34,6 +34,29 @@ export default class App extends Component {
 
 	//render the app
 
+	componentDidMount() {
+		axios
+			.get(
+				"http://54.152.27.68:7099/v2/catalog",
+				{
+					headers: { "X-Broker-API-Version": "2.13" }
+				},
+				{
+					auth: {
+						username: "",
+						password: ""
+					}
+				}
+			)
+			.then(success => {
+				console.log(success);
+			})
+
+			.catch(error => {
+				console.log(error);
+			});
+	}
+
 	render() {
 		return (
 			<Router>
