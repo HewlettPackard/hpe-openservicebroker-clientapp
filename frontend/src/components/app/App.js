@@ -11,59 +11,71 @@ import RegisterForm from "../forms/RegisterForm";
 import "../app/App.css";
 import axios from "axios";
 
+
 //========================================= App
 export default class App extends Component {
 	//set initial state
-	state = {};
+	state = {
+    services: []
+  };
 
 	//request catalog from the broker API
-	// async componentDidMount() {
-	//   try {
-	//     var request = new Request('http://54.197.219.166:7099/v2/catalog', {
-	//       headers: new Headers({
-	//         'X-Broker-API-Version': '2.13',
-	//         'X-Broker-API-Originating-Identity': 'user1 password'
-	//       })
-	//     });
-	//     let result = await fetch(request);
-	//     console.log(result);
-	//   } catch(e) {
-	//     console.log(e);
-	//   }
-	// }
+	async componentDidMount() {
+	  try {
+	    var request = new Request('http://54.197.219.166:7099/v2/catalog', {
+	      headers: new Headers({
+	        'X-Broker-API-Version': '2.13',
+	        'X-Broker-API-Originating-Identity': 'user1 password'
+	      })
+	    });
+	    await fetch(request)
+      .then(result => result.json())
+      .then(resultJSON => {
+        this.setState(
+          { services: [...resultJSON.services] }
+        );
+        console.log(JSON.stringify(resultJSON));
+      }
+      );
+	  } catch(e) {
+	    console.log(e);
+	  }
+  }
 
-	//render the app
+  // //request catalog from the broker API
+	// componentDidMount() {
+  //   axios.get('http://54.152.27.68:7099/v2/catalog',
+  //     { 
+  //       headers: { 
+  //         'X-Broker-API-Version': '2.13', 
+  //       },
+  //       auth: {
+  //         username: "",
+  //         password: ""
+  //       }
+  //     }
+	// 	)
+  //   .then(result => {
+  //     console.log(result);
+  //     this.setState(
+  //       { services: [...result.services] }
+  //     );
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  // }
 
-	componentDidMount() {
-		axios
-			.get(
-				"http://54.152.27.68:7099/v2/catalog",
-				{
-					headers: { "X-Broker-API-Version": "2.13" }
-				},
-				{
-					auth: {
-						username: "",
-						password: ""
-					}
-				}
-			)
-			.then(success => {
-				console.log(success);
-			})
+  
+    //render the app
+    render() {
+      const { services } = this.state;
 
-			.catch(error => {
-				console.log(error);
-			});
-	}
-
-	render() {
-		return (
-			<Router>
+      return (
+        <Router>
 				<Grommet theme={hpe} full>
 					<Box fill background={{ color: "light-4" }}>
 						<Switch>
-							{" "}
 							{/*Pass text to AppBar heading based on route*/}
 							<Route exact path="/" render={() => <AppBar text="Catalog" />} />
 							<Route path="/home" render={() => <AppBar text="Catalog" />} />
@@ -91,9 +103,9 @@ export default class App extends Component {
 							>
 								<Switch>
 									{/*Routing - Catalog is the home route*/}
-									<Route exact path="/" component={CatalogResults} />
-									<Route path="/home" component={CatalogResults} />
-									<Route path="/catalog" component={CatalogResults} />
+									<Route exact path="/" render={() => <CatalogResults services={services} />} />
+									<Route path="/home" render={() => <CatalogResults services={services} />} />
+									<Route path="/catalog" render={() => <CatalogResults services={services} />} />
 									<Route path="/login" component={LoginForm} />
 									<Route path="/deploy" component={DeployForm} />
 									<Route path="/register" component={RegisterForm} />
