@@ -25,7 +25,6 @@ export default class App extends Component {
       var request = new Request('http://54.197.219.166:7099/v2/catalog', {
         headers: new Headers({
            'X-Broker-API-Version': '2.13',
-	         'X-Broker-API-Originating-Identity': 'user1 password'
         })
       });
 	    await fetch(request)
@@ -115,7 +114,17 @@ export default class App extends Component {
                 <Route path="/home" render={() => <CatalogResults services={services} />} />
                 <Route path="/catalog" render={() => <CatalogResults services={services} />} />
                 <Route path="/login" component={LoginForm} />
-                <Route path="/deploy/:name" render={({match}) => <DeployForm plans={[]} match={match} />} />
+                <Route 
+                  path="/deploy/:name" 
+                  render={(obj) => {
+                    const { name } = obj.match.params;
+                    const serviceArg = this.state.services.find((service) => service.name === name);
+                    let plans = [];
+                    if (serviceArg === undefined) {plans = []}
+                    else {plans = serviceArg.plans}
+                    return (<DeployForm plans={plans} match={obj.match} />);
+                  }} 
+                />
                 <Route path="/register" component={RegisterForm} />
               </Switch>
             </Box>
