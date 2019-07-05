@@ -24,10 +24,10 @@ export default class App extends Component {
     try {
       var request = new Request('http://54.197.219.166:7099/v2/catalog', {
         headers: new Headers({
-          'X-Broker-API-Version': '2.13',
-	        'X-Broker-API-Originating-Identity': 'user1 password'
-	      })
-	    });
+           'X-Broker-API-Version': '2.13',
+	         'X-Broker-API-Originating-Identity': 'user1 password'
+        })
+      });
 	    await fetch(request)
       .then(result => result.json())
       .then(resultJSON => {
@@ -70,7 +70,7 @@ export default class App extends Component {
   // }
                 
   // //to get the service catalog initially
-  // componentWillMount() {
+  // componentDidMount() {
   //   this.update();
   // }
              
@@ -115,7 +115,7 @@ export default class App extends Component {
                 <Route path="/home" render={() => <CatalogResults services={services} />} />
                 <Route path="/catalog" render={() => <CatalogResults services={services} />} />
                 <Route path="/login" component={LoginForm} />
-                <Route path="/deploy" component={DeployForm} />
+                <Route path="/deploy/:name" render={({match}) => <DeployForm plans={[]} match={match} />} />
                 <Route path="/register" component={RegisterForm} />
               </Switch>
             </Box>

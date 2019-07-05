@@ -25,14 +25,9 @@ class Card extends Component {
 
   render() {
     const { borderColor, service } = this.state;
-    const plans = [];
-
-    service.plans.forEach(plan => 
-      plans.push(plan)
-    );
 
     return (
-      <Link to='/deploy' style={{ textDecoration: 'none' }}>
+      <Link to={`/deploy/${service.name}`} style={{ textDecoration: 'none' }}>
         <Box 
           elevation='medium' 
           background={{ color: 'white' }}

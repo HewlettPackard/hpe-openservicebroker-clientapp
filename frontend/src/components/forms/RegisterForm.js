@@ -18,7 +18,7 @@ class RegisterForm extends Component {
           <FormField
             label="URL"
             help="Use https for secure connection. Ex: https://127.0.0.1:7009"
-            >
+          >
             <TextInput />
           </FormField>
           <FormField label="Username" help="Username used to login to broker">
