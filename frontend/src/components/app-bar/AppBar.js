@@ -13,7 +13,7 @@ class AppBar extends Component {
 	};
 
 	render() {
-    const { text } = this.props;
+    const { text, update } = this.props;
     let back = <Box />;
     let buttons = <Box width='50%' />;
 
@@ -43,6 +43,7 @@ class AppBar extends Component {
               label='Update Catalog'
               gap='xsmall'
               icon={<Sync size='medium' color='brand' />}
+              onClick={() => update}
             /> 
           </Box>
         break;

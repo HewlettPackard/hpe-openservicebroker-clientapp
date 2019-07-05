@@ -11,6 +11,13 @@ class CatalogResults extends Component {
     showList: [...this.props.services]
   };
   
+  static getDerivedStateFromProps(props, state) {
+    return {
+      serviceList: [...props.services],
+      showList: [...props.services]
+    };
+  } 
+
   search = (value) => {
     let tempList = [];
     this.setState({ showList: this.state.serviceList });
@@ -35,7 +42,6 @@ class CatalogResults extends Component {
 
   render() {
     const { showList, value } = this.state;
-    console.log(showList);
 
     return (
       <Box fill>

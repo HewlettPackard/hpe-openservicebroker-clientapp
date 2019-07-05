@@ -19,12 +19,12 @@ export default class App extends Component {
     services: []
   };
 
-	//request catalog from the broker API
-	async componentDidMount() {
-	  try {
-	    var request = new Request('http://54.197.219.166:7099/v2/catalog', {
-	      headers: new Headers({
-	        'X-Broker-API-Version': '2.13',
+  //update the service catalog by calling the API
+  async update() {
+    try {
+      var request = new Request('http://54.197.219.166:7099/v2/catalog', {
+        headers: new Headers({
+          'X-Broker-API-Version': '2.13',
 	        'X-Broker-API-Originating-Identity': 'user1 password'
 	      })
 	    });
@@ -34,27 +34,30 @@ export default class App extends Component {
         this.setState(
           { services: [...resultJSON.services] }
         );
-        console.log(JSON.stringify(resultJSON));
-      }
-      );
-	  } catch(e) {
-	    console.log(e);
-	  }
+      });
+    } catch(e) {
+        console.log(e);
+    }
   }
-
-  // //request catalog from the broker API
-	// componentDidMount() {
+    
+    //to get the service catalog initially
+    async componentDidMount() {
+      this.update();  
+    }
+    
+  // //update the service catalog by calling the API
+  // async update() {
   //   axios.get('http://54.152.27.68:7099/v2/catalog',
   //     { 
   //       headers: { 
   //         'X-Broker-API-Version': '2.13', 
-  //       },
+  //     },
   //       auth: {
   //         username: "",
   //         password: ""
   //       }
   //     }
-	// 	)
+  //   )
   //   .then(result => {
   //     console.log(result);
   //     this.setState(
@@ -65,57 +68,62 @@ export default class App extends Component {
   //     console.log(error);
   //   });
   // }
+                
+  // //to get the service catalog initially
+  // componentWillMount() {
+  //   this.update();
+  // }
+             
 
-  
-    //render the app
-    render() {
-      const { services } = this.state;
+  //render the app
+  render() {
+    const { services } = this.state;
 
-      return (
-        <Router>
-				<Grommet theme={hpe} full>
-					<Box fill background={{ color: "light-4" }}>
-						<Switch>
-							{/*Pass text to AppBar heading based on route*/}
-							<Route exact path="/" render={() => <AppBar text="Catalog" />} />
-							<Route path="/home" render={() => <AppBar text="Catalog" />} />
-							<Route path="/catalog" render={() => <AppBar text="Catalog" />} />
-							<Route path="/login" render={() => <AppBar text="Login" />} />
-							<Route
-								path="/deploy"
-								render={() => <AppBar text="Deploy Service" />}
-							/>
-							<Route
-								path="/register"
-								render={() => <AppBar text="Register Broker" />}
-							/>
-						</Switch>
+    return (
+      <Router>
+      <Grommet theme={hpe} full>
+        <Box fill background={{ color: "light-4" }}>
+          <Switch>
+            {/*Pass text to AppBar heading based on route*/}
+            <Route exact path="/" render={() => <AppBar text="Catalog" update={this.update} />} />
+            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} />} />
+            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} />} />
+            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />} />
+            <Route
+              path="/deploy"
+              render={() => <AppBar text="Deploy Service" />}
+            />
+            <Route
+              path="/register"
+              render={() => <AppBar text="Register Broker" />}
+            />
+          </Switch>
 
-						<Box className="body-and-footer" align="center" flex>
-							<Box
-								width="100rem"
-								className="main-content"
-								background={{ color: "white" }}
-								border={{ color: "light-5", size: "xsmall" }}
-								pad="large"
-								flex
-								overflow={{ vertical: "scroll" }}
-							>
-								<Switch>
-									{/*Routing - Catalog is the home route*/}
-									<Route exact path="/" render={() => <CatalogResults services={services} />} />
-									<Route path="/home" render={() => <CatalogResults services={services} />} />
-									<Route path="/catalog" render={() => <CatalogResults services={services} />} />
-									<Route path="/login" component={LoginForm} />
-									<Route path="/deploy" component={DeployForm} />
-									<Route path="/register" component={RegisterForm} />
-								</Switch>
-							</Box>
-							<Footer />
-						</Box>
-					</Box>
-				</Grommet>
-			</Router>
-		);
+          <Box className="body-and-footer" align="center" flex>
+            <Box
+              width="100rem"
+              className="main-content"
+              background={{ color: "white" }}
+              border={{ color: "light-5", size: "xsmall" }}
+              pad="large"
+              flex
+              overflow={{ vertical: "scroll" }}
+            >
+              <Switch>
+                {/*Routing - Catalog is the home route*/}
+                <Route exact path="/" render={() => <CatalogResults services={services} />} />
+                <Route path="/home" render={() => <CatalogResults services={services} />} />
+                <Route path="/catalog" render={() => <CatalogResults services={services} />} />
+                <Route path="/login" component={LoginForm} />
+                <Route path="/deploy" component={DeployForm} />
+                <Route path="/register" component={RegisterForm} />
+              </Switch>
+            </Box>
+            <Footer />
+          </Box>
+        </Box>
+      </Grommet>
+      </Router>
+    );
 	}
 }
