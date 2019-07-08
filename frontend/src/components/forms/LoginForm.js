@@ -15,7 +15,7 @@ const LoginForm = () => (
         <TextInput type='password' />
       </FormField>
     </Form>
-    <Link to='/'>
+    <Link to='/catalog'>
       <Button
         color='brand'
         label='Login'

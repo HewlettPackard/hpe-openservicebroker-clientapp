@@ -24,10 +24,9 @@ export default class App extends Component {
     try {
       var request = new Request('http://54.197.219.166:7099/v2/catalog', {
         headers: new Headers({
-          'X-Broker-API-Version': '2.13',
-	        'X-Broker-API-Originating-Identity': 'user1 password'
-	      })
-	    });
+           'X-Broker-API-Version': '2.13',
+        })
+      });
 	    await fetch(request)
       .then(result => result.json())
       .then(resultJSON => {
@@ -70,7 +69,7 @@ export default class App extends Component {
   // }
                 
   // //to get the service catalog initially
-  // componentWillMount() {
+  // componentDidMount() {
   //   this.update();
   // }
              
@@ -85,10 +84,10 @@ export default class App extends Component {
         <Box fill background={{ color: "light-4" }}>
           <Switch>
             {/*Pass text to AppBar heading based on route*/}
-            <Route exact path="/" render={() => <AppBar text="Catalog" update={this.update} />} />
+            <Route exact path="/" render={() => <AppBar text="Login" update={this.update} />} />
+            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />} />
             <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} />} />
             <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} />} />
-            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />} />
             <Route
               path="/deploy"
               render={() => <AppBar text="Deploy Service" />}
@@ -111,11 +110,21 @@ export default class App extends Component {
             >
               <Switch>
                 {/*Routing - Catalog is the home route*/}
-                <Route exact path="/" render={() => <CatalogResults services={services} />} />
+                <Route exact path="/" component={LoginForm} />
+                <Route path="/login" component={LoginForm} />
                 <Route path="/home" render={() => <CatalogResults services={services} />} />
                 <Route path="/catalog" render={() => <CatalogResults services={services} />} />
-                <Route path="/login" component={LoginForm} />
-                <Route path="/deploy" component={DeployForm} />
+                <Route 
+                  path="/deploy/:name" 
+                  render={(obj) => {
+                    const { name } = obj.match.params;
+                    const serviceArg = this.state.services.find((service) => service.name === name);
+                    let plans = [];
+                    if (serviceArg === undefined) {plans = []}
+                    else {plans = serviceArg.plans}
+                    return (<DeployForm plans={plans} match={obj.match} />);
+                  }} 
+                />
                 <Route path="/register" component={RegisterForm} />
               </Switch>
             </Box>
