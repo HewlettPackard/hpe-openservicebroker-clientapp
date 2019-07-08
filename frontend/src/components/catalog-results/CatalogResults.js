@@ -37,7 +37,7 @@ class CatalogResults extends Component {
   };
     
   setValue = (event) => {
-    if (event.target.value.search(/[a-z]?(\\|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\+)+/i) !== -1) 
+    if (event.target.value.search(/[a-z]?(\\|!|@|#|\$|%|\^|&|\*|\(|\)|-|\+)+/i) !== -1) 
       return;
     else {
       const tempList = this.search(event.target.value, this.state.serviceList);
