@@ -25,7 +25,7 @@ class RegisterForm extends Component {
             <TextInput />
           </FormField>
           <FormField label="Password">
-            <TextInput />
+            <TextInput type='password'/>
           </FormField>
           <Link to='/catalog'>
             <Button label="Submit" margin={{ top: 'medium', left: '35%' }} />
