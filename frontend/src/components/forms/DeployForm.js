@@ -35,7 +35,7 @@ class DeployForm extends Component {
             options={[...planNames]}
           />
           <Link to='/catalog'>
-            <Button label="Submit" margin={{ top: 'medium', left: '35%' }} />
+            <Button label="Deploy" margin={{ top: 'medium', left: '35%' }} />
           </Link>
         </Form>
       </Box>

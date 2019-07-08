@@ -53,7 +53,7 @@ class AppBar extends Component {
       case 'Deploy Service': 
       case 'Undeploy Service': 
         back = 
-          <Link to='/'>
+          <Link to='/catalog'>
             <Button
               plain
               color='brand'
