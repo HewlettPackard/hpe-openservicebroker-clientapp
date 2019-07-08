@@ -7,37 +7,46 @@ import Card from "../card/Card";
 class CatalogResults extends Component {
   state = {
     value: '',
+    notYetUpdated: true,
     serviceList: [...this.props.services],
     showList: [...this.props.services]
   };
-  
-  static getDerivedStateFromProps(props, state) {
-    return {
-      serviceList: [...props.services],
-      showList: [...props.services]
-    };
-  } 
 
-  search = (value) => {
+  static getDerivedStateFromProps(props, state) {
+    if (state.notYetUpdated)
+      return ({
+        serviceList: [...props.services],
+        showList: [...props.services]
+      })
+      else 
+        return null;
+  }
+
+  search = (value, listToSearch) => {
     let tempList = [];
-    this.setState({ showList: this.state.serviceList });
-    
-    if (value === '')
-      return;
+
+    if (value === '' && this.state.notYetUpdated)
+      return [];
     else {
-      this.state.showList.forEach( service => {
+      listToSearch.forEach( service => {
         if (service.name.search(value) !== -1)
         tempList.push(service);
       });
-      
-      this.setState({ showList: tempList });
+      return tempList;
     }
   };
     
   setValue = (event) => {
-    this.setState({ value: event.target.value });
-    //console.log(event.target.value);
-    this.search(event.target.value);
+    if (event.target.value.search(/[a-z]?(\\|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\+)+/i) !== -1) 
+      return;
+    else {
+      const tempList = this.search(event.target.value, this.state.serviceList);
+      this.setState({ 
+        value: event.target.value, 
+        notYetUpdated: false,
+        showList: [...tempList]
+      });
+    }
   };
 
   render() {
