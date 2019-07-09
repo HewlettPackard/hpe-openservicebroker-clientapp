@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Box, Button, Form, FormField, Heading, TextInput } from "grommet";
 import axios from "axios";
 
@@ -23,11 +23,16 @@ class RegisterForm extends Component {
 			sname: this.state.sname,
 			url: this.state.url,
 			uname: this.state.uname,
-			pwd: this.state.pwd
+			pwd: this.state.pwd,
+			toCatalog: false
 		};
 
+		this.setState(() => ({
+			toCatalog: true
+		}));
+
 		axios
-			.post("http://localhost:5000/register", data)
+			.post("http://3.86.206.101:7099/register", data)
 			.then(response => {
 				console.log(response);
 			})
@@ -36,6 +41,9 @@ class RegisterForm extends Component {
 			});
 	};
 	render() {
+		if (this.state.toCatalog === true) {
+			return <Redirect to="/catalog" />;
+		}
 		return (
 			<Box align="center" justify="start" pad="medium" flex>
 				<Heading size="medium" level="2">
