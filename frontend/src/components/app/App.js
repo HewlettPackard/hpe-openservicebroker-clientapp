@@ -8,6 +8,7 @@ import CatalogResults from "../catalog-results/CatalogResults";
 import DeployForm from "../forms/DeployForm";
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
+import Details from "../details/Details";
 import "../app/App.css";
 import axios from "axios";
 
@@ -16,7 +17,8 @@ import axios from "axios";
 export default class App extends Component {
 	//set initial state
 	state = {
-    services: []
+    services: [],
+    username: ''
   };
 
   //update the service catalog by calling the API
@@ -72,12 +74,17 @@ export default class App extends Component {
   // componentDidMount() {
   //   this.update();
   // }
-             
+  
+
+  logIn = (input) => {
+    this.setState({ username: input });
+  }
+
 
   //render the app
   render() {
-    const { services } = this.state;
-
+    const { services, username } = this.state;
+console.log('username', username);
     return (
       <Router>
       <Grommet theme={hpe} full>
@@ -85,9 +92,9 @@ export default class App extends Component {
           <Switch>
             {/*Pass text to AppBar heading based on route*/}
             <Route exact path="/" render={() => <AppBar text="Login" update={this.update} />} />
-            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />} />
-            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} />} />
+            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />}  />
+            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} username={username} />} />
+            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} username={username} />} />
             <Route
               path="/deploy"
               render={() => <AppBar text="Deploy Service" />}
@@ -110,10 +117,12 @@ export default class App extends Component {
             >
               <Switch>
                 {/*Routing - Catalog is the home route*/}
-                <Route exact path="/" component={LoginForm} />
-                <Route path="/login" component={LoginForm} />
+                <Route exact path="/" render={() => <LoginForm logIn={this.logIn} />} />
+                <Route path="/login" render={() => <LoginForm logIn={this.logIn} />} />
                 <Route path="/home" render={() => <CatalogResults services={services} />} />
                 <Route path="/catalog" render={() => <CatalogResults services={services} />} />
+                <Route path="/register" component={RegisterForm} />
+                <Route path="/details" component={Details} />
                 <Route 
                   path="/deploy/:name" 
                   render={(obj) => {
@@ -125,7 +134,6 @@ export default class App extends Component {
                     return (<DeployForm plans={plans} match={obj.match} />);
                   }} 
                 />
-                <Route path="/register" component={RegisterForm} />
               </Switch>
             </Box>
             <Footer />

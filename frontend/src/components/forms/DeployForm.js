@@ -19,7 +19,7 @@ class DeployForm extends Component {
       if (plan.name === value) 
         selectedPlan = plan;
     });
-    this.setState({ planLabel: value, selectedPlan:  selectedPlan});
+    this.setState({ planLabel: value, selectedPlan: selectedPlan});
   }
 
   setParamterMenuLabel = (value, index) => {
@@ -101,7 +101,7 @@ class DeployForm extends Component {
                     <Text size='large'>Price: </Text>
                   </Box>
                   <Box flex justify='center' align='start'>
-                    <Text size='large'>{`${cost.amount.usd} for ${cost.unit}`}</Text>
+                    <Text size='large'>{`$${cost.amount.usd} for ${cost.unit}`}</Text>
                   </Box>
                 </Box>
               ))}
