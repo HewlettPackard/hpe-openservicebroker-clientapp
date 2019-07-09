@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 //========================================= AppBar
 class AppBar extends Component {
 	render() {
-    const { text, update, username } = this.props;
+    const { goToDetails, text, update, username } = this.props;
     let back = <Box />;
     let buttons = <Box width='50%' />;
     let user = <Box />;
@@ -58,7 +58,7 @@ class AppBar extends Component {
               icon={<User />}
               reverse
               items={[
-                { label: 'Deployed Services', href: '/details' },
+                { label: 'Deployed Services', onClick: goToDetails },
                 { label: 'Log Out', href: '/login' }
               ]}
               dropBackground={{ "color": "light-1" }}
@@ -116,5 +116,6 @@ class AppBar extends Component {
 		);
 	}
 };
+
 
 export default AppBar;

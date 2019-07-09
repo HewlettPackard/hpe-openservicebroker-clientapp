@@ -40,6 +40,13 @@ class DeployForm extends Component {
     return false;
 }
 
+handleInputChange = (input, index) => {
+  let temp = [...this.state.parameterMenuLabels];
+  temp[index] = input;
+  this.setState({ parameterMenuLabels: [...temp] })
+}
+
+
 
   render() {
     const { match: {params} } = this.props;
@@ -140,7 +147,10 @@ class DeployForm extends Component {
                       </Box>
                       <Box flex justify='center' align='start'>
                         <FormField>
-                          <TextInput placeholder={propertyName.description} />
+                          <TextInput 
+                            placeholder={propertyName.description} 
+                            onChange={(input) => this.handleInputChange(input.target.value, propertyName.index)}
+                          />
                         </FormField>
                       </Box>
                     </Box>
@@ -175,6 +185,7 @@ class DeployForm extends Component {
             <Button label='Deploy' margin={{ top: 'medium' }} />
           </Link>
         </Form>
+        {console.log('menu labels', parameterMenuLabels)}
       </Box>
     );
   }

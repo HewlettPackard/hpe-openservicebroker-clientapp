@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, ReactDOM } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Box, Grommet } from "grommet";
+import { Box, Grommet, Layer } from "grommet";
 import { hpe } from "grommet-theme-hpe";
 import AppBar from "../app-bar/AppBar";
 import Footer from "../footer/Footer";
@@ -17,6 +17,7 @@ import axios from "axios";
 export default class App extends Component {
 	//set initial state
 	state = {
+    detailsOpen: false,
     services: [],
     username: ''
   };
@@ -24,7 +25,7 @@ export default class App extends Component {
   //update the service catalog by calling the API
   async update() {
     try {
-      var request = new Request('http://54.197.219.166:7099/v2/catalog', {
+      var request = new Request('http://3.86.206.101:8099/v2/catalog', {
         headers: new Headers({
            'X-Broker-API-Version': '2.13',
         })
@@ -80,11 +81,16 @@ export default class App extends Component {
     this.setState({ username: input });
   }
 
+  toggleDetailsLayer = () => {
+    console.log('toggling');
+    this.setState({ detailsOpen: !this.state.detailsOpen });
+  }
 
   //render the app
   render() {
-    const { services, username } = this.state;
-console.log('username', username);
+    const { detailsOpen, services, username } = this.state;
+    console.log('detailsOpen', detailsOpen);
+
     return (
       <Router>
       <Grommet theme={hpe} full>
@@ -93,8 +99,8 @@ console.log('username', username);
             {/*Pass text to AppBar heading based on route*/}
             <Route exact path="/" render={() => <AppBar text="Login" update={this.update} />} />
             <Route path="/login" render={() => <AppBar text="Login" update={this.update} />}  />
-            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} username={username} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} username={username} />} />
+            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} username={username} goToDetails={this.toggleDetailsLayer} />} />
+            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} username={username} goToDetails={this.toggleDetailsLayer} />} />
             <Route
               path="/deploy"
               render={() => <AppBar text="Deploy Service" />}
@@ -135,6 +141,18 @@ console.log('username', username);
                   }} 
                 />
               </Switch>
+              { detailsOpen && 
+                <Layer 
+                  full
+                  plain
+                  onEsc={() => this.toggleDetailsLayer()}
+                  onClickOutside={() => this.toggleDetailsLayer()}
+                >
+                  <Box background={{ color: 'blue', opacity: 'strong' }} width='xlarge'>
+                    details
+                  </Box>
+                </Layer>
+              }
             </Box>
             <Footer />
           </Box>
