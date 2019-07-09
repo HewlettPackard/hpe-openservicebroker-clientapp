@@ -7,7 +7,7 @@ import { Box, Button, Form, FormField, Heading, Select, Text, TextInput, SkipLin
 class DeployForm extends Component {
   state = {
     parameterMenuLabels: [],
-    plans: [...this.props.plans],
+    plans: [...this.props.location.state.service.plans],
     planLabel: '',
     selectedPlan: {}
   }
@@ -53,22 +53,21 @@ handleDeploy = () => {
 
 
   render() {
-    const { match: {params} } = this.props;
     const { parameterMenuLabels, plans, planLabel, selectedPlan } = this.state;
+    const service = this.props.location.state.service;
     const planNames = plans.map(plan => plan.name);
     let planProperties = [];
     if (this.isNotEmpty(selectedPlan)) 
-      if (selectedPlan.hasOwnProperty('schemas')) 
-        for (let property in selectedPlan.schemas.service_instance.create.parameters.properties){
-          let obj = {[property]: selectedPlan.schemas.service_instance.create.parameters.properties[property]};
-          planProperties[selectedPlan.schemas.service_instance.create.parameters.properties[property].index] = obj;
-        }
+    if (selectedPlan.hasOwnProperty('schemas')) 
+    for (let property in selectedPlan.schemas.service_instance.create.parameters.properties){
+      let obj = {[property]: selectedPlan.schemas.service_instance.create.parameters.properties[property]};
+      planProperties[selectedPlan.schemas.service_instance.create.parameters.properties[property].index] = obj;
+    }
     
-
     return (
       <Box align='center' justify="start" pad="medium" flex>
         <Heading size="medium" level="2">
-          Deploy {params.name} service
+          Deploy {service.name} service
         </Heading>
         <Form>
           <FormField label="Name" help="Name the instance">

@@ -5,7 +5,7 @@ import { FormClose, Services } from "grommet-icons";
 import { Login } from 'grommet-icons';
 
 
-//========================================= Login Form
+//========================================= Details Form
 const Details = (props) => {
   const { toggle } = props;
   const services = []; //from back end

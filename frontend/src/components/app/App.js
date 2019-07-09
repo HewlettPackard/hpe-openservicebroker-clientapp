@@ -19,27 +19,8 @@ export default class App extends Component {
 	//set initial state
 	state = {
     detailsOpen: false,
-    services: [],
     username: ''
   };
-    
-  //update the service catalog by calling the API
-  async update() {
-    axios.get('http://3.86.206.101:8099/v2/catalog')
-    .then(result => {
-      this.setState(
-        { services: [...result.data.services] }
-      );
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-                
-  //to get the service catalog initially
-  componentDidMount() {
-    this.update();
-  }
 
   logIn = (input) => {
     this.setState({ username: input });
@@ -49,7 +30,7 @@ export default class App extends Component {
     this.setState({ detailsOpen: !this.state.detailsOpen });
   }
 
-  
+
   //render the app
   render() {
     const { detailsOpen, services, username } = this.state;
@@ -60,10 +41,10 @@ export default class App extends Component {
         <Box fill background={{ color: "light-4" }}>
           <Switch>
             {/*Pass text to AppBar heading based on route*/}
-            <Route exact path="/" render={() => <AppBar text="Login" update={this.update} />} />
-            <Route path="/login" render={() => <AppBar text="Login" update={this.update} />}  />
-            <Route path="/home" render={() => <AppBar text="Catalog" update={this.update} username={username} goToDetails={this.toggleDetailsLayer} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" update={this.update} username={username} goToDetails={this.toggleDetailsLayer} />} />
+            <Route exact path="/" render={() => <AppBar text="Login" />} />
+            <Route path="/login" render={() => <AppBar text="Login" />}  />
+            <Route path="/home" render={() => <AppBar text="Catalog" username={username} goToDetails={this.toggleDetailsLayer} />} />
+            <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} goToDetails={this.toggleDetailsLayer} />} />
             <Route
               path="/deploy"
               render={() => <AppBar text="Deploy Service" />}
@@ -88,21 +69,11 @@ export default class App extends Component {
                 {/*Routing - Catalog is the home route*/}
                 <Route exact path="/" render={() => <LoginForm logIn={this.logIn} />} />
                 <Route path="/login" render={() => <LoginForm logIn={this.logIn} />} />
-                <Route path="/home" render={() => <CatalogResults services={services} />} />
-                <Route path="/catalog" render={() => <CatalogResults services={services} />} />
+                <Route path="/home" render={() => <CatalogResults />} />
+                <Route path="/catalog" render={() => <CatalogResults />} />
                 <Route path="/register" component={RegisterForm} />
                 <Route path="/details" component={Details} />
-                <Route 
-                  path="/deploy/:name" 
-                  render={(obj) => {
-                    const { name } = obj.match.params;
-                    const serviceArg = this.state.services.find((service) => service.name === name);
-                    let plans = [];
-                    if (serviceArg === undefined) {plans = []}
-                    else {plans = serviceArg.plans}
-                    return (<DeployForm plans={plans} match={obj.match} />);
-                  }} 
-                />
+                <Route path="/deploy/" component={DeployForm} />
               </Switch>
               { detailsOpen && 
                 <Details toggle={this.toggleDetailsLayer} />
