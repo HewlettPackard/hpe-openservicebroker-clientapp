@@ -1,6 +1,7 @@
 import React, { Component, ReactDOM } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Box, Grommet, Layer } from "grommet";
+import { Box, Button, Grommet, Layer, Heading } from "grommet";
+import { FormClose } from "grommet-icons";
 import { hpe } from "grommet-theme-hpe";
 import AppBar from "../app-bar/AppBar";
 import Footer from "../footer/Footer";
@@ -82,14 +83,12 @@ export default class App extends Component {
   }
 
   toggleDetailsLayer = () => {
-    console.log('toggling');
     this.setState({ detailsOpen: !this.state.detailsOpen });
   }
 
   //render the app
   render() {
     const { detailsOpen, services, username } = this.state;
-    console.log('detailsOpen', detailsOpen);
 
     return (
       <Router>
@@ -146,10 +145,28 @@ export default class App extends Component {
                   full
                   plain
                   onEsc={() => this.toggleDetailsLayer()}
-                  onClickOutside={() => this.toggleDetailsLayer()}
                 >
-                  <Box background={{ color: 'blue', opacity: 'strong' }} width='xlarge'>
-                    details
+                  <Box 
+                    fill 
+                    background={{ color: 'light-2', opacity: 'strong' }} 
+                    pad='medium' 
+                    width='xlarge'
+                    align='center'  
+                  >
+                    <Box 
+                      background={{ color: 'white' }} 
+                      height='100%' 
+                      width='90%'
+                    >
+                      <Box justify='center' direction='row'>
+                        <Box flex align='center'>
+                          <Heading color='brand'>Details</Heading>
+                        </Box>
+                        <Box justifySelf='end' align='start' width='80px'>
+                          <Button icon={<FormClose size='large' />} onClick={this.toggleDetailsLayer} />
+                        </Box>
+                      </Box>
+                    </Box>
                   </Box>
                 </Layer>
               }
