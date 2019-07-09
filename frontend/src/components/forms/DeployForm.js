@@ -46,6 +46,10 @@ handleInputChange = (input, index) => {
   this.setState({ parameterMenuLabels: [...temp] })
 }
 
+handleDeploy = () => {
+  const inputs = [...this.state.parameterMenuLabels];
+  //api call 
+}
 
 
   render() {
@@ -182,7 +186,7 @@ handleInputChange = (input, index) => {
         </Box>
         <Form>
           <Link to='/catalog'>
-            <Button label='Deploy' margin={{ top: 'medium' }} />
+            <Button label='Deploy' margin={{ top: 'medium' }} onClick={this.handleDeploy} />
           </Link>
         </Form>
         {console.log('menu labels', parameterMenuLabels)}

@@ -22,61 +22,24 @@ export default class App extends Component {
     services: [],
     username: ''
   };
-
+    
   //update the service catalog by calling the API
   async update() {
-    try {
-      var request = new Request('http://3.86.206.101:8099/v2/catalog', {
-        headers: new Headers({
-           'X-Broker-API-Version': '2.13',
-        })
-      });
-	    await fetch(request)
-      .then(result => result.json())
-      .then(resultJSON => {
-        this.setState(
-          { services: [...resultJSON.services] }
-        );
-      });
-    } catch(e) {
-        console.log(e);
-    }
+    axios.get('http://3.86.206.101:8099/v2/catalog')
+    .then(result => {
+      this.setState(
+        { services: [...result.data.services] }
+      );
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
-    
-    //to get the service catalog initially
-    async componentDidMount() {
-      this.update();  
-    }
-    
-  // //update the service catalog by calling the API
-  // async update() {
-  //   axios.get('http://54.152.27.68:7099/v2/catalog',
-  //     { 
-  //       headers: { 
-  //         'X-Broker-API-Version': '2.13', 
-  //     },
-  //       auth: {
-  //         username: "",
-  //         password: ""
-  //       }
-  //     }
-  //   )
-  //   .then(result => {
-  //     console.log(result);
-  //     this.setState(
-  //       { services: [...result.services] }
-  //     );
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
-  // }
                 
-  // //to get the service catalog initially
-  // componentDidMount() {
-  //   this.update();
-  // }
-  
+  //to get the service catalog initially
+  componentDidMount() {
+    this.update();
+  }
 
   logIn = (input) => {
     this.setState({ username: input });
@@ -86,6 +49,7 @@ export default class App extends Component {
     this.setState({ detailsOpen: !this.state.detailsOpen });
   }
 
+  
   //render the app
   render() {
     const { detailsOpen, services, username } = this.state;
@@ -141,34 +105,7 @@ export default class App extends Component {
                 />
               </Switch>
               { detailsOpen && 
-                <Layer 
-                  full
-                  plain
-                  onEsc={() => this.toggleDetailsLayer()}
-                >
-                  <Box 
-                    fill 
-                    background={{ color: 'light-2', opacity: 'strong' }} 
-                    pad='medium' 
-                    width='xlarge'
-                    align='center'  
-                  >
-                    <Box 
-                      background={{ color: 'white' }} 
-                      height='100%' 
-                      width='90%'
-                    >
-                      <Box justify='center' direction='row'>
-                        <Box flex align='center'>
-                          <Heading color='brand'>Details</Heading>
-                        </Box>
-                        <Box justifySelf='end' align='start' width='80px'>
-                          <Button icon={<FormClose size='large' />} onClick={this.toggleDetailsLayer} />
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Layer>
+                <Details toggle={this.toggleDetailsLayer} />
               }
             </Box>
             <Footer />
