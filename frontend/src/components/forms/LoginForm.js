@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Box, Button, Form, FormField, TextInput } from "grommet";
 import { Login } from "grommet-icons";
 import axios from "axios";
@@ -8,7 +8,8 @@ import axios from "axios";
 class LoginForm extends Component {
 	state = {
 		uname: "",
-		pwd: ""
+		pwd: "",
+		toCatalog: false
 	};
 	handleChange = e => {
 		this.setState({
@@ -19,9 +20,13 @@ class LoginForm extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 		let { logIn } = this.props;
+		this.setState(() => ({
+			toCatalog: true
+		}));
+
 		let data = {
-			uname: this.state.username,
-			pwd: this.state.password
+			username: this.state.username,
+			password: this.state.password
 		};
 
 		axios
@@ -39,6 +44,10 @@ class LoginForm extends Component {
 	};
 
 	render() {
+		if (this.state.toCatalog === true) {
+			return <Redirect to="/catalog" />;
+		}
+
 		return (
 			<Box width="small" align="center" gap="medium" fill>
 				<Form>

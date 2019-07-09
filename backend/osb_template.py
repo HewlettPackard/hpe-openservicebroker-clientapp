@@ -10,6 +10,8 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
+    req_data=request.get_json()
+    print(req_data['username'], req_data['password'])
     return jsonify(success=True)
 
 @app.route('/register', methods=['POST'])
