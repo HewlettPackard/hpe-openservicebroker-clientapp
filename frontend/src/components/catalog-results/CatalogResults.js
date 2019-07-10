@@ -10,7 +10,8 @@ class CatalogResults extends Component {
 		value: "",
 		notYetUpdated: true,
 		serviceList: [],
-		showList: []
+		showList: [],
+		deployedList: []
 	};
 
 	//update the serviceList by calling the API
@@ -31,6 +32,8 @@ class CatalogResults extends Component {
 	//update catalog on page render
 	componentDidMount() {
 		this.update();
+
+		//get deployed services from back end to show undeploy button on correct cards
 	}
 
 	handleUpdate() {
@@ -67,7 +70,7 @@ class CatalogResults extends Component {
 	};
 
 	render() {
-		const { showList, value } = this.state;
+		const { deployedList, showList, value } = this.state;
 
 		return (
 			<Box fill>
