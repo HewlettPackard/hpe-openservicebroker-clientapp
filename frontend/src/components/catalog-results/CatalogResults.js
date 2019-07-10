@@ -74,7 +74,7 @@ class CatalogResults extends Component {
             width="70%"
             alignSelf="center"
             margin={{ bottom: "large" }}
-            border={{ size: "xsmall", color: "accent-1" }}
+            border={{ size: "xsmall", color: "light-5" }}
           >
             <TextInput
               placeholder="search"

@@ -14,7 +14,7 @@ const Details = (props) => {
     <Layer 
       full
       plain
-      onEsc={() => this.toggleDetailsLayer()}
+      onEsc={toggle}
     >
       <Box 
         fill 
