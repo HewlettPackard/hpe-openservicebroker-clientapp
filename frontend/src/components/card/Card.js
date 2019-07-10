@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Box, Heading, Text } from 'grommet';
+import { Box, Heading, Text, Button } from 'grommet';
 
 
 //========================================= Card
@@ -13,6 +13,7 @@ class Card extends Component {
     borderColor: 'light-5',
     hovering: false, 
     clicked: false,
+    deployed: false,
     service: this.props.service
   };
 
@@ -29,7 +30,7 @@ class Card extends Component {
 
   
   render() {
-    const { borderColor, service, clicked } = this.state;
+    const { borderColor, service, clicked, deployed } = this.state;
 
     if (clicked)
       return (
@@ -38,39 +39,7 @@ class Card extends Component {
             pathname: '/deploy',
             state: { service: service }
           }} 
-          style={{ textDecoration: 'none' }}
-        >
-          <Box 
-            elevation='medium' 
-            background={{ color: 'white' }}
-            border={{ color: borderColor }}
-            round='xsmall'
-            justify='start'
-            align='center'
-            width='small'
-            height='small'
-            onMouseOver={this.setBorder}
-            onMouseOut={this.setBorder}
-          >
-            <Box flex fill='horizontal' pad={{ left: 'medium' }}>
-              <Heading level='2' color='brand' size='medium' truncate>
-                {service.name}
-              </Heading>
-            </Box>
-            <Box 
-              flex 
-              fill='horizontal' 
-              justify='start' 
-              align='start' 
-              overflow={{ horizontal: 'scroll' }}
-              pad={{ left: 'medium' }}
-            >  
-              <Text size='large'>
-                {service.description}
-              </Text>
-            </Box>
-          </Box>
-        </Redirect>
+        />
       )
     else return (
       <Box 
@@ -86,10 +55,10 @@ class Card extends Component {
         onMouseOut={this.setBorder}
         onClick={this.handleClick}
       >
-        <Box flex fill='horizontal' pad={{ left: 'medium' }}>
-          <Heading level='2' color='brand' size='medium' truncate>
+        <Box flex fill='horizontal' justify='center' align='center'>
+          <Text size='38px' color='brand' truncate>
             {service.name}
-          </Heading>
+          </Text>
         </Box>
         <Box 
           flex 
@@ -103,6 +72,12 @@ class Card extends Component {
             {service.description}
           </Text>
         </Box>
+        { deployed && (
+            <Box fill='horizontal'>
+              <Button  label='Undeploy' primary />
+            </Box>
+          )
+        }
       </Box>
     )
   }
