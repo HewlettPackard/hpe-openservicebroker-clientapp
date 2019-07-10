@@ -35,13 +35,6 @@ class AppBar extends Component {
                 icon={<Add size='medium' color='brand' />}
               />
             </Link>
-            <Button
-              color='brand'
-              label='Update Catalog'
-              gap='xsmall'
-              icon={<Sync size='medium' color='brand' />}
-              onClick={() => {alert('Udating Services'); update();}}
-            /> 
           </Box>;
         user = 
           <Box
