@@ -50,7 +50,7 @@ handleInputChange = (input, index) => {
 handleDeploy = () => {
   const inputs = [...this.state.parameterMenuLabels];
   //api call 
-  const success = true;
+  const success = true; //whether the call was a success
   this.setState({ successfullyDeployed: success });
 }
 
@@ -60,15 +60,14 @@ handleDeploy = () => {
     const service = this.props.location.state.service;
     const planNames = plans.map(plan => plan.name);
     let planProperties = [];
-    if (this.isNotEmpty(selectedPlan)) 
     if (selectedPlan.hasOwnProperty('schemas')) 
-    for (let property in selectedPlan.schemas.service_instance.create.parameters.properties){
-      let obj = {[property]: selectedPlan.schemas.service_instance.create.parameters.properties[property]};
-      planProperties[selectedPlan.schemas.service_instance.create.parameters.properties[property].index] = obj;
-    }
+      for (let property in selectedPlan.schemas.service_instance.create.parameters.properties){
+        let obj = {[property]: selectedPlan.schemas.service_instance.create.parameters.properties[property]};
+        planProperties[selectedPlan.schemas.service_instance.create.parameters.properties[property].index] = obj;
+      }
     
     return (
-      <Box align='center' justify="start" pad="medium" flex>
+      <Box align='center' justify="start" pad="medium" flex={false}>
         <Heading size="medium" level="2">
           Deploy {service.name} service
         </Heading>
@@ -84,18 +83,18 @@ handleDeploy = () => {
             margin='medium'
           />
         </Form>
-        <Box gap='medium' width='large' pad={{ bottom: 'medium' }}>
+        <Box width='large'>
           { this.isNotEmpty(selectedPlan) && 
               <Box className='description-box'>
-                <Box align='start'>
-                  <Heading level='3'><strong>Description: </strong></Heading>
+                <Box>
+                  <Heading level='3'><strong>Description</strong></Heading>
                 </Box>
                 <Box background={{ color: 'accent-1' }} height='2px' />
-                <Box direction='row' align='start'>
-                  <Box flex>
+                <Box direction='row' align='start' height='xxsmall' justify='center'>
+                  <Box flex justify='center' fill='vertical'>
                     <Text size='large'>Description: </Text>
                   </Box>
-                  <Box flex justify='center' align='start'>
+                  <Box flex justify='center' align='start' fill='vertical'>
                     <Text size='large'>{selectedPlan.description}</Text>
                   </Box>
                 </Box>
@@ -105,12 +104,12 @@ handleDeploy = () => {
             (selectedPlan.free === false) &&
             <Box className='prices-box'> 
               <Box>
-                <Heading level='3'><strong>Price Options: </strong></Heading>
+                <Heading level='3'><strong>Price Options</strong></Heading>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
               {selectedPlan.metadata.costs.map(cost => (
-                <Box direction='row' key={cost.amount.usd}>
-                  <Box flex>
+                <Box direction='row' key={cost.amount.usd} height='xxsmall'>
+                  <Box flex justify='center'>
                     <Text size='large'>Price: </Text>
                   </Box>
                   <Box flex justify='center' align='start'>
@@ -124,10 +123,10 @@ handleDeploy = () => {
              (selectedPlan.free === true) &&
             <Box className='prices-box'> 
               <Box>
-                <Heading level='3'><strong>Price Options: </strong></Heading>
+                <Heading level='3'><strong>Price Options</strong></Heading>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
-              <Box direction='row'>
+              <Box direction='row' height='xxsmall'>
                 <Box flex>
                   <Text size='large'>Price: </Text>
                 </Box>
@@ -140,24 +139,22 @@ handleDeploy = () => {
           { this.isNotEmpty(selectedPlan) &&
             <Box className='parameters-box'> 
               <Box>
-                <Heading level='3'><strong>Inputs: </strong></Heading>
+                <Heading level='3'><strong>Inputs</strong></Heading>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
               { planProperties.map(property => {
                 const propertyName = property[Object.keys(property)[0]];
                 if (propertyName.type === 'string')
                   return (
-                    <Box direction='row' key={Object.keys(property)[0]} height='30px'>
-                      <Box flex>
-                        <Text size='large'>{Object.keys(property)[0]}: </Text>
+                    <Box direction='row' key={Object.keys(property)[0]} height='xxsmall'>
+                      <Box flex justify='center'>
+                        <Text plain size='large'>{Object.keys(property)[0]}: </Text>
                       </Box>
                       <Box flex justify='center' align='start'>
-                        <FormField>
-                          <TextInput 
-                            placeholder={propertyName.description} 
-                            onChange={(input) => this.handleInputChange(input.target.value, propertyName.index)}
-                          />
-                        </FormField>
+                        <TextInput plain
+                          placeholder={propertyName.description} 
+                          onChange={(input) => this.handleInputChange(input.target.value, propertyName.index)}
+                        />
                       </Box>
                     </Box>
                   ) 
@@ -166,19 +163,19 @@ handleDeploy = () => {
                     parameterMenuLabels[propertyName.index] :
                     '';
                   return (
-                    <Box direction='row' key={Object.keys(property)[0]}>
-                      <Box flex>
+                    <Box direction='row' key={Object.keys(property)[0]} height='xxsmall'>
+                      <Box flex justify='center'>
                         <Text size='large'>{Object.keys(property)[0]}: </Text>
                       </Box>
                       <Box flex justify='center' align='start'>
-                        <FormField>
-                          <Select 
+                        {/* <FormField> */}
+                          <Select plain
                             placeholder={propertyName.description} 
                             options={propertyName.allowedValues}
                             onChange={({ option }) => this.setParamterMenuLabel(option,propertyName.index)}
                             value={label}
                           />
-                        </FormField>
+                        {/* </FormField> */}
                       </Box>
                     </Box>
                   )}

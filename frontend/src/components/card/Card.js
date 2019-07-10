@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Box, Button, Heading, Layer, Text } from 'grommet';
-import { FormClose, Subtract } from 'grommet-icons';
+import { Redirect } from 'react-router-dom';
+import { Box, Button, Text } from 'grommet';
+import { Subtract } from 'grommet-icons';
 import DeployedList from '../deployed-list/DeployedList'; 
 
 
@@ -36,7 +36,7 @@ class Card extends Component {
   }
 
   toggle = () => {
-    this.setState({ showing: !this.state.showing });
+    this.setState({ showing: !this.state.showing, hovering: false });
   }
 
 
