@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Box, Grid, TextInput } from "grommet";
+import { Box, Button, Grid, TextInput } from "grommet";
+import { Sync } from "grommet-icons";
 import Card from "../card/Card";
 import axios from "axios";
 
@@ -13,15 +14,10 @@ class CatalogResults extends Component {
 	};
 
 	//update the serviceList by calling the API
-	componentDidMount() {
+	update() {
 		axios
-			.get("http://localhost:5000/v2/catalog", {
-				headers: {
-					"X-Broker-API-Version": "2.14"
-				}
-			})
+			.get("http://3.86.206.101:8099/v2/catalog")
 			.then(results => {
-				console.log(results);
 				this.setState({
 					serviceList: [...results.data.services],
 					showList: [...results.data.services]
@@ -30,6 +26,11 @@ class CatalogResults extends Component {
 			.catch(error => {
 				console.log(error);
 			});
+	}
+
+	//update catalog on page render
+	componentDidMount() {
+		this.update();
 	}
 
 	handleUpdate() {
@@ -75,7 +76,7 @@ class CatalogResults extends Component {
 						width="70%"
 						alignSelf="center"
 						margin={{ bottom: "large" }}
-						border={{ size: "xsmall", color: "accent-1" }}
+						border={{ size: "xsmall", color: "light-5" }}
 					>
 						<TextInput
 							placeholder="search"
@@ -89,6 +90,25 @@ class CatalogResults extends Component {
 						<Card service={service} key={service.name} />
 					))}
 				</Grid>
+				<Box
+					width="medium"
+					align="center"
+					justify="center"
+					alignSelf="center"
+					margin={{ top: "30px" }}
+				>
+					<Button
+						fill
+						color="brand"
+						label="Update Catalog"
+						gap="small"
+						icon={<Sync size="medium" color="brand" />}
+						onClick={() => {
+							alert("Udating Services");
+							this.update();
+						}}
+					/>
+				</Box>
 			</Box>
 		);
 	}
