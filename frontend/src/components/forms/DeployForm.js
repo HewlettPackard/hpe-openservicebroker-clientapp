@@ -9,7 +9,8 @@ class DeployForm extends Component {
     parameterMenuLabels: [],
     plans: [...this.props.location.state.service.plans],
     planLabel: '',
-    selectedPlan: {}
+    selectedPlan: {},
+    successfullyDeployed: false
   }
 
   setPlanMenuLabel = (value) => {
@@ -49,11 +50,13 @@ handleInputChange = (input, index) => {
 handleDeploy = () => {
   const inputs = [...this.state.parameterMenuLabels];
   //api call 
+  const success = true;
+  this.setState({ successfullyDeployed: success });
 }
 
 
   render() {
-    const { parameterMenuLabels, plans, planLabel, selectedPlan } = this.state;
+    const { parameterMenuLabels, plans, planLabel, selectedPlan, successfullyDeployed } = this.state;
     const service = this.props.location.state.service;
     const planNames = plans.map(plan => plan.name);
     let planProperties = [];
@@ -144,7 +147,7 @@ handleDeploy = () => {
                 const propertyName = property[Object.keys(property)[0]];
                 if (propertyName.type === 'string')
                   return (
-                    <Box direction='row' key={Object.keys(property)[0]}>
+                    <Box direction='row' key={Object.keys(property)[0]} height='30px'>
                       <Box flex>
                         <Text size='large'>{Object.keys(property)[0]}: </Text>
                       </Box>

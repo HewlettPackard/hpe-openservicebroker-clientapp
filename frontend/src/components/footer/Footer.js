@@ -16,7 +16,7 @@ const Footer = () => (
   >
     <Box direction='row' gap='small' align='center'>
       <Hpe color='brand' size='medium' />
-      <Text size='large' color='brand' >Hewlett-Packard Enterprise</Text>
+      <Text size='large' color='brand' >Hewlett Packard Enterprise</Text>
     </Box>
   </Box>
 )
