@@ -67,12 +67,12 @@ handleDeploy = () => {
       }
     
     return (
-      <Box align='center' justify="start" pad="medium" flex={false}>
-        <Heading size="medium" level="2">
+      <Box align='center' justify='start' pad='medium' flex={false}>
+        <Heading size='medium' level='2'>
           Deploy {service.name} service
         </Heading>
         <Form>
-          <FormField label="Name" help="Name the instance">
+          <FormField label='Name' help='Name the instance'>
             <TextInput />
           </FormField>
           <Select
@@ -89,7 +89,7 @@ handleDeploy = () => {
                 <Box>
                   <Heading level='3'><strong>Description</strong></Heading>
                 </Box>
-                <Box background={{ color: 'accent-1' }} height='2px' />
+                <Box background={{ color: 'brand' }} height='2px' />
                 <Box direction='row' align='start' height='xxsmall' justify='center'>
                   <Box flex justify='center' fill='vertical'>
                     <Text size='large'>Description: </Text>
@@ -106,7 +106,7 @@ handleDeploy = () => {
               <Box>
                 <Heading level='3'><strong>Price Options</strong></Heading>
               </Box>
-              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box background={{ color: 'brand' }} height='2px' />
               {selectedPlan.metadata.costs.map(cost => (
                 <Box direction='row' key={cost.amount.usd} height='xxsmall'>
                   <Box flex justify='center'>
@@ -125,7 +125,7 @@ handleDeploy = () => {
               <Box>
                 <Heading level='3'><strong>Price Options</strong></Heading>
               </Box>
-              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box background={{ color: 'brand' }} height='2px' />
               <Box direction='row' height='xxsmall'>
                 <Box flex>
                   <Text size='large'>Price: </Text>
@@ -141,7 +141,7 @@ handleDeploy = () => {
               <Box>
                 <Heading level='3'><strong>Inputs</strong></Heading>
               </Box>
-              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box background={{ color: 'brand' }} height='2px' />
               { planProperties.map(property => {
                 const propertyName = property[Object.keys(property)[0]];
                 if (propertyName.type === 'string')
