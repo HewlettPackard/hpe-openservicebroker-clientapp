@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Accordion, AccordionPanel, Box, Button, Heading, Layer, Text } from "grommet";
-import { FormClose, Services } from "grommet-icons";
-import { Login } from 'grommet-icons';
+import { FormClose } from "grommet-icons";
 
 
-//========================================= Details Form
-const Details = (props) => {
+//========================================= Broker List Layer
+const BrokerList = (props) => {
   const { toggle } = props;
   const services = []; //from back end
 
@@ -31,7 +29,7 @@ const Details = (props) => {
         >
           <Box justify='center' direction='row' className='detail-header'>
             <Box flex align='center'>
-              <Heading color='brand'>Details</Heading>
+              <Heading color='brand'>Your Brokers</Heading>
             </Box>
             <Box justifySelf='end' align='start' width='80px'>
               <Button icon={<FormClose size='large' />} onClick={toggle} />
@@ -58,4 +56,4 @@ const Details = (props) => {
   )
 }
 
-export default Details;
+export default BrokerList;

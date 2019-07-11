@@ -8,7 +8,7 @@ import LogoAndTitle from '../logo-title/LogoTitle';
 //========================================= AppBar
 class AppBar extends Component {
 	render() {
-    const { goToDetails, text, update, username } = this.props;
+    const { openBrokerList, openDeployedList, text, update, username } = this.props;
     let back = <Box />;
     let buttons = <Box width='50%' />;
     let user = <Box />;
@@ -50,8 +50,8 @@ class AppBar extends Component {
               icon={<User />}
               reverse
               items={[
-                { label: 'Deployed Services', onClick: goToDetails },
-                { label: 'Registered Brokers', onClick: goToDetails },
+                { label: 'Deployed Services', onClick: openDeployedList },
+                { label: 'Registered Brokers', onClick: openBrokerList },
                 { label: 'Log Out', href: '/login' }
               ]}
               dropBackground={{ "color": "light-1" }}
@@ -59,11 +59,8 @@ class AppBar extends Component {
             />  
           </Box>;
         break;
-      case 'Details': 
       case 'Register Broker': 
-      case 'Unregister Broker': 
       case 'Deploy Service': 
-      case 'Undeploy Service': 
         back = 
           <Link to='/catalog'>
             <Button

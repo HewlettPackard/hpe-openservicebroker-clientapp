@@ -1,7 +1,6 @@
-import React, { Component, ReactDOM } from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Box, Button, Grommet, Layer, Heading } from "grommet";
-import { FormClose } from "grommet-icons";
+import { Box, Grommet } from "grommet";
 import { hpe } from "grommet-theme-hpe";
 import AppBar from "../app-bar/AppBar";
 import Footer from "../footer/Footer";
@@ -9,7 +8,8 @@ import CatalogResults from "../catalog-results/CatalogResults";
 import DeployForm from "../forms/DeployForm";
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
-import Details from "../details/Details";
+import BrokerList from "../broker-list/BrokerList";
+import DeployedList from "../deployed-list/DeployedList";
 import "../app/App.css";
 import axios from "axios";
 
@@ -19,6 +19,8 @@ export default class App extends Component {
 	//set initial state
 	state = {
     detailsOpen: false,
+    deployedListOpen: false,
+    brokerListOpen: false,
     username: ''
   };
 
@@ -26,14 +28,18 @@ export default class App extends Component {
     this.setState({ username: input });
   }
 
-  toggleDetailsLayer = () => {
-    this.setState({ detailsOpen: !this.state.detailsOpen });
+  toggleBrokerList = () => {
+    this.setState({ brokerListOpen: !this.state.brokerListOpen });
+  }
+
+  toggleDeployedList = () => {
+    this.setState({ deployedListOpen: !this.state.deployedListOpen });
   }
 
 
   //render the app
   render() {
-    const { detailsOpen, services, username } = this.state;
+    const { deployedListOpen, brokerListOpen, services, username } = this.state;
 
     return (
       <Router>
@@ -43,8 +49,8 @@ export default class App extends Component {
             {/*Pass text to AppBar heading based on route*/}
             <Route exact path="/" render={() => <AppBar text="Login" />} />
             <Route path="/login" render={() => <AppBar text="Login" />}  />
-            <Route path="/home" render={() => <AppBar text="Catalog" username={username} goToDetails={this.toggleDetailsLayer} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} goToDetails={this.toggleDetailsLayer} />} />
+            <Route path="/home" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
+            <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
             <Route
               path="/deploy"
               render={() => <AppBar text="Deploy Service" />}
@@ -72,11 +78,13 @@ export default class App extends Component {
                 <Route path="/home" render={() => <CatalogResults />} />
                 <Route path="/catalog" render={() => <CatalogResults />} />
                 <Route path="/register" component={RegisterForm} />
-                <Route path="/details" component={Details} />
                 <Route path="/deploy/" component={DeployForm} />
               </Switch>
-              { detailsOpen && 
-                <Details toggle={this.toggleDetailsLayer} />
+              { deployedListOpen && 
+                <DeployedList toggle={this.toggleDeployedList} />
+              }
+              { brokerListOpen && 
+                <BrokerList toggle={this.toggleBrokerList} />
               }
             </Box>
             <Footer />
