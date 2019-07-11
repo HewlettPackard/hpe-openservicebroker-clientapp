@@ -77,6 +77,7 @@ class RegisterForm extends Component {
 					</FormField>
 					<FormField label="Password">
 						<TextInput
+              type='password'
 							id="pwd"
 							value={this.state.pwd}
 							onChange={this.handleChange}
