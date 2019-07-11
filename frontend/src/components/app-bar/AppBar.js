@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Menu } from 'grommet';
 import { Add, LinkPrevious, Sync, User } from 'grommet-icons';
 import LogoAndTitle from '../logo-title/LogoTitle';
-import PropTypes from 'prop-types';
 
 
 //========================================= AppBar
@@ -52,6 +51,7 @@ class AppBar extends Component {
               reverse
               items={[
                 { label: 'Deployed Services', onClick: goToDetails },
+                { label: 'Registered Brokers', onClick: goToDetails },
                 { label: 'Log Out', href: '/login' }
               ]}
               dropBackground={{ "color": "light-1" }}
