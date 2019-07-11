@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Box, Button, Grid, Text, TextInput, Layer } from "grommet";
-import { Sync } from "grommet-icons";
-import Card from "../card/Card";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Button, Grid, Text, TextInput, Layer } from 'grommet';
+import { Sync } from 'grommet-icons';
+import Card from '../card/Card';
+import axios from 'axios';
 
 //========================================= Catalog Results
 class CatalogResults extends Component {
 	state = {
-		value: "",
+		value: '',
 		notYetUpdated: true,
 		serviceList: [],
 		showList: [],
@@ -18,7 +18,7 @@ class CatalogResults extends Component {
 	//update the serviceList by calling the API
 	update() {
 		axios
-			.get("http://3.86.206.101:8099/v2/catalog")
+			.get('http://3.86.206.101:8099/v2/catalog')
 			.then(results => {
 				this.setState({
 					serviceList: [...results.data.services],
@@ -44,7 +44,7 @@ class CatalogResults extends Component {
 	search = (value, listToSearch) => {
 		let tempList = [];
 
-		if (value === "" && this.state.notYetUpdated) return [];
+		if (value === '' && this.state.notYetUpdated) return [];
 		else {
 			listToSearch.forEach(service => {
 				if (service.name.search(value) !== -1) tempList.push(service);
@@ -89,41 +89,27 @@ class CatalogResults extends Component {
           )
         }
         { !showEmptyMessage && (
-            <Box>
-              <Box fill="horizontal" flex={false}>
-                <Box
-                  width="70%"
-                  alignSelf="center"
-                  margin={{ bottom: "large" }}
-                  border={{ size: "xsmall", color: "light-5" }}
-                >
+            <Box gap='large'>
+              <Box className='search-area' alignSelf='center' direction='row' gap='small'>
+                <Box width='medium' border={{ size: 'xsmall', color: 'light-5' }}>
                   <TextInput
-                    placeholder="search"
+                    placeholder='search'
                     value={value}
                     onChange={this.setValue}
                   />
                 </Box>
-              </Box>
-              <Box
-                width="medium"
-                align="center"
-                justify="center"
-                alignSelf="center"
-                margin={{ top: "30px" }}
-              >
                 <Button
-                  fill
-                  color="brand"
-                  label="Update Catalog"
-                  gap="small"
-                  icon={<Sync size="medium" color="brand" />}
+                  label='refresh'
+                  color='brand'
+                  gap='small'
+                  icon={<Sync size='medium' color='brand' />}
                   onClick={() => {
-                    alert("Udating Services");
+                    alert('Udating Services');
                     this.update();
                   }}
                 />
               </Box>
-              <Grid gap="large" columns="small" rows="small">
+              <Grid gap='large' columns='small' rows='small'>
                 {showList.map(service => (
                   <Card service={service} key={service.name} />
                 ))}
