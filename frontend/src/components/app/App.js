@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Box, Grommet } from "grommet";
 import { hpe } from "grommet-theme-hpe";
+import Sidebar from "../sidebar/Sidebar";
 import AppBar from "../app-bar/AppBar";
 import Footer from "../footer/Footer";
 import CatalogResults from "../catalog-results/CatalogResults";
@@ -18,9 +19,6 @@ import axios from "axios";
 export default class App extends Component {
 	//set initial state
 	state = {
-    detailsOpen: false,
-    deployedListOpen: false,
-    brokerListOpen: false,
     username: ''
   };
 
@@ -39,58 +37,63 @@ export default class App extends Component {
 
   //render the app
   render() {
+    let onLoginPage = false;
     const { deployedListOpen, brokerListOpen, services, username } = this.state;
 
     return (
       <Router>
       <Grommet theme={hpe} full>
-        <Box fill background={{ color: "light-4" }}>
-          <Switch>
-            {/*Pass text to AppBar heading based on route*/}
-            <Route exact path="/" render={() => <AppBar text="Login" />} />
-            <Route path="/login" render={() => <AppBar text="Login" />}  />
-            <Route path="/home" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-            <Route
-              path="/deploy"
-              render={() => <AppBar text="Deploy Service" />}
-            />
-            <Route
-              path="/register"
-              render={() => <AppBar text="Register Broker" />}
-            />
-          </Switch>
-
-          <Box className="body-and-footer" align="center" flex>
-            <Box
-              width="100rem"
-              className="main-content"
-              background={{ color: "white" }}
-              border={{ color: "light-5", size: "xsmall" }}
-              pad="large"
-              flex
-              overflow={{ vertical: "scroll" }}
-            >
+        <Box 
+          className='page' 
+          fill
+          direction='row'
+        >
+          { !onLoginPage && ( 
+              <Box>
+                <Sidebar /> 
+                {/* empty box to fix catalog width */}
+                 <Box fill='vertical' width='10rem' /> 
+              </Box>
+            )
+          }
+          <Box className="non-sidebar" flex>
+            <Box className='header-and-body' height='120vh' flex={false} overflow={{ vertical: 'scroll' }}>
               <Switch>
-                {/*Routing - Catalog is the home route*/}
-                <Route exact path="/" render={() => <LoginForm logIn={this.logIn} />} />
-                <Route path="/login" render={() => <LoginForm logIn={this.logIn} />} />
-                <Route path="/home" render={() => <CatalogResults />} />
-                <Route path="/catalog" render={() => <CatalogResults />} />
-                <Route path="/register" component={RegisterForm} />
-                <Route path="/deploy/" component={DeployForm} />
+                {/*Pass text to AppBar heading based on route*/}
+                <Route exact path="/" render={() => <AppBar text="Login" />} />
+                <Route path="/login" render={() => <AppBar text="Login" />}  />
+                <Route path="/home" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
+                <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
+                <Route
+                  path="/deploy"
+                  render={() => <AppBar text="Deploy Service" />}
+                  />
+                <Route
+                  path="/register"
+                  render={() => <AppBar text="Register Broker" />}
+                  />
               </Switch>
-              { deployedListOpen && 
-                <DeployedList toggle={this.toggleDeployedList} fromUserMenu={false} />
-              }
-              { brokerListOpen && 
-                <BrokerList toggle={this.toggleBrokerList} />
-              }
-            </Box>
+              <Box
+                className="body"
+                pad="large"
+                overflow={{vertical:'scroll'}}
+                flex
+              >
+                <Switch>
+                  {/*Routing - Catalog is the home route*/}
+                  <Route exact path="/" render={() => <LoginForm logIn={this.logIn} />} />
+                  <Route path="/login" render={() => <LoginForm logIn={this.logIn} />} />
+                  <Route path="/home" render={() => <CatalogResults />} />
+                  <Route path="/catalog" render={() => <CatalogResults />} />
+                  <Route path="/register" component={RegisterForm} />
+                  <Route path="/deploy/" component={DeployForm} />
+                </Switch>
+              </Box> {/*end of body box*/}
+            </Box> {/*end of header-and-body box*/}
             <Footer />
-          </Box>
-        </Box>
-      </Grommet>
+          </Box> {/*end of non-sidebar box*/}
+        </Box> {/*end of page box*/}
+]      </Grommet>
       </Router>
     );
 	}

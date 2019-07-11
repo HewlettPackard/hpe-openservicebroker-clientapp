@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Box, Button, Grid, Text, TextInput } from "grommet";
+import { Link } from "react-router-dom";
+import { Box, Button, Grid, Text, TextInput, Layer } from "grommet";
 import { Sync } from "grommet-icons";
 import Card from "../card/Card";
 import axios from "axios";
@@ -79,8 +80,11 @@ class CatalogResults extends Component {
 			<Box fill>
 				
         { showEmptyMessage && (
-            <Box className='emptyMessage' align='center'>
-              <Text size='xlarge' color='brand'>You do not have any brokers registered. Register a broker to access services.</Text>
+            <Box className='emptyMessage' align='center' gap='medium'>
+              <Text size='xlarge' color=''>You do not have any brokers registered. Register a broker to access services.</Text>
+              <Link to='/settings' style={{ color: '#01a982' }}>
+                <Text size='large' color='brand'>Register Broker</Text>
+              </Link>
             </Box>
           )
         }
@@ -100,11 +104,6 @@ class CatalogResults extends Component {
                   />
                 </Box>
               </Box>
-              <Grid gap="large" columns="small" rows="small">
-                {showList.map(service => (
-                  <Card service={service} key={service.name} />
-                ))}
-              </Grid>
               <Box
                 width="medium"
                 align="center"
@@ -124,6 +123,11 @@ class CatalogResults extends Component {
                   }}
                 />
               </Box>
+              <Grid gap="large" columns="small" rows="small">
+                {showList.map(service => (
+                  <Card service={service} key={service.name} />
+                ))}
+              </Grid>
             </Box>
           )   
         }
