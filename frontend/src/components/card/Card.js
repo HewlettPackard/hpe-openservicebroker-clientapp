@@ -121,7 +121,7 @@ class Card extends Component {
           <Button label='Undeploy' icon={<Subtract />} plain primary onClick={this.toggle} color='light-3' />
         </Box>
         { showing && 
-            <DeployedList toggle={this.toggle} />
+            <DeployedList toggle={this.toggle} fromCardButton={true} />
         }
       </Box>
     )

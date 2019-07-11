@@ -81,7 +81,7 @@ export default class App extends Component {
                 <Route path="/deploy/" component={DeployForm} />
               </Switch>
               { deployedListOpen && 
-                <DeployedList toggle={this.toggleDeployedList} />
+                <DeployedList toggle={this.toggleDeployedList} fromUserMenu={false} />
               }
               { brokerListOpen && 
                 <BrokerList toggle={this.toggleBrokerList} />
