@@ -50,7 +50,7 @@ const Sidebar = () => (
       </Link>
     </Box>
     <Box>
-      <Link to='/logout' style={{ color:'white' }}>
+      <Link to='/login' style={{ color:'white' }}>
         <Text size='xlarge'>Loguot</Text>
       </Link>
     </Box>
