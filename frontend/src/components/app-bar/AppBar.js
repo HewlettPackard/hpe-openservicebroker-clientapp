@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Button, Menu } from 'grommet';
-import { Add, LinkPrevious, Sync, User } from 'grommet-icons';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { Box } from 'grommet';
 import LogoAndTitle from '../logo-title/LogoTitle';
 
 
 //========================================= AppBar
-const AppBar = (props) => (
+const AppBar = () => (
   <Box 
     fill='horizontal' 
     height='5rem' 
@@ -14,7 +13,18 @@ const AppBar = (props) => (
     pad='small'
     margin={{ left: 'small' }}
   >
-    <LogoAndTitle text={props.text} />
+    {/* change text based on route */}
+    <Switch>
+      <Route exact path='/' render={() => <LogoAndTitle text='Login' />} />
+      <Route path='/login' render={() => <LogoAndTitle text='Login' />} />
+      <Route path='/home' render={() => <LogoAndTitle text='Catalog' />} />
+      <Route path='/catalog' render={() => <LogoAndTitle text='Catalog' />} />
+      <Route path='/deploy' render={() => <LogoAndTitle text='Deploy Service' />} />
+      <Route path='/deployed' render={() => <LogoAndTitle text='Deployed Services' />} />
+      <Route path='/register' render={() => <LogoAndTitle text='Register Broker' />} />
+      <Route path='/settings' render={() => <LogoAndTitle text='Settings' />} />
+      <Route path='/help' render={() => <LogoAndTitle text='Help' />} />
+    </Switch>
   </Box>
 )
 

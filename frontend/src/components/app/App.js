@@ -58,21 +58,7 @@ export default class App extends Component {
           }
           <Box className="non-sidebar" flex>
             <Box className='header-and-body' height='120vh' flex={false} overflow={{ vertical: 'scroll' }}>
-              <Switch>
-                {/*Pass text to AppBar heading based on route*/}
-                <Route exact path="/" render={() => <AppBar text="Login" />} />
-                <Route path="/login" render={() => <AppBar text="Login" />}  />
-                <Route path="/home" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-                <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-                <Route
-                  path="/deploy"
-                  render={() => <AppBar text="Deploy Service" />}
-                  />
-                <Route
-                  path="/register"
-                  render={() => <AppBar text="Register Broker" />}
-                  />
-              </Switch>
+              <AppBar />
               <Box
                 className="body"
                 pad="large"
