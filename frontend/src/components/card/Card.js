@@ -15,7 +15,7 @@ class Card extends Component {
     borderColor: 'light-5',
     hovering: false, 
     clicked: false,
-    deployed: true,
+    deployed: false,
     service: this.props.service,
     showing: false
   };

@@ -52,7 +52,7 @@ export default class App extends Component {
               <Box>
                 <Sidebar /> 
                 {/* empty box to fix catalog width */}
-                 <Box fill='vertical' width='10rem' /> 
+                 <Box fill='vertical' width='16rem' /> 
               </Box>
             )
           }

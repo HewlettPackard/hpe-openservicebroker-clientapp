@@ -11,7 +11,7 @@ const Sidebar = () => (
     border={{ color: 'white', side: 'left' }}
     pad='medium'
     fill='vertical'
-    width='10rem'
+    width='16rem'
     align='center'
     gap='large'
     align='start'
