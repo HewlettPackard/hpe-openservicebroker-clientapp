@@ -5,7 +5,7 @@ import { FormClose, Subtract } from 'grommet-icons';
 
 //========================================= Deployed List
 const DeployedList = () => (
-  <Box fill>
+  <Box pad='large' fill>
     deployed
   </Box>
 )

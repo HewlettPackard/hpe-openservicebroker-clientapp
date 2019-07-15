@@ -9,10 +9,10 @@ import axios from 'axios';
 class CatalogResults extends Component {
 	state = {
 		value: '',
-		notYetUpdated: true,
+		notYetSearched: true,
 		serviceList: [],
 		showList: [],
-		deployedList: []
+    deployedList: [],
 	};
 
 	//update the serviceList by calling the API
@@ -22,8 +22,8 @@ class CatalogResults extends Component {
 			.then(results => {
 				this.setState({
 					serviceList: [...results.data.services],
-					showList: [...results.data.services]
-				});
+          showList: [...results.data.services]
+        });
 			})
 			.catch(error => {
 				console.log(error);
@@ -32,19 +32,13 @@ class CatalogResults extends Component {
 
 	//update catalog on page render
 	componentDidMount() {
-		this.update();
-
-		//get deployed services from back end to show undeploy button on correct cards
-	}
-
-	handleUpdate() {
-		this.setState({ state: this.state });
+    this.update();
 	}
 
 	search = (value, listToSearch) => {
 		let tempList = [];
 
-		if (value === '' && this.state.notYetUpdated) return [];
+		if (value === '' && this.state.notYetSearched) return [];
 		else {
 			listToSearch.forEach(service => {
 				if (service.name.search(value) !== -1) tempList.push(service);
@@ -64,20 +58,20 @@ class CatalogResults extends Component {
 			const tempList = this.search(event.target.value, this.state.serviceList);
 			this.setState({
 				value: event.target.value,
-				notYetUpdated: false,
+				notYetSearched: false,
 				showList: [...tempList]
 			});
 		}
 	};
 
 	render() {
-    const { deployedList, serviceList, showList, value } = this.state;
+    const { deployedList, notYetLoaded, serviceList, showList, value } = this.state;
     let showEmptyMessage = false;
     if (serviceList.length === 0) 
       showEmptyMessage = true;
 
 		return (
-			<Box fill>
+			<Box pad='large' fill>
 				
         { showEmptyMessage && (
             <Box className='emptyMessage' align='center' gap='medium'>

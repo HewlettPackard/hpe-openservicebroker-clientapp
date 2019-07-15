@@ -15,7 +15,6 @@ class Card extends Component {
     borderColor: 'light-5',
     hovering: false, 
     clicked: false,
-    deployed: false,
     service: this.props.service,
     showing: false
   };
@@ -29,10 +28,6 @@ class Card extends Component {
 
   handleClick = () => {
     this.setState({ clicked: !this.state.clicked })
-  }
-
-  updateDeployed = () => {
-    this.setState({ deployed: true })
   }
 
   toggle = () => {
@@ -58,7 +53,6 @@ class Card extends Component {
         elevation='medium' 
         background={{ color: 'white' }}
         border={{ color: borderColor }}
-        round='xsmall'
         justify='start'
         align='center'
         width='small'

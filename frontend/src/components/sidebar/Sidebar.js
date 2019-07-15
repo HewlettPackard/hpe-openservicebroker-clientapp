@@ -11,8 +11,7 @@ const Sidebar = () => (
     border={{ color: 'white', side: 'left' }}
     pad='medium'
     fill='vertical'
-    width='16rem'
-    align='center'
+    width='20rem'
     gap='large'
     align='start'
     style={{position: 'fixed'}}
@@ -50,8 +49,8 @@ const Sidebar = () => (
       </Link>
     </Box>
     <Box>
-      <Link to='/login' style={{ color:'white' }}>
-        <Text size='xlarge'>Loguot</Text>
+      <Link to='/' style={{ color:'white' }}>
+        <Text size='xlarge'>Logout</Text>
       </Link>
     </Box>
   </Box>

@@ -27,14 +27,6 @@ export default class App extends Component {
     this.setState({ username: input });
   }
 
-  toggleBrokerList = () => {
-    this.setState({ brokerListOpen: !this.state.brokerListOpen });
-  }
-
-  toggleDeployedList = () => {
-    this.setState({ deployedListOpen: !this.state.deployedListOpen });
-  }
-
 
   //render the app
   render() {
@@ -44,34 +36,25 @@ export default class App extends Component {
     return (
       <Router>
       <Grommet theme={hpe} full>
-        <Box 
-          className='page' 
-          fill
-          direction='row'
-        >
+        <Box className='page' fill direction='row' >
           { !onLoginPage && ( 
               <Box>
                 <Sidebar /> 
-                {/* empty box to fix catalog width */}
-                 <Box fill='vertical' width='16rem' /> 
+                {/* empty box to fix catalog width due to static sidebar*/}
+                 <Box fill='vertical' width='20rem' /> 
               </Box>
             )
           }
           <Box className='non-sidebar' flex>
             <Box className='header-and-body' height='120vh' flex={false} overflow={{ vertical: 'scroll' }}>
-              <AppBar />
-              <Box
-                className='body'
-                pad='large'
-                overflow={{vertical:'scroll'}}
-                flex
-              >
+              <Route path='/' component={AppBar} />
+              <Box className='body' overflow={{vertical:'scroll'}} flex>
                 <Switch>
                   {/*Routing - Catalog is the home route*/}
                   <Route exact path='/' render={() => <LoginForm logIn={this.logIn} />} />
                   <Route path='/login' render={() => <LoginForm logIn={this.logIn} />} />
-                  <Route path='/home' render={() => <CatalogResults />} />
-                  <Route path='/catalog' render={() => <CatalogResults />} />
+                  <Route path='/home' component={CatalogResults} />
+                  <Route path='/catalog' component={CatalogResults} />
                   <Route path='/register' component={RegisterForm} />
                   <Route path='/settings' component={Settings} />
                   <Route path='/deploy' component={DeployForm} />
