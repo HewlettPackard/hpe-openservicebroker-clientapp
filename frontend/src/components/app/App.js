@@ -20,18 +20,23 @@ import '../app/App.css';
 export default class App extends Component {
 	//set initial state
 	state = {
-    username: ''
+    username: '',
+    onLoginPage: true
   };
 
   logIn = (input) => {
-    this.setState({ username: input });
+    this.setState({ username: input, onLoginPage: false });
+  }
+
+  hideSideBar = () => {
+    this.setState({ onLoginPage: true });
   }
 
 
   //render the app
   render() {
-    let onLoginPage = false;
-    const { deployedListOpen, brokerListOpen, services, username } = this.state;
+    
+    const { onLoginPage, services, username } = this.state;
 
     return (
       <Router>
@@ -51,8 +56,8 @@ export default class App extends Component {
               <Box className='body' overflow={{vertical:'scroll'}} flex>
                 <Switch>
                   {/*Routing - Catalog is the home route*/}
-                  <Route exact path='/' render={() => <LoginForm logIn={this.logIn} />} />
-                  <Route path='/login' render={() => <LoginForm logIn={this.logIn} />} />
+                  <Route exact path='/' render={() => <LoginForm logIn={this.logIn} hideSideBar={this.hideSideBar} />} />
+                  <Route path='/login' render={() => <LoginForm logIn={this.logIn} />} hideSideBar={this.hideSideBar} />
                   <Route path='/home' component={CatalogResults} />
                   <Route path='/catalog' component={CatalogResults} />
                   <Route path='/register' component={RegisterForm} />

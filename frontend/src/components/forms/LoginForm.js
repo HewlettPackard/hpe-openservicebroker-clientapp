@@ -11,7 +11,8 @@ class LoginForm extends Component {
 		uname: '',
 		pwd: '',
 		toCatalog: false
-	};
+  };
+  
 	handleChange = e => {
 		this.setState({
 			[e.target.id]: e.target.value
@@ -20,7 +21,7 @@ class LoginForm extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		let { logIn } = this.props;
+    let { logIn } = this.props;
 		this.setState(() => ({
 			toCatalog: true
 		}));
@@ -41,6 +42,11 @@ class LoginForm extends Component {
 
 		logIn(this.state.username);
 	};
+
+  componentWillMount() {
+    this.props.hideSideBar();
+  }
+
 
 	render() {
 		if (this.state.toCatalog === true) {

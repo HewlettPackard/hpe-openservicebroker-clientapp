@@ -170,7 +170,7 @@ const deploymentsObject = {
               "redirect_uri": "http://localhost:1234",
               "id": "7cc087aa-e978-4e66-9e3f-820024d05868"
           },
-          "description": "grommet service"
+          "description": "grommet service for grommet1"
       },
       {
           "name": "grommet2",
@@ -332,7 +332,7 @@ const deploymentsObject = {
               "redirect_uri": "http://localhost:1234",
               "id": "7cc087aa-e978-4e66-9e3f-820024d05868"
           },
-          "description": "grommet service"
+          "description": "grommet service for grommet2"
       },
       {
           "name": "grommet3",
@@ -494,7 +494,7 @@ const deploymentsObject = {
               "redirect_uri": "http://localhost:1234",
               "id": "7cc087aa-e978-4e66-9e3f-820024d05868"
           },
-          "description": "grommet service"
+          "description": "grommet service for grommet3"
       }
   ]
 }
@@ -503,31 +503,23 @@ const deploymentsObject = {
 //========================================= Deployed List
 export default class Deployments extends Component {
   state = {
-    toDetails: false,
-    instanceName: '',
+    instance: {},
     deployments: [...deploymentsObject.services],
     detailsShowing: false
   };
 
-  handleDetails(e, name) {
-    this.setState(() => ({
-      toDetails: true,
-      instanceName: name
-    }));
-    console.log(name);
-  }
-    
   handleDelete = () => {
 
   }
 
-  toggleDetails = () => {
-    this.setState({ detailsShowing: !this.state.detailsShowing });
+  toggleDetails = (instance) => {
+    console.log('instance', instance)
+    this.setState({ detailsShowing: !this.state.detailsShowing, instance: instance });
   }
 
 
   render() {
-    const { deployments, detailsShowing } = this.state;;
+    const { deployments, detailsShowing, instance } = this.state;;
 
     if (this.state.toDetails === true) {
       return (
@@ -548,7 +540,7 @@ export default class Deployments extends Component {
           )}
         </Grid>
         { detailsShowing && 
-            <DeployedDetail toggleDetails={this.toggleDetails} />
+            <DeployedDetail toggleDetails={this.toggleDetails} instance={instance} />
         }
       </Box>
     );

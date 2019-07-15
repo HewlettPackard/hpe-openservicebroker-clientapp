@@ -14,17 +14,8 @@ class Card extends Component {
   state = {
     borderColor: 'light-5',
     hovering: false, 
-    clicked: false,
-    service: this.props.service
+    clicked: false
   };
-
-  // setBorder = () => {
-  //   if (!this.state.hovering)
-  //     this.setState({ borderColor: 'accent-1', hovering: true })
-  //   else 
-  //     this.setState({ borderColor: 'light-5', hovering: false })
-  // }
-
 
   setBorder = (color) => {
       this.setState({ borderColor: color });
@@ -40,8 +31,8 @@ class Card extends Component {
 
 
   render() {
-    const { borderColor, service, clicked } = this.state;
-    const { fromDeployed, toggleDetails } = this.props;
+    const { borderColor, clicked } = this.state;
+    const { fromDeployed, service, toggleDetails } = this.props;
 
     if (clicked && !fromDeployed)
       return (
@@ -98,7 +89,7 @@ class Card extends Component {
         height='small'
         onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
-        onClick={toggleDetails}
+        onClick={() => toggleDetails(service)}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
           <Text size='38px' color='brand' truncate>

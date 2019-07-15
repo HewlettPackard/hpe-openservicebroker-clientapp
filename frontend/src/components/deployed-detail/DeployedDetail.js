@@ -7,7 +7,8 @@ import axios from 'axios';
   
   
 const DeployedDetail = (props) => {
-  const { toggleDetails } = props;
+  const { instance, toggleDetails } = props;
+  console.log('instance', instance)
 
   return (
     <Layer 
@@ -24,17 +25,34 @@ const DeployedDetail = (props) => {
             height='100%' 
             width='large'
             pad='small'
+            overflow={{ vertical: 'scroll' }}
           >
             <Box justify='center' direction='row' className='deploy-detail-header'>
               <Box justifySelf='start' justify='center' width='80px'>
                 <Button icon={<FormClose size='large' />} onClick={toggleDetails} />
               </Box>
               <Box flex align='center'>
-                <Heading level='2' color='brand'>instance name</Heading>
+                <Heading level='2' color='brand'>{instance.name}</Heading>
               </Box>
             </Box>
+            <Box flex align='center'>
+              <Text size='large' color='white'>{instance.description}</Text>
+            </Box>
             <Box className='details-content'>
-
+              {/* { instance.map(detail => {
+                const detailName = detail[Object.keys(detail)[0]];
+                const detailValue = detail[detailName];
+                return (
+                  <Box direction='row'>
+                    <Box flex align='start'>
+                      {detailName}:
+                    </Box>
+                    <Box flex align='end'>
+                      {detailValue}
+                    </Box>
+                  </Box>
+                )}
+              )} */}
             </Box>
         </Box>
       </Box>
