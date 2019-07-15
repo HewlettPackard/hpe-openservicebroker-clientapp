@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Grid, Text, TextInput, Layer } from 'grommet';
+import { Box, Button, Grid, Text, TextInput } from 'grommet';
 import { Sync } from 'grommet-icons';
 import Card from '../card/Card';
 import axios from 'axios';

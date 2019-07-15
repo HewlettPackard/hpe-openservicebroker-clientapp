@@ -6,7 +6,7 @@ import { User } from "grommet-icons";
 
 //========================================= Settings Page
 const Settings = () => (
-  <Box pad='large'> 
+  <Box pad='medium'> 
     settings
   </Box>
 )

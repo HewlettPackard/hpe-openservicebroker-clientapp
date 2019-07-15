@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Box, Button, Form, FormField, TextInput, Heading } from 'grommet';
+import { Box, Button, Form, FormField, TextInput } from 'grommet';
 import { Login } from 'grommet-icons';
 import axios from 'axios';
 

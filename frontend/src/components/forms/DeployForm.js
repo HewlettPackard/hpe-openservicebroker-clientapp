@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Form, FormField, Heading, Select, Text, TextInput, SkipLinkTarget } from 'grommet';
+import { Box, Button, Form, FormField, Heading, Select, Text, TextInput } from 'grommet';
 
 
 //========================================= Deploy Form
@@ -68,7 +68,7 @@ handleDeploy = () => {
     
     return (
       <Box align='center' justify='start' pad='medium' flex={false}>
-        <Heading size='medium' level='2'>
+        <Heading level='2'>
           Deploy {service.name} service
         </Heading>
         <Form>
