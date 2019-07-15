@@ -15,15 +15,19 @@ class Card extends Component {
     borderColor: 'light-5',
     hovering: false, 
     clicked: false,
-    service: this.props.service,
-    showing: false
+    service: this.props.service
   };
 
-  setBorder = () => {
-    if (!this.state.hovering)
-      this.setState({ borderColor: 'accent-1', hovering: true })
-    else 
-      this.setState({ borderColor: 'light-5', hovering: false })
+  // setBorder = () => {
+  //   if (!this.state.hovering)
+  //     this.setState({ borderColor: 'accent-1', hovering: true })
+  //   else 
+  //     this.setState({ borderColor: 'light-5', hovering: false })
+  // }
+
+
+  setBorder = (color) => {
+      this.setState({ borderColor: color });
   }
 
   handleClick = () => {
@@ -31,13 +35,15 @@ class Card extends Component {
   }
 
   toggle = () => {
-    this.setState({ showing: !this.state.showing, hovering: false });
+    this.setState({ hovering: false });
   }
 
 
   render() {
-    const { borderColor, service, clicked, deployed, showing } = this.state;
-    if (clicked)
+    const { borderColor, service, clicked } = this.state;
+    const { fromDeployed, toggleDetails } = this.props;
+
+    if (clicked && !fromDeployed)
       return (
         <Redirect 
           to={{
@@ -48,7 +54,8 @@ class Card extends Component {
           }} 
         />
       )
-    else if (!deployed) return (
+
+    else if (!fromDeployed) return (
       <Box 
         elevation='medium' 
         background={{ color: 'white' }}
@@ -57,8 +64,8 @@ class Card extends Component {
         align='center'
         width='small'
         height='small'
-        onMouseOver={this.setBorder}
-        onMouseOut={this.setBorder}
+        onMouseOver={() => this.setBorder('accent-1')}
+        onMouseOut={() => this.setBorder('light-5')}
         onClick={this.handleClick}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
@@ -80,43 +87,36 @@ class Card extends Component {
         </Box>
       </Box>
     )
-    else if (deployed) return (
+    else if (fromDeployed) return (
       <Box 
         elevation='medium' 
         background={{ color: 'white' }}
         border={{ color: borderColor }}
-        round='xsmall'
         justify='start'
         align='center'
         width='small'
         height='small'
-        onMouseOver={this.setBorder}
-        onMouseOut={this.setBorder}
+        onMouseOver={() => this.setBorder('accent-1')}
+        onMouseOut={() => this.setBorder('light-5')}
+        onClick={toggleDetails}
       >
-        <Box onClick={this.handleClick} flex>
-          <Box flex fill='horizontal' justify='center' align='center'>
-            <Text size='38px' color='brand' truncate>
-              {service.name}
-            </Text>
-          </Box>
-          <Box 
-            flex 
-            fill='horizontal' 
-            justify='start' 
-            align='start' 
-            overflow={{ horizontal: 'scroll' }}
-          >  
-            <Text size='large'>
-              {service.description}
-            </Text>
-          </Box>
+        <Box flex fill='horizontal' justify='center' align='center'>
+          <Text size='38px' color='brand' truncate>
+            {service.name}
+          </Text>
         </Box>
-        <Box fill='horizontal'>
-          <Button label='Undeploy' icon={<Subtract />} plain primary onClick={this.toggle} color='light-3' />
+        <Box 
+          flex 
+          fill='horizontal' 
+          justify='start' 
+          align='start' 
+          overflow={{ horizontal: 'scroll' }}
+          pad={{ left: 'medium' }}
+        >  
+          <Text size='large'>
+            {service.description}
+          </Text>
         </Box>
-        { showing && 
-            <DeployedList toggle={this.toggle} fromCardButton={true} />
-        }
       </Box>
     )
   }

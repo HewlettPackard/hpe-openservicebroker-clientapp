@@ -11,8 +11,7 @@ class CatalogResults extends Component {
 		value: '',
 		notYetSearched: true,
 		serviceList: [],
-		showList: [],
-    deployedList: [],
+		showList: []
 	};
 
 	//update the serviceList by calling the API
@@ -65,7 +64,7 @@ class CatalogResults extends Component {
 	};
 
 	render() {
-    const { deployedList, notYetLoaded, serviceList, showList, value } = this.state;
+    const { serviceList, showList, value } = this.state;
     let showEmptyMessage = false;
     if (serviceList.length === 0) 
       showEmptyMessage = true;
