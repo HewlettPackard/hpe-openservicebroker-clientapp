@@ -1,28 +1,32 @@
-import React, { Component } from "react";
-import { Box, Button, Grid, Text, TextInput } from "grommet";
-import { Sync } from "grommet-icons";
-import Card from "../card/Card";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Button, Grid, Text, TextInput } from 'grommet';
+import { Sync } from 'grommet-icons';
+import Card from '../card/Card';
+import DeployForm from '../forms/DeployForm'; 
+import axios from 'axios';
+
 
 //========================================= Catalog Results
 class CatalogResults extends Component {
 	state = {
-		value: "",
-		notYetUpdated: true,
+    deployFormOpen: false,
+		notYetSearched: true,
+    value: '',
 		serviceList: [],
-		showList: [],
-		deployedList: []
+    showList: [],
+    service: {}
 	};
 
 	//update the serviceList by calling the API
 	update() {
 		axios
-			.get("http://3.86.206.101:8099/v2/catalog")
+			.get('http://3.86.206.101:8099/v2/catalog')
 			.then(results => {
 				this.setState({
 					serviceList: [...results.data.services],
-					showList: [...results.data.services]
-				});
+          showList: [...results.data.services]
+        });
 			})
 			.catch(error => {
 				console.log(error);
@@ -31,19 +35,13 @@ class CatalogResults extends Component {
 
 	//update catalog on page render
 	componentDidMount() {
-		this.update();
-
-		//get deployed services from back end to show undeploy button on correct cards
-	}
-
-	handleUpdate() {
-		this.setState({ state: this.state });
+    this.update();
 	}
 
 	search = (value, listToSearch) => {
 		let tempList = [];
 
-		if (value === "" && this.state.notYetUpdated) return [];
+		if (value === '' && this.state.notYetSearched) return [];
 		else {
 			listToSearch.forEach(service => {
 				if (service.name.search(value) !== -1) tempList.push(service);
@@ -63,69 +61,66 @@ class CatalogResults extends Component {
 			const tempList = this.search(event.target.value, this.state.serviceList);
 			this.setState({
 				value: event.target.value,
-				notYetUpdated: false,
+				notYetSearched: false,
 				showList: [...tempList]
 			});
 		}
 	};
 
+  toggleDeploy = (service) => {
+    this.setState({ deployFormOpen: !this.state.deployFormOpen, service: service });
+  }
+
+
 	render() {
-    const { deployedList, serviceList, showList, value } = this.state;
+    const { deployFormOpen, service, serviceList, showList, value } = this.state;
+    const { updateInstances } = this.props;
     let showEmptyMessage = false;
     if (serviceList.length === 0) 
       showEmptyMessage = true;
 
 		return (
-			<Box fill>
-				
+			<Box pad='large' fill>
         { showEmptyMessage && (
-            <Box className='emptyMessage' align='center'>
-              <Text size='xlarge' color='brand'>You do not have any brokers registered. Register a broker to access services.</Text>
+            <Box className='empty-catalog-message' align='center' gap='medium'>
+              <Text size='xlarge' color=''>You do not have any brokers registered. Register a broker to access services.</Text>
+              <Link to='/settings' style={{ color: '#01a982' }}>
+                <Text size='large' color='brand'>Register Broker</Text>
+              </Link>
             </Box>
           )
         }
         { !showEmptyMessage && (
-            <Box>
-              <Box fill="horizontal" flex={false}>
-                <Box
-                  width="70%"
-                  alignSelf="center"
-                  margin={{ bottom: "large" }}
-                  border={{ size: "xsmall", color: "light-5" }}
-                >
+            <Box gap='large'>
+              <Box className='search-area' alignSelf='center' direction='row' gap='small'>
+                <Box width='medium' border={{ size: 'xsmall', color: 'light-5' }}>
                   <TextInput
-                    placeholder="search"
+                    placeholder='search'
                     value={value}
                     onChange={this.setValue}
                   />
                 </Box>
-              </Box>
-              <Grid gap="large" columns="small" rows="small">
-                {showList.map(service => (
-                  <Card service={service} key={service.name} />
-                ))}
-              </Grid>
-              <Box
-                width="medium"
-                align="center"
-                justify="center"
-                alignSelf="center"
-                margin={{ top: "30px" }}
-              >
                 <Button
-                  fill
-                  color="brand"
-                  label="Update Catalog"
-                  gap="small"
-                  icon={<Sync size="medium" color="brand" />}
+                  label='refresh'
+                  color='brand'
+                  gap='small'
+                  icon={<Sync size='medium' color='brand' />}
                   onClick={() => {
-                    alert("Udating Services");
+                    alert('Udating Services');
                     this.update();
                   }}
                 />
               </Box>
+              <Grid gap='large' columns='small' rows='small'>
+                {showList.map(service => (
+                  <Card service={service} key={service.name} toggleDeploy={this.toggleDeploy} />
+                ))}
+              </Grid>
             </Box>
           )   
+        }
+        { deployFormOpen && 
+            <DeployForm toggleDeploy={this.toggleDeploy} service={service} updateInstances={updateInstances} />
         }
 			</Box>
 		);

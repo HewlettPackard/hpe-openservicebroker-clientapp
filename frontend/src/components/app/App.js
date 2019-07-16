@@ -1,96 +1,90 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Box, Grommet } from "grommet";
-import { hpe } from "grommet-theme-hpe";
-import AppBar from "../app-bar/AppBar";
-import Footer from "../footer/Footer";
-import CatalogResults from "../catalog-results/CatalogResults";
-import DeployForm from "../forms/DeployForm";
-import LoginForm from "../forms/LoginForm";
-import RegisterForm from "../forms/RegisterForm";
-import BrokerList from "../broker-list/BrokerList";
-import DeployedList from "../deployed-list/DeployedList";
-import "../app/App.css";
-import axios from "axios";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Box, Grommet } from 'grommet';
+import { hpe } from 'grommet-theme-hpe';
+import Sidebar from '../sidebar/Sidebar';
+import AppBar from '../app-bar/AppBar';
+import Footer from '../footer/Footer';
+import CatalogResults from '../catalog-results/CatalogResults';
+import DeployForm from '../forms/DeployForm';
+import LoginForm from '../forms/LoginForm';
+import RegisterForm from '../forms/RegisterForm';
+import Settings from '../settings/Settings';
+import BrokerList from '../broker-list/BrokerList';
+import DeployedList from '../deployed-list/DeployedList';
+import Help from '../help/Help';
+import '../app/App.css';
 
 
 //========================================= App
 export default class App extends Component {
 	//set initial state
 	state = {
-    detailsOpen: false,
-    deployedListOpen: false,
-    brokerListOpen: false,
-    username: ''
+    username: 'user name',
+    onLoginPage: false,
+    instances: []
   };
 
   logIn = (input) => {
-    this.setState({ username: input });
+    this.setState({ username: input, onLoginPage: false });
   }
 
-  toggleBrokerList = () => {
-    this.setState({ brokerListOpen: !this.state.brokerListOpen });
+  hideSideBar = () => {
+    this.setState({ onLoginPage: true });
   }
 
-  toggleDeployedList = () => {
-    this.setState({ deployedListOpen: !this.state.deployedListOpen });
+  updateInstances = (command, instance) => {
+    if (command === 'add') {
+      let newInstances = [...this.state.instances];
+      if (instance.name !== '')
+        newInstances.push(instance);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'delete') {
+      let newInstances = [...this.state.instances];
+      for (const i=0; i<newInstances.length; i++)
+        if (newInstances[i].name === instance.name)
+          newInstances.splice(i,1);
+      this.setState({ instances: [...newInstances] });
+    }
   }
 
 
   //render the app
   render() {
-    const { deployedListOpen, brokerListOpen, services, username } = this.state;
+    const { onLoginPage, instances, username } = this.state;
 
     return (
       <Router>
       <Grommet theme={hpe} full>
-        <Box fill background={{ color: "light-4" }}>
-          <Switch>
-            {/*Pass text to AppBar heading based on route*/}
-            <Route exact path="/" render={() => <AppBar text="Login" />} />
-            <Route path="/login" render={() => <AppBar text="Login" />}  />
-            <Route path="/home" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-            <Route path="/catalog" render={() => <AppBar text="Catalog" username={username} openBrokerList={this.toggleBrokerList} openDeployedList={this.toggleDeployedList} />} />
-            <Route
-              path="/deploy"
-              render={() => <AppBar text="Deploy Service" />}
-            />
-            <Route
-              path="/register"
-              render={() => <AppBar text="Register Broker" />}
-            />
-          </Switch>
-
-          <Box className="body-and-footer" align="center" flex>
-            <Box
-              width="100rem"
-              className="main-content"
-              background={{ color: "white" }}
-              border={{ color: "light-5", size: "xsmall" }}
-              pad="large"
-              flex
-              overflow={{ vertical: "scroll" }}
-            >
-              <Switch>
-                {/*Routing - Catalog is the home route*/}
-                <Route exact path="/" render={() => <LoginForm logIn={this.logIn} />} />
-                <Route path="/login" render={() => <LoginForm logIn={this.logIn} />} />
-                <Route path="/home" render={() => <CatalogResults />} />
-                <Route path="/catalog" render={() => <CatalogResults />} />
-                <Route path="/register" component={RegisterForm} />
-                <Route path="/deploy/" component={DeployForm} />
-              </Switch>
-              { deployedListOpen && 
-                <DeployedList toggle={this.toggleDeployedList} fromUserMenu={false} />
-              }
-              { brokerListOpen && 
-                <BrokerList toggle={this.toggleBrokerList} />
-              }
-            </Box>
+        <Box className='page' fill direction='row' >
+          { !onLoginPage && ( 
+              <Box>
+                <Sidebar username={username} /> 
+                {/* empty box to fix catalog width due to static sidebar */}
+                <Box fill='vertical' width='20rem' /> 
+              </Box>
+            )
+          }
+          <Box className='non-sidebar' flex>
+            <Box className='header-and-body' height='120vh' flex={false} overflow={{ vertical: 'scroll' }}>
+              <Route path='/' component={AppBar} />
+              <Box className='body' overflow={{vertical:'scroll'}} flex>
+                <Switch>
+                  {/*Routing - Catalog is the home route*/}
+                  <Route exact path='/' render={() => <LoginForm logIn={this.logIn} hideSideBar={this.hideSideBar} />} />
+                  <Route path='/login' render={() => <LoginForm logIn={this.logIn} />} hideSideBar={this.hideSideBar} />
+                  <Route path='/catalog' render={() => <CatalogResults updateInstances={this.updateInstances} />} />
+                  <Route path='/deployed' render={() => <DeployedList updateInstances={this.updateInstances} instances={instances} />} />
+                  <Route path='/settings' component={Settings} />
+                  <Route path='/help' component={Help} />
+                </Switch>
+              </Box> {/*end of body box*/}
+            </Box> {/*end of header-and-body box*/}
             <Footer />
-          </Box>
-        </Box>
-      </Grommet>
+          </Box> {/*end of non-sidebar box*/}
+        </Box> {/*end of page box*/}
+]      </Grommet>
       </Router>
     );
 	}

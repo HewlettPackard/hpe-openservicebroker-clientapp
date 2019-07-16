@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, AccordionPanel, Box, Button, Heading, Layer, Text } from "grommet";
+import { Accordion, AccordionPanel, Box, Button, Heading, Layer } from "grommet";
 import { FormClose } from "grommet-icons";
 
 

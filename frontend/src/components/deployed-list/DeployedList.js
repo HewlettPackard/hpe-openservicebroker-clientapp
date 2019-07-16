@@ -1,59 +1,55 @@
-import React from 'react';
-import { Box, Button, Heading, Layer, Text } from 'grommet';
-import { FormClose, Subtract } from 'grommet-icons';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Grid, Text } from 'grommet';
+import Card from '../card/Card';
+import DeployedDetail from '../deployed-detail/DeployedDetail';
+import axios from 'axios';  
 
 
 //========================================= Deployed List
-const DeployedList = (props) => (
-  <Layer 
-    full
-    plain
-    onEsc={props.toggle}
-  >
-    <Box 
-      fill 
-      background={{ color: 'light-2', opacity: 'strong' }} 
-      pad='medium' 
-      width='xlarge'
-      align='center'  
-    >
-      <Box 
-        background={{ color: 'white' }} 
-        height='100%' 
-        width='90%'
-        pad='small'
-      >
-        <Box justify='center' direction='row' className='undeploy-list-header'>
-          <Box flex align='center'>
-            { props.fromCardButton && 
-                <Heading color='brand'>Undeploy</Heading>
-            }
-            { !props.fromCardButton && 
-                <Heading color='brand'>Your Instances</Heading>
-            }
-          </Box>
-          <Box justifySelf='end' align='start' width='80px'>
-            <Button icon={<FormClose size='large' />} onClick={props.toggle} />
-          </Box>
-        </Box>
-        <Box className='undeploy-list-content' pad='medium'>
-          { props.fromCardButton && 
-              <Heading level='3' color='brand' alignSelf='center'>
-                Choose an instance to undeploy.
-              </Heading>
-          }
-          <Box direction='row'>
-            <Box flex>
-              <Text>instance A</Text>
-            </Box>
-            <Box width='small'>
-              <Button label='Undeploy' icon={<Subtract />} onClick={props.toggle} round='small' />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  </Layer>
-)
+export default class Deployments extends Component {
+  state = {
+    instance: {},
+    detailsOpen: false
+  };
 
-export default DeployedList;
+  handleDelete = () => {
+
+  }
+
+  toggleDetails = (instance) => {
+    console.log('instance', instance)
+    this.setState({ detailsShowing: !this.state.detailsShowing, instance: instance });
+  }
+
+
+  render() {
+    const { detailsShowing, instance } = this.state;;
+    const { instances } = this.props;;
+
+    return (
+      <Box pad='large'>
+        { (instances.length > 0) && (
+            <Grid gap='large' columns='small' rows='small'>
+              {instances.map(instance => 
+                <Card instance={instance} fromDeployed toggleDetails={this.toggleDetails} key={instance.name} />
+              )}
+            </Grid>
+          )
+        }
+        { (instances.length === 0) && (
+            <Box className='empty-deployed-list-message' align='center' gap='medium'>
+              <Text size='xlarge' color=''>You do not have any deployed services. Deploy a service in the catalog.</Text>
+              <Link to='/catalog' style={{ color: '#01a982' }}>
+                <Text size='large' color='brand'>Catalog</Text>
+              </Link>
+            </Box>
+          )
+        }
+        { detailsShowing && 
+            <DeployedDetail toggleDetails={this.toggleDetails} instance={instance} />
+        }
+      </Box>
+    );
+  }
+}
