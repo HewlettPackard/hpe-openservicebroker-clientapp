@@ -170,7 +170,7 @@ const deploymentsObject = {
               "redirect_uri": "http://localhost:1234",
               "id": "7cc087aa-e978-4e66-9e3f-820024d05868"
           },
-          "description": "grommet service for grommet1grommet service for grommet1grommet service for grommet1grommet service for grommet1grommet service for grommet1grommet service for grommet1grommet service for grommet1grommet service for grommet1"
+          "description": "grommet service for grommet1"
       },
       {
           "name": "grommet2",
