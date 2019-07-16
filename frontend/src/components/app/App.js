@@ -21,7 +21,8 @@ export default class App extends Component {
 	//set initial state
 	state = {
     username: 'user name',
-    onLoginPage: false
+    onLoginPage: false,
+    instances: []
   };
 
   logIn = (input) => {
@@ -32,11 +33,26 @@ export default class App extends Component {
     this.setState({ onLoginPage: true });
   }
 
+  updateInstances = (command, instance) => {
+    if (command === 'add') {
+      let newInstances = [...this.state.instances];
+      if (instance.name !== '')
+        newInstances.push(instance);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'delete') {
+      let newInstances = [...this.state.instances];
+      for (const i=0; i<newInstances.length; i++)
+        if (newInstances[i].name === instance.name)
+          newInstances.splice(i,1);
+      this.setState({ instances: [...newInstances] });
+    }
+  }
+
 
   //render the app
   render() {
-    
-    const { onLoginPage, services, username } = this.state;
+    const { onLoginPage, instances, username } = this.state;
 
     return (
       <Router>
@@ -58,12 +74,9 @@ export default class App extends Component {
                   {/*Routing - Catalog is the home route*/}
                   <Route exact path='/' render={() => <LoginForm logIn={this.logIn} hideSideBar={this.hideSideBar} />} />
                   <Route path='/login' render={() => <LoginForm logIn={this.logIn} />} hideSideBar={this.hideSideBar} />
-                  <Route path='/home' component={CatalogResults} />
-                  <Route path='/catalog' component={CatalogResults} />
-                  <Route path='/register' component={RegisterForm} />
+                  <Route path='/catalog' render={() => <CatalogResults updateInstances={this.updateInstances} />} />
+                  <Route path='/deployed' render={() => <DeployedList updateInstances={this.updateInstances} instances={instances} />} />
                   <Route path='/settings' component={Settings} />
-                  <Route path='/deploy' component={DeployForm} />
-                  <Route path='/deployed' component={DeployedList} />
                   <Route path='/help' component={Help} />
                 </Switch>
               </Box> {/*end of body box*/}

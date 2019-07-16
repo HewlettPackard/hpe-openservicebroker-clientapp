@@ -74,6 +74,7 @@ class CatalogResults extends Component {
 
 	render() {
     const { deployFormOpen, service, serviceList, showList, value } = this.state;
+    const { updateInstances } = this.props;
     let showEmptyMessage = false;
     if (serviceList.length === 0) 
       showEmptyMessage = true;
@@ -81,7 +82,7 @@ class CatalogResults extends Component {
 		return (
 			<Box pad='large' fill>
         { showEmptyMessage && (
-            <Box className='emptyMessage' align='center' gap='medium'>
+            <Box className='empty-catalog-message' align='center' gap='medium'>
               <Text size='xlarge' color=''>You do not have any brokers registered. Register a broker to access services.</Text>
               <Link to='/settings' style={{ color: '#01a982' }}>
                 <Text size='large' color='brand'>Register Broker</Text>
@@ -119,7 +120,7 @@ class CatalogResults extends Component {
           )   
         }
         { deployFormOpen && 
-            <DeployForm toggleDeploy={this.toggleDeploy} service={service} />
+            <DeployForm toggleDeploy={this.toggleDeploy} service={service} updateInstances={updateInstances} />
         }
 			</Box>
 		);

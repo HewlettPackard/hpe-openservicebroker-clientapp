@@ -10,8 +10,8 @@ class DeployForm extends Component {
     parameterMenuLabels: [],
     plans: [...this.props.service.plans],
     planLabel: '',
-    selectedPlan: {},
-    successfullyDeployed: false
+    name: '',
+    selectedPlan: {}
   }
 
   setPlanMenuLabel = (value) => {
@@ -36,8 +36,8 @@ class DeployForm extends Component {
 
   isNotEmpty(obj) {
     for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return true;
+      if(obj.hasOwnProperty(key))
+        return true;
     }
     return false;
 }
@@ -48,25 +48,34 @@ handleInputChange = (input, index) => {
   this.setState({ parameterMenuLabels: [...temp] })
 }
 
-handleDeploy = () => {
-  const inputs = [...this.state.parameterMenuLabels];
-  //api call 
-  const success = true; //whether the call was a success
-  this.setState({ successfullyDeployed: success });
+handleDeploy = (name) => {
+  let arg = {};
+  let val = 0;
+  for (const i in name)
+    val += name.charCodeAt(i);
+  arg.name = name;
+  arg.id = val; 
+
+  this.props.updateInstances('add',arg);
   this.props.toggleDeploy();
+
+  //api call 
+  const inputs = [...this.state.parameterMenuLabels];
 }
 
 
   render() {
-    const { parameterMenuLabels, plans, planLabel, selectedPlan, successfullyDeployed } = this.state;
-    const { service, toggleDeploy } = this.props;
+    const { parameterMenuLabels, plans, planLabel, name, selectedPlan } = this.state;
+    const { toggleDeploy } = this.props;
     const planNames = plans.map(plan => plan.name);
     let planProperties = [];
-    if (selectedPlan.hasOwnProperty('schemas')) 
-      for (let property in selectedPlan.schemas.service_instance.create.parameters.properties){
-        let obj = {[property]: selectedPlan.schemas.service_instance.create.parameters.properties[property]};
-        planProperties[selectedPlan.schemas.service_instance.create.parameters.properties[property].index] = obj;
+    if (selectedPlan.hasOwnProperty('schemas')) {
+      const properties = selectedPlan.schemas.service_instance.create.parameters.properties;
+      for (let property in properties){
+        let obj = {[property]: properties[property]};
+        planProperties[properties[property].index] = obj;
       }
+    }
     
     return (
       <Layer full plain onEsc={toggleDeploy} animate={false}>
@@ -160,7 +169,7 @@ handleDeploy = () => {
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     <Form>
                       <FormField label='Name'>
-                        <TextInput placeholder='Name the instance' />
+                        <TextInput placeholder='Name the instance' onChange={(input) => {this.setState({ name: input.target.value })} } />
                       </FormField>
                       { planProperties.map(property => {
                           const propertyName = property[Object.keys(property)[0]];
@@ -198,9 +207,8 @@ handleDeploy = () => {
                 }
               </Box>
               <Form>
-                <Button label='Deploy' icon={<Add />} margin={{ top: 'medium' }} onClick={this.handleDeploy} />
+                <Button label='Deploy' icon={<Add />} margin={{ top: 'medium' }} onClick={() => this.handleDeploy(name)} />
               </Form>
-              {console.log('menu labels', parameterMenuLabels)}
             </Box>
           </Box>
         </Box>

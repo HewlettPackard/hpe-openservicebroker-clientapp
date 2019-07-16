@@ -16,7 +16,7 @@ class Card extends Component {
 
 
   render() {
-    const { borderColor, clicked } = this.state;
+    const { borderColor } = this.state;
     const { fromDeployed, instance, service, toggleDeploy, toggleDetails } = this.props;
 
     if (!fromDeployed) return (
@@ -76,7 +76,7 @@ class Card extends Component {
           overflow={{ vertical: 'scroll' }}
         >  
           <Text size='large'>
-            {instance.description}
+            ID: {instance.id}
           </Text>
         </Box>
       </Box>

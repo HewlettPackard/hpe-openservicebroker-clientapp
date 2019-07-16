@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Box } from 'grommet';
-import LogoAndTitle from '../logo-title/LogoTitle';
+import LogoAndTitle from '../logo-and-title/LogoAndTitle';
 
 
 //========================================= AppBar
