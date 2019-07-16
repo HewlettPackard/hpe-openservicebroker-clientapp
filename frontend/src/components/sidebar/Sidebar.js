@@ -9,12 +9,13 @@ const Sidebar = (props) => (
   <Box 
     background={{ color: 'dark-1' }}
     border={{ color: 'white', side: 'left' }}
+    // elevation='medium'
     pad='medium'
     fill='vertical'
     width='20rem'
     gap='large'
     align='start'
-    style={{position: 'fixed'}}
+    style={{ position: 'fixed', boxShadow: '2px 0 8px grey' }}
   >
     <Box className='user-icon-and-name'>
       <Box align='start' fill='horizontal' margin={{ left: '-12px' }}>

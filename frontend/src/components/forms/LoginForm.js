@@ -54,8 +54,8 @@ class LoginForm extends Component {
 		}
 
 		return (
-			<Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,grey 20%,black)' }}>
-			{/* <Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,#01a982 20%,#614767)' }}> */}
+			// <Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,grey 20%,black)' }}>
+			<Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,#01a982 20%,#614767)' }}>
 			{/* <Box justify='center' align='center' fill className='login-form-image'> */}
         <Box 
           animation='fadeIn' 
