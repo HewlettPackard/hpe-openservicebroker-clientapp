@@ -19,7 +19,7 @@ const DeployedDetail = (props) => {
     >
       <Box direction='row' fill>
         <Box 
-          flex background={{ color: 'light-5', opacity: 'medium' }} />
+          flex background={{ color: 'dark-1', opacity: 'medium' }} />
           <Box 
             background={{ color: 'dark-1' }} 
             height='100%' 

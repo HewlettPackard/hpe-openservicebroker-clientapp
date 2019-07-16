@@ -66,11 +66,9 @@ class Card extends Component {
         </Box>
         <Box 
           flex 
-          fill='horizontal' 
-          justify='start' 
-          align='start' 
-          overflow={{ horizontal: 'scroll' }}
+          fill='horizontal'  
           pad={{ left: 'medium' }}
+          overflow={{ vertical: 'scroll' }}
         >  
           <Text size='large'>
             {service.description}
@@ -99,10 +97,8 @@ class Card extends Component {
         <Box 
           flex 
           fill='horizontal' 
-          justify='start' 
-          align='start' 
-          overflow={{ horizontal: 'scroll' }}
           pad={{ left: 'medium' }}
+          overflow={{ vertical: 'scroll' }}
         >  
           <Text size='large'>
             {service.description}

@@ -21,7 +21,7 @@ export default class App extends Component {
 	//set initial state
 	state = {
     username: '',
-    onLoginPage: true
+    onLoginPage: false
   };
 
   logIn = (input) => {
@@ -45,8 +45,8 @@ export default class App extends Component {
           { !onLoginPage && ( 
               <Box>
                 <Sidebar /> 
-                {/* empty box to fix catalog width due to static sidebar*/}
-                 <Box fill='vertical' width='20rem' /> 
+                {/* empty box to fix catalog width due to static sidebar */}
+                <Box fill='vertical' width='20rem' /> 
               </Box>
             )
           }
