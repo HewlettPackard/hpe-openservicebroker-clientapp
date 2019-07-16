@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Grid, Text, TextInput } from 'grommet';
 import { Sync } from 'grommet-icons';
 import Card from '../card/Card';
+import DeployForm from '../forms/DeployForm'; 
 import axios from 'axios';
+
 
 //========================================= Catalog Results
 class CatalogResults extends Component {
 	state = {
-		value: '',
+    deployFormOpen: false,
 		notYetSearched: true,
+    value: '',
 		serviceList: [],
-		showList: []
+    showList: [],
+    service: {}
 	};
 
 	//update the serviceList by calling the API
@@ -63,15 +67,19 @@ class CatalogResults extends Component {
 		}
 	};
 
+  toggleDeploy = (service) => {
+    this.setState({ deployFormOpen: !this.state.deployFormOpen, service: service });
+  }
+
+
 	render() {
-    const { serviceList, showList, value } = this.state;
+    const { deployFormOpen, service, serviceList, showList, value } = this.state;
     let showEmptyMessage = false;
     if (serviceList.length === 0) 
       showEmptyMessage = true;
 
 		return (
 			<Box pad='large' fill>
-				
         { showEmptyMessage && (
             <Box className='emptyMessage' align='center' gap='medium'>
               <Text size='xlarge' color=''>You do not have any brokers registered. Register a broker to access services.</Text>
@@ -104,11 +112,14 @@ class CatalogResults extends Component {
               </Box>
               <Grid gap='large' columns='small' rows='small'>
                 {showList.map(service => (
-                  <Card service={service} key={service.name} />
+                  <Card service={service} key={service.name} toggleDeploy={this.toggleDeploy} />
                 ))}
               </Grid>
             </Box>
           )   
+        }
+        { deployFormOpen && 
+            <DeployForm toggleDeploy={this.toggleDeploy} service={service} />
         }
 			</Box>
 		);

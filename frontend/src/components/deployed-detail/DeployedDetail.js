@@ -15,26 +15,21 @@ const DeployedDetail = (props) => {
   }  
 
   return (
-    <Layer 
-      full
-      plain
-      onEsc={toggleDetails}
-      animate={false}
-    >
+    <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
-        <Box flex background={{ color: 'dark-1', opacity: 'medium' }} />
+        <Box flex background={{ color: 'black', opacity: 'medium' }} />
         <Box 
           background={{ color: 'dark-1' }} 
+          overflow={{ vertical: 'scroll' }}
           width='large'
           pad='small'
-          overflow={{ vertical: 'scroll' }}
         >
           <Box className='deploy-detail-header' direction='row' flex={false}>
             <Box justify='center' flex>
-              <Button icon={<FormClose size='large' />} onClick={toggleDetails} />
+              <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
             <Box align='center' flex>
-              <Heading level='2' color='brand'>{instance.name}</Heading>
+              <Heading level='2'>{instance.name}</Heading>
             </Box>
             <Box flex /> {/*empty box to center heading*/}
           </Box>

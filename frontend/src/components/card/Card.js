@@ -1,52 +1,30 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Box, Button, Text } from 'grommet';
 import { Subtract } from 'grommet-icons';
-import DeployedList from '../deployed-list/DeployedList'; 
+import DeployForm from '../forms/DeployForm'; 
 
 
 //========================================= Card
 class Card extends Component {
-  // static propTypes = {
-  //   text: PropTypes.string.isRequired
-  // };
-
   state = {
-    borderColor: 'light-5',
-    hovering: false, 
-    clicked: false
+    borderColor: 'light-5'
   };
 
   setBorder = (color) => {
       this.setState({ borderColor: color });
   }
 
-  handleClick = () => {
-    this.setState({ clicked: !this.state.clicked })
-  }
-
-  toggle = () => {
-    this.setState({ hovering: false });
-  }
+  // handleClick = () => {
+  //   this.setState({ clicked: !this.state.clicked })
+  // }
 
 
   render() {
     const { borderColor, clicked } = this.state;
-    const { fromDeployed, service, toggleDetails } = this.props;
+    const { fromDeployed, service, toggleDeploy, toggleDetails } = this.props;
 
-    if (clicked && !fromDeployed)
-      return (
-        <Redirect 
-          to={{
-            pathname: '/deploy',
-            state: { 
-              service: service
-            }
-          }} 
-        />
-      )
-
-    else if (!fromDeployed) return (
+    if (!fromDeployed) return (
       <Box 
         elevation='medium' 
         background={{ color: 'white' }}
@@ -57,7 +35,7 @@ class Card extends Component {
         height='small'
         onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
-        onClick={this.handleClick}
+        onClick={() => toggleDeploy(service)}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
           <Text size='38px' color='brand' truncate>

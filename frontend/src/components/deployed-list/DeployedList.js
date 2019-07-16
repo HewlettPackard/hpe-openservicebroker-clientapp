@@ -505,7 +505,7 @@ export default class Deployments extends Component {
   state = {
     instance: {},
     deployments: [...deploymentsObject.services],
-    detailsShowing: false
+    detailsOpen: false
   };
 
   handleDelete = () => {
