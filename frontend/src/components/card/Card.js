@@ -33,7 +33,7 @@ class Card extends Component {
         onClick={() => toggleDeploy(service)}
         style={{ cursor: 'pointer' }}
       >
-        <Box flex fill='horizontal' justify='center' align='center'>
+        <Box flex fill='horizontal' pad='medium'>
           <Text size='38px' color='brand' truncate>
             {service.name}
           </Text>
@@ -64,17 +64,12 @@ class Card extends Component {
         onClick={() => toggleDetails(instance)}
         style={{ cursor: 'pointer' }}
       >
-        <Box flex fill='horizontal' justify='center' align='center'>
+        <Box flex fill='horizontal' pad='medium'>
           <Text size='38px' color='brand' truncate>
             {instance.name}
           </Text>
         </Box>
-        <Box 
-          flex 
-          fill='horizontal' 
-          pad={{ left: 'medium' }}
-          overflow={{ vertical: 'scroll' }}
-        >  
+        <Box flex fill='horizontal' align='center' pad={{ left: 'medium' }} overflow={{ vertical: 'scroll' }}>  
           <Text size='large'>
             ID: {instance.id}
           </Text>
