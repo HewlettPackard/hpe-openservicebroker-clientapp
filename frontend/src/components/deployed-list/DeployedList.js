@@ -521,22 +521,11 @@ export default class Deployments extends Component {
   render() {
     const { deployments, detailsShowing, instance } = this.state;;
 
-    if (this.state.toDetails === true) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/details',
-            state: { instanceName: this.state.instanceName }
-          }}
-        />
-      );
-    }
-
     return (
       <Box pad='large'>
         <Grid gap='large' columns='small' rows='small'>
           {deployments.map(instance => 
-            <Card service={instance} fromDeployed={true} toggleDetails={this.toggleDetails} key={instance.name} />
+            <Card instance={instance} fromDeployed toggleDetails={this.toggleDetails} key={instance.name} />
           )}
         </Grid>
         { detailsShowing && 

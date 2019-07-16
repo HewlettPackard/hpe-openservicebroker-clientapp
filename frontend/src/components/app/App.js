@@ -20,7 +20,7 @@ import '../app/App.css';
 export default class App extends Component {
 	//set initial state
 	state = {
-    username: '',
+    username: 'user name',
     onLoginPage: false
   };
 
@@ -44,7 +44,7 @@ export default class App extends Component {
         <Box className='page' fill direction='row' >
           { !onLoginPage && ( 
               <Box>
-                <Sidebar /> 
+                <Sidebar username={username} /> 
                 {/* empty box to fix catalog width due to static sidebar */}
                 <Box fill='vertical' width='20rem' /> 
               </Box>

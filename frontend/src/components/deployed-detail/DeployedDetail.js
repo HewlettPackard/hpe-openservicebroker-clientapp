@@ -14,6 +14,7 @@ const DeployedDetail = (props) => {
     props.toggleDetails();
   }  
 
+
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
@@ -33,24 +34,37 @@ const DeployedDetail = (props) => {
             </Box>
             <Box flex /> {/*empty box to center heading*/}
           </Box>
-          <Box align='center' flex={false}>
-            <Text size='large' color='white'>{instance.description}</Text>
-          </Box>
-          <Box className='details-content' flex={false} margin={{ top: 'medium' }}>
-            {/* { instance.map(detail => {
-              const detailName = detail[Object.keys(detail)[0]];
-              const detailValue = detail[detailName];
-              return (
-                <Box direction='row'>
-                  <Box flex align='start'>
-                    {detailName}:
-                  </Box>
-                  <Box flex align='end'>
-                    {detailValue}
-                  </Box>
+          <Box className='deployed-details-content' width='large' pad='medium' flex={false}>
+            <Box className='deployed-description-box'>
+              <Box>
+                <Heading level='3'><strong>Description</strong></Heading>
+              </Box>
+              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box direction='row' align='start' height='xxsmall' justify='center'>
+                <Box flex justify='center' fill='vertical'>
+                  <Text size='large'>Description: </Text>
                 </Box>
-              )}
-            )} */}
+                <Box flex justify='center' align='start' fill='vertical'>
+                  <Text size='large'>{instance.description}</Text>
+                </Box>
+              </Box>
+            </Box> 
+            <Box className='deployed-parameters-box'>
+              {/* { instance.paramters.map(detail => {
+                const detailName = detail[Object.keys(detail)[0]];
+                const detailValue = detail[detailName];
+                return (
+                  <Box direction='row'>
+                    <Box flex align='start'>
+                      {detailName}:
+                    </Box>
+                    <Box flex align='end'>
+                      {detailValue}
+                    </Box>
+                  </Box>
+                )}
+              )} */}
+            </Box>
           </Box>
           <Box width='medium' align='center' alignSelf='center' margin='medium' flex={false}>
             <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete()}/>

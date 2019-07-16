@@ -5,7 +5,7 @@ import { User } from "grommet-icons";
 
 
 //========================================= Side Bar
-const Sidebar = () => (
+const Sidebar = (props) => (
   <Box 
     background={{ color: 'dark-1' }}
     border={{ color: 'white', side: 'left' }}
@@ -24,7 +24,7 @@ const Sidebar = () => (
       </Box>
       <Box>
         <Link to='/settings' style={{ color:'white', textDecoration: 'none' }}>
-          <Text size='xlarge' truncate>User Name</Text>
+          <Text size='xlarge' truncate>{props.username}</Text>
         </Link>
       </Box>
     </Box>

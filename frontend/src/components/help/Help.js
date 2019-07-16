@@ -6,7 +6,7 @@ import { User } from "grommet-icons";
 
 //========================================= Settings Page
 const Settings = () => (
-  <Box pad='medium' align='start' justify='start' gap='large'> 
+  <Box pad='large' align='start' justify='start' gap='large'> 
     <Box gap='small' flex={false}>
       <Text weight='bold' size='xxlarge'>References for the open service broker API</Text>
       <Anchor href='https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md' label='OSB Specification' weight='bold' size='xlarge' color='brand' />

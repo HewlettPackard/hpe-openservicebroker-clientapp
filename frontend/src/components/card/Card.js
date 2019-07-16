@@ -17,7 +17,7 @@ class Card extends Component {
 
   render() {
     const { borderColor, clicked } = this.state;
-    const { fromDeployed, service, toggleDeploy, toggleDetails } = this.props;
+    const { fromDeployed, instance, service, toggleDeploy, toggleDetails } = this.props;
 
     if (!fromDeployed) return (
       <Box 
@@ -61,12 +61,12 @@ class Card extends Component {
         height='small'
         onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
-        onClick={() => toggleDetails(service)}
+        onClick={() => toggleDetails(instance)}
         style={{ cursor: 'pointer' }}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
           <Text size='38px' color='brand' truncate>
-            {service.name}
+            {instance.name}
           </Text>
         </Box>
         <Box 
@@ -76,7 +76,7 @@ class Card extends Component {
           overflow={{ vertical: 'scroll' }}
         >  
           <Text size='large'>
-            {service.description}
+            {instance.description}
           </Text>
         </Box>
       </Box>

@@ -83,7 +83,7 @@ handleDeploy = () => {
                 <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDeploy} />
               </Box>
               <Box align='center' flex>
-                <Heading level='2'>Deploy service</Heading>
+                <Heading level='2'>Deploy Service</Heading>
               </Box>
               <Box flex /> {/*empty box to center heading*/}
             </Box>
@@ -100,7 +100,7 @@ handleDeploy = () => {
               </Form>
               <Box width='large'>
                 { this.isNotEmpty(selectedPlan) && 
-                    <Box className='description-box'>
+                    <Box className='deploy-form-description-box'>
                       <Box>
                         <Heading level='3'><strong>Description</strong></Heading>
                       </Box>
