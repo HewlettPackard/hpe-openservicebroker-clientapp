@@ -9,7 +9,7 @@ import CatalogResults from '../catalog-results/CatalogResults';
 import DeployForm from '../forms/DeployForm';
 import LoginForm from '../forms/LoginForm';
 import RegisterForm from '../forms/RegisterForm';
-import Settings from '../settings/Settings';
+import Settings from '../forms/Settings';
 import BrokerList from '../broker-list/BrokerList';
 import DeployedList from '../deployed-list/DeployedList';
 import Help from '../help/Help';
