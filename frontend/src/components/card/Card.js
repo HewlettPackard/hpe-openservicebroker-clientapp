@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Text } from 'grommet';
 import { Subtract } from 'grommet-icons';
-import DeployForm from '../forms/DeployForm'; 
 
 
 //========================================= Card
@@ -14,10 +13,6 @@ class Card extends Component {
   setBorder = (color) => {
       this.setState({ borderColor: color });
   }
-
-  // handleClick = () => {
-  //   this.setState({ clicked: !this.state.clicked })
-  // }
 
 
   render() {
@@ -36,6 +31,7 @@ class Card extends Component {
         onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
         onClick={() => toggleDeploy(service)}
+        style={{ cursor: 'pointer' }}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
           <Text size='38px' color='brand' truncate>
@@ -66,6 +62,7 @@ class Card extends Component {
         onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
         onClick={() => toggleDetails(service)}
+        style={{ cursor: 'pointer' }}
       >
         <Box flex fill='horizontal' justify='center' align='center'>
           <Text size='38px' color='brand' truncate>
