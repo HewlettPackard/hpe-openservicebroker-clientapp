@@ -69,7 +69,7 @@ class Card extends Component {
             {instance.name}
           </Text>
         </Box>
-        <Box flex fill='horizontal' align='center' pad={{ left: 'medium' }} overflow={{ vertical: 'scroll' }}>  
+        <Box flex fill='horizontal' align='start' pad={{ left: 'medium' }} overflow={{ vertical: 'scroll' }}>  
           <Text size='large'>
             ID: {instance.id}
           </Text>

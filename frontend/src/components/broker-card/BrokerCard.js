@@ -23,9 +23,12 @@ class BrokerCard extends Component {
 
 	handleBoxClick() {
 		console.log("Box clicked!");
-	}
+  }
+  
+
 	render() {
-		const { borderColor } = this.state;
+    const { borderColor } = this.state;
+    const { broker, toggleDetails } = this.props;
 		return (
 			<Box
 				elevation="medium"
@@ -37,13 +40,14 @@ class BrokerCard extends Component {
 				width="small"
 				height="small"
 				onMouseOver={this.setBorder}
-				onMouseOut={this.setBorder}
+        onMouseOut={this.setBorder}
+        onClick={() => toggleDetails(broker)}
 				style={{ cursor: "pointer" }}
 			>
 				<Box onClick={this.handleClick} flex>
 					<Box flex fill="horizontal" justify="center" align="center">
 						<Text size="38px" color="brand" truncate>
-							{this.props.brokerName}
+							{broker.name}
 						</Text>
 					</Box>
 					<Box
@@ -53,7 +57,7 @@ class BrokerCard extends Component {
 						align="start"
 						overflow={{ horizontal: "scroll" }}
 					>
-						<Text size="large">{this.props.brokerDesc}</Text>
+						<Text size="large">{broker.description}</Text>
 					</Box>
 				</Box>
 				<Box fill="horizontal">
@@ -64,7 +68,7 @@ class BrokerCard extends Component {
 						primary
 						// focusIndicator={true}
 						// hoverIndicator={true}
-						onClick={() => this.handleClick(this.props.brokerId)}
+						onClick={() => this.handleClick(broker.id)}
 						color="light-3"
 					/>
 				</Box>

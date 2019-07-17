@@ -18,17 +18,16 @@ export default class Deployments extends Component {
   }
 
   toggleDetails = (instance) => {
-    console.log('instance', instance)
-    this.setState({ detailsShowing: !this.state.detailsShowing, instance: instance });
+    this.setState({ detailsOpen: !this.state.detailsOpen, instance: instance });
   }
 
 
   render() {
-    const { detailsShowing, instance } = this.state;;
+    const { detailsOpen, instance } = this.state;;
     const { instances } = this.props;;
 
     return (
-      <Box pad='large'>
+      <Box pad='large' fill>
         { (instances.length > 0) && (
             <Grid gap='large' columns='small' rows='small'>
               {instances.map(instance => 
@@ -46,7 +45,7 @@ export default class Deployments extends Component {
             </Box>
           )
         }
-        { detailsShowing && 
+        { detailsOpen && 
             <DeployedDetail toggleDetails={this.toggleDetails} instance={instance} />
         }
       </Box>

@@ -4,8 +4,8 @@ import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
   
   
-const DeployedDetail = (props) => {
-  const { instance, toggleDetails } = props;
+const BrokerDetail = (props) => {
+  const { broker, toggleDetails } = props;
 
   const handleDelete = () => {
     ///API stuff
@@ -28,7 +28,7 @@ const DeployedDetail = (props) => {
               <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
             <Box align='center' flex>
-              <Heading level='2'>{instance.name}</Heading>
+              <Heading level='2'>{broker.name}</Heading>
             </Box>
             <Box flex /> {/*empty box to center heading*/}
           </Box>
@@ -43,12 +43,12 @@ const DeployedDetail = (props) => {
                   <Text size='large'>Description: </Text>
                 </Box>
                 <Box flex justify='center' align='start' fill='vertical'>
-                  <Text size='large'>{instance.description}</Text>
+                  <Text size='large'>{broker.description}</Text>
                 </Box>
               </Box>
             </Box> 
             <Box className='deployed-parameters-box'>
-              {/* { instance.paramters.map(detail => {
+              {/* { broker.paramters.map(detail => {
                 const detailName = detail[Object.keys(detail)[0]];
                 const detailValue = detail[detailName];
                 return (
@@ -73,4 +73,4 @@ const DeployedDetail = (props) => {
   )
 }
 
-export default DeployedDetail;
+export default BrokerDetail;
