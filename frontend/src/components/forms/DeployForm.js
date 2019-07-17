@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Layer, Form, FormField, Heading, Select, Text, TextInput } from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
-
+import uuidv1 from 'uuid/v1';  
 
 //========================================= Deploy Form
 class DeployForm extends Component {
@@ -61,6 +61,8 @@ handleDeploy = (name) => {
 
   //api call 
   const inputs = [...this.state.parameterMenuLabels];
+  console.log(inputs);
+  console.log(uuidv1());
 }
 
 
