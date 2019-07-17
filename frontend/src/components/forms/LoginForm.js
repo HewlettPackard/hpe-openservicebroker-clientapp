@@ -40,7 +40,7 @@ class LoginForm extends Component {
 				console.log(error);
 			});
 
-		logIn(this.state.username);
+		logIn(this.state.uname);
 	};
 
   componentWillMount() {
