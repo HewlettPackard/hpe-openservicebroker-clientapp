@@ -1,30 +1,18 @@
 import React, { Component } from "react";
 import { Box, Button, Text } from "grommet";
 import { More } from "grommet-icons";
+
+
+//========================================= Broker Card
 class BrokerCard extends Component {
 	state = {
-		borderColor: "light-5",
-		hovering: false
-	};
-	setBorder = () => {
-		if (!this.state.hovering)
-			this.setState({ borderColor: "accent-1", hovering: true });
-		else this.setState({ borderColor: "light-5", hovering: false });
-	};
-
-	toggle = () => {
-		this.setState({ hovering: false });
-	};
-
-	handleClick = id => {
-		this.toggle();
-		console.log(`${id} clicked!`);
-	};
-
-	handleBoxClick() {
-		console.log("Box clicked!");
-  }
+		borderColor: "light-5"
+  };
   
+  setBorder = (color) => {
+    this.setState({ borderColor: color });
+  }
+
 
 	render() {
     const { borderColor } = this.state;
@@ -39,8 +27,8 @@ class BrokerCard extends Component {
 				align="center"
 				width="small"
 				height="small"
-				onMouseOver={this.setBorder}
-        onMouseOut={this.setBorder}
+				onMouseOver={() => this.setBorder('accent-1')}
+        onMouseOut={() => this.setBorder('light-5')}
         onClick={() => toggleDetails(broker)}
 				style={{ cursor: "pointer" }}
 			>
@@ -66,9 +54,6 @@ class BrokerCard extends Component {
 						icon={<More />}
 						plain
 						primary
-						// focusIndicator={true}
-						// hoverIndicator={true}
-						onClick={() => this.handleClick(broker.id)}
 						color="light-3"
 					/>
 				</Box>

@@ -4,6 +4,7 @@ import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
   
   
+//========================================= Broker Details
 const BrokerDetail = (props) => {
   const { broker, toggleDetails } = props;
 
@@ -11,7 +12,6 @@ const BrokerDetail = (props) => {
     ///API stuff
     props.toggleDetails();
   }  
-
 
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
