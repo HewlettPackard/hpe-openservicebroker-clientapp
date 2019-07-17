@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Box, Button, Form, FormField, TextInput } from 'grommet';
 import { Login } from 'grommet-icons';
 import axios from 'axios';
+import hpeLogo from './../../assets/images/hpe_pri_grn_rev_rgb.png';
 
 
 //========================================= Login Form
@@ -56,7 +57,10 @@ class LoginForm extends Component {
 		return (
 			<Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,grey 20%,black)' }}>
 			{/*<Box justify='center' align='center' fill background={{ image: 'linear-gradient(210deg,#01a982 20%,#614767)' }}>*/}
-			{/* <Box justify='center' align='center' fill className='login-form-image'> */}
+      {/* <Box justify='center' align='center' fill className='login-form-image'> */}
+        <Box className='hpe-logo' height='100px' margin={{ bottom: '3rem' }} flex={false}>
+          <img src={hpeLogo} alt='logo' height='100px' />
+        </Box>
         <Box 
           animation='fadeIn' 
           elevation='medium' 
@@ -68,6 +72,7 @@ class LoginForm extends Component {
           width='medium' 
           height='medium' 
           margin={{ bottom: '20%' }}
+          flex={false}
         >
 				<Form>
 					<FormField label='Username:'>
