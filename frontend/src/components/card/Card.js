@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Box, Button, Text } from 'grommet';
-import { Subtract } from 'grommet-icons';
+import { Add, More } from 'grommet-icons';
 
 
 //========================================= Card
@@ -48,6 +47,15 @@ class Card extends Component {
             {service.description}
           </Text>
         </Box>
+        <Box fill="horizontal">
+					<Button
+						label="Deploy"
+            icon={<Add />}
+						plain
+						primary
+						color="light-3"
+					/>
+				</Box>
       </Box>
     )
     else if (fromDeployed) return (
@@ -74,6 +82,15 @@ class Card extends Component {
             ID: {instance.id}
           </Text>
         </Box>
+        <Box fill="horizontal">
+					<Button
+						label="Details"
+						icon={<More />}
+						plain
+						primary
+						color="light-3"
+					/>
+				</Box>
       </Box>
     )
   }

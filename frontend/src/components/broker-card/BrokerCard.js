@@ -32,7 +32,7 @@ class BrokerCard extends Component {
         onClick={() => toggleDetails(broker)}
 				style={{ cursor: "pointer" }}
 			>
-				<Box onClick={this.handleClick} flex>
+				<Box flex>
 					<Box flex fill="horizontal" justify="center" align="center">
 						<Text size="38px" color="brand" truncate>
 							{broker.name}
