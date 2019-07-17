@@ -7,30 +7,26 @@ import BrokerDetail from "../broker-detail/BrokerDetail";
 
 class Settings extends Component {
 	state = {
-		brokerList: [
-			{
-				name: "Broker 1",
-				id: "1",
-				description: "Some broker"
-			},
-			{
-				name: "Broker 2",
-				id: "2",
-				description: "Some broker"
-			}
-    ],
+		brokerList: [],
     broker: {},
     detailsOpen: false,
-		hovering: false,
     borderColor: "light-5"
-	};
-
-	setBorder = () => {
-		if (!this.state.hovering)
-			this.setState({ borderColor: "accent-1", hovering: true });
-		else this.setState({ borderColor: "light-5", hovering: false });
   };
   
+  //update the list of brokers by calling the API
+	componentDidMount() {
+		axios
+			.get('http://3.86.206.101:8099/v2/catalog')
+			.then(results => {
+				this.setState({
+					brokerList: [...results.data.services]
+        });
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	}
+
   toggleDetails = (broker) => {
     this.setState({ detailsOpen: !this.state.detailsOpen, broker: broker });
   }

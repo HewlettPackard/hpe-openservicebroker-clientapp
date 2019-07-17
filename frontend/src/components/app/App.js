@@ -6,11 +6,8 @@ import Sidebar from '../sidebar/Sidebar';
 import AppBar from '../app-bar/AppBar';
 import Footer from '../footer/Footer';
 import CatalogResults from '../catalog-results/CatalogResults';
-import DeployForm from '../forms/DeployForm';
 import LoginForm from '../forms/LoginForm';
-import RegisterForm from '../forms/RegisterForm';
 import Settings from '../forms/Settings';
-import BrokerList from '../broker-list/BrokerList';
 import DeployedList from '../deployed-list/DeployedList';
 import Help from '../help/Help';
 import '../app/App.css';
@@ -20,7 +17,7 @@ import '../app/App.css';
 export default class App extends Component {
 	//set initial state
 	state = {
-    username: 'user name',
+    username: '',
     onLoginPage: false,
     instances: []
   };
@@ -42,9 +39,17 @@ export default class App extends Component {
     }
     if (command === 'delete') {
       let newInstances = [...this.state.instances];
-      for (const i=0; i<newInstances.length; i++)
+      for (let i=0; i<newInstances.length; i++)
         if (newInstances[i].name === instance.name)
           newInstances.splice(i,1);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'loaded') {
+      let newInstances = [...this.state.instances];
+      let newElement = newInstances.find((element) => element.id === instance.id)
+      newElement.loaded = true;
+      newInstances = newInstances.filter((element) => element.id !== instance.id);
+      newInstances.push(newElement);
       this.setState({ instances: [...newInstances] });
     }
   }

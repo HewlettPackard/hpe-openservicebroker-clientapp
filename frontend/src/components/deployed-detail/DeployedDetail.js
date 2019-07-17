@@ -5,11 +5,12 @@ import axios from 'axios';
   
   
 const DeployedDetail = (props) => {
-  const { instance, toggleDetails } = props;
+  const { instance, toggleDetails, updateInstances } = props;
 
   const handleDelete = () => {
     ///API stuff
-    props.toggleDetails();
+    toggleDetails();
+    updateInstances('delete',instance);
   }  
 
 
@@ -65,7 +66,7 @@ const DeployedDetail = (props) => {
             </Box>
           </Box>
           <Box width='medium' align='center' alignSelf='center' margin='medium' flex={false}>
-            <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete()}/>
+            <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete(instance)}/>
           </Box>
         </Box>
       </Box>

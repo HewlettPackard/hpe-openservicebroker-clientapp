@@ -21,10 +21,35 @@ export default class Deployments extends Component {
     this.setState({ detailsOpen: !this.state.detailsOpen, instance: instance });
   }
 
+  timer = {};
+
+  componentDidMount() {
+    const { instances } = this.props;
+    for (let i=0; i<instances.length; i++)
+      if(!instances[i].loaded) {
+        this.timer = setInterval(() => {
+          axios
+            .get(`http://3.86.206.101:8099/v2/service_instances/${instances[i].id}/last_operation`)
+            .then(result => {
+              if (result.data.state === 'succeeded')
+                this.props.updateInstances('loaded',instances[i]);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          }, 
+        5000);
+      }
+  }
+
+  componentDidUpdate() {
+    clearInterval(this.timer);
+  }
+
 
   render() {
     const { detailsOpen, instance } = this.state;;
-    const { instances } = this.props;;
+    const { instances } = this.props;
 
     return (
       <Box pad='large' fill>
@@ -46,7 +71,7 @@ export default class Deployments extends Component {
           )
         }
         { detailsOpen && 
-            <DeployedDetail toggleDetails={this.toggleDetails} instance={instance} />
+            <DeployedDetail toggleDetails={this.toggleDetails} instance={instance} updateInstances={this.props.updateInstances} />
         }
       </Box>
     );

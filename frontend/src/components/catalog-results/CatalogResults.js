@@ -19,7 +19,7 @@ class CatalogResults extends Component {
 	};
 
 	//update the serviceList by calling the API
-	update() {
+	componentDidMount() {
 		axios
 			.get('http://3.86.206.101:8099/v2/catalog')
 			.then(results => {
@@ -31,11 +31,6 @@ class CatalogResults extends Component {
 			.catch(error => {
 				console.log(error);
 			});
-	}
-
-	//update catalog on page render
-	componentDidMount() {
-    this.update();
 	}
 
 	search = (value, listToSearch) => {
@@ -107,7 +102,7 @@ class CatalogResults extends Component {
                   icon={<Sync size='medium' color='brand' />}
                   onClick={() => {
                     alert('Udating Services');
-                    this.update();
+                    this.setState({});
                   }}
                 />
               </Box>

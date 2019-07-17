@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Layer, Form, FormField, Heading, Select, Text, TextInput } from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
 import uuidv1 from 'uuid/v1';  
+import axios from 'axios';
+
 
 //========================================= Deploy Form
 class DeployForm extends Component {
@@ -40,30 +42,44 @@ class DeployForm extends Component {
         return true;
     }
     return false;
-}
+  }
 
-handleInputChange = (input, index) => {
-  let temp = [...this.state.parameterMenuLabels];
-  temp[index] = input;
-  this.setState({ parameterMenuLabels: [...temp] })
-}
+  handleInputChange = (input, index) => {
+    let temp = [...this.state.parameterMenuLabels];
+    temp[index] = input;
+    this.setState({ parameterMenuLabels: [...temp] })
+  }
 
-handleDeploy = (name) => {
-  let arg = {};
-  let val = 0;
-  for (const i in name)
-    val += name.charCodeAt(i);
-  arg.name = name;
-  arg.id = val; 
+  handleDeploy = (name) => {
+    let instance = {};
+    let val = uuidv1();
+    instance.name = name;
+    instance.id = val; 
+    instance.loaded = false;
 
-  this.props.updateInstances('add',arg);
-  this.props.toggleDeploy();
+    this.props.updateInstances('add',instance);
+    this.props.toggleDeploy();
 
-  //api call 
-  const inputs = [...this.state.parameterMenuLabels];
-  console.log(inputs);
-  console.log(uuidv1());
-}
+    //api call 
+    const inputs = [...this.state.parameterMenuLabels];
+    let data = {
+      'service_id': this.props.service.id,
+      'plan_id': '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
+    }
+  
+    axios
+      .put(`http://3.86.206.101:8099/v2/service_instances/${val}`, data, {headers: {
+        'Content-Type': 'application/json',
+        'X-Broker-API-Version': 2.14
+      }})
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      console.log(inputs);
+  }
 
 
   render() {
@@ -106,7 +122,7 @@ handleDeploy = (name) => {
                   value={planLabel}
                   onChange={({ option }) => this.setPlanMenuLabel(option)}
                   options={[...planNames]}
-                  margin='medium'
+                  minstancein='medium'
                 />
               </Form>
               <Box width='large'>
@@ -188,8 +204,8 @@ handleDeploy = (name) => {
                             } 
                             else if (propertyName.type === 'object') {
                               let label = (parameterMenuLabels !== undefined) ?
-                              parameterMenuLabels[propertyName.index] :
-                              '';
+                                parameterMenuLabels[propertyName.index] :
+                                '';
                               return (
                                 <FormField label={Object.keys(property)[0]} key={Object.keys(property)[0]}>
                                   <Select 
@@ -209,7 +225,9 @@ handleDeploy = (name) => {
                 }
               </Box>
               <Form>
-                <Button label='Deploy' icon={<Add />} margin={{ top: 'medium' }} onClick={() => this.handleDeploy(name)} />
+                <Link to='/deployed'>
+                  <Button label='Deploy' icon={<Add />} minstancein={{ top: 'medium' }} onClick={() => this.handleDeploy(name)} />
+                </Link>
               </Form>
             </Box>
           </Box>
