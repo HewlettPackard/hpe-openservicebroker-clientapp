@@ -1,22 +1,23 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Box, Grommet } from "grommet";
-import { hpe } from "grommet-theme-hpe";
-import Sidebar from "../sidebar/Sidebar";
-import AppBar from "../app-bar/AppBar";
-import Footer from "../footer/Footer";
-import CatalogResults from "../catalog-results/CatalogResults";
-import LoginForm from "../help/LoginForm";
-import Settings from "../register/Settings";
-import DeployedList from "../deployed-list/DeployedList";
-import Help from "../help/Help";
-import "../app/App.css";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Box, Grommet } from 'grommet';
+import { hpe } from 'grommet-theme-hpe';
+import Sidebar from '../sidebar/Sidebar';
+import AppBar from '../app-bar/AppBar';
+import Footer from '../footer/Footer';
+import CatalogResults from '../catalog-results/CatalogResults';
+import LoginForm from '../help/LoginForm';
+import Settings from '../register/Settings';
+import DeployedList from '../deployed-list/DeployedList';
+import Help from '../help/Help';
+import '../app/App.css';
+
 
 //========================================= App
 export default class App extends Component {
 	//set initial state
 	state = {
-		username: "",
+		username: '',
 		onLoginPage: false,
 		instances: []
 	};
@@ -30,18 +31,18 @@ export default class App extends Component {
 	};
 
 	updateInstances = (command, instance) => {
-		if (command === "add") {
+		if (command === 'add') {
 			let newInstances = [...this.state.instances];
-			if (instance.name !== "") newInstances.push(instance);
+			if (instance.name !== '') newInstances.push(instance);
 			this.setState({ instances: [...newInstances] });
 		}
-		if (command === "delete") {
+		if (command === 'delete') {
 			let newInstances = [...this.state.instances];
 			for (let i = 0; i < newInstances.length; i++)
 				if (newInstances[i].name === instance.name) newInstances.splice(i, 1);
 			this.setState({ instances: [...newInstances] });
 		}
-		if (command === "loaded") {
+		if (command === 'loaded') {
 			let newInstances = [...this.state.instances];
 			let newElement = newInstances.find(element => element.id === instance.id);
 			newElement.loaded = true;
@@ -58,28 +59,28 @@ export default class App extends Component {
 		return (
 			<Router>
 				<Grommet theme={hpe} full>
-					<Box className="page" fill direction="row">
+					<Box className='page' fill direction='row'>
 						{!onLoginPage && (
 							<Box>
 								<Sidebar username={username} />
 								{/* empty box to fix catalog width due to static sidebar */}
-								<Box fill="vertical" width="20rem" />
+								<Box fill='vertical' width='20rem' />
 							</Box>
 						)}
-						<Box className="non-sidebar" flex>
+						<Box className='non-sidebar' flex>
 							<Box
-								className="header-and-body"
-								height="120vh"
+								className='header-and-body'
+								height='120vh'
 								flex={false}
-								overflow={{ vertical: "scroll" }}
+								overflow={{ vertical: 'scroll' }}
 							>
-								<Route path="/" component={AppBar} />
-								<Box className="body" overflow={{ vertical: "scroll" }} flex>
+								<Route path='/' component={AppBar} />
+								<Box className='body' overflow={{ vertical: 'scroll' }} flex>
 									<Switch>
 										{/*Routing - Catalog is the home route*/}
 										<Route
 											exact
-											path="/"
+											path='/'
 											render={() => (
 												<LoginForm
 													logIn={this.logIn}
@@ -88,12 +89,12 @@ export default class App extends Component {
 											)}
 										/>
 										<Route
-											path="/login"
+											path='/login'
 											render={() => <LoginForm logIn={this.logIn} />}
 											hideSideBar={this.hideSideBar}
 										/>
 										<Route
-											path="/catalog"
+											path='/catalog'
 											render={() => (
 												<CatalogResults
 													updateInstances={this.updateInstances}
@@ -101,7 +102,7 @@ export default class App extends Component {
 											)}
 										/>
 										<Route
-											path="/deployed"
+											path='/deployed'
 											render={() => (
 												<DeployedList
 													updateInstances={this.updateInstances}
@@ -109,18 +110,18 @@ export default class App extends Component {
 												/>
 											)}
 										/>
-										<Route path="/settings" component={Settings} />
-										<Route path="/help" component={Help} />
+										<Route path='/settings' component={Settings} />
+										<Route path='/help' component={Help} />
 									</Switch>
-								</Box>{" "}
+								</Box>{' '}
 								{/*end of body box*/}
-							</Box>{" "}
+							</Box>{' '}
 							{/*end of header-and-body box*/}
 							<Footer />
-						</Box>{" "}
+						</Box>{' '}
 						{/*end of non-sidebar box*/}
-					</Box>{" "}
-					{/*end of page box*/}]{" "}
+					</Box>{' '}
+					{/*end of page box*/}]{' '}
 				</Grommet>
 			</Router>
 		);

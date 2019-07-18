@@ -70,26 +70,17 @@ class Card extends Component {
 					justify="start"
 					align="center"
 					width="small"
-					height="small"
+          height="small"
 					onMouseOver={() => this.setBorder("accent-1")}
 					onMouseOut={() => this.setBorder("light-5")}
 					onClick={() => toggleDetails(instance)}
-					style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer" }}
 				>
-					<Box flex fill="horizontal" pad="medium">
-						<Text size="38px" color="brand" truncate>
-							{instance.name}
-						</Text>
-					</Box>
-					<Box
-						flex
-						fill="horizontal"
-						align="start"
-						pad={{ left: "medium" }}
-						overflow={{ vertical: "scroll" }}
-					>
-						<Text size="large">ID: {instance.id}</Text>
-					</Box>
+          <Box overflow={{ vertical: "scroll" }} flex pad='medium'>
+            <Text size="38px" color="brand" wordBreak='break-all'>
+              {instance.name}
+            </Text>
+          </Box>
 					<Box fill="horizontal">
 						<Button
 							label="Details"

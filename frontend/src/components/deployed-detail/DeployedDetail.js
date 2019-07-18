@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Layer, Heading, Text } from 'grommet';
+import { Box, Button, Layer, Text } from 'grommet';
 import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
   
@@ -25,18 +25,17 @@ const DeployedDetail = (props) => {
           pad='small'
         >
           <Box className='deploy-detail-header' direction='row' flex={false}>
-            <Box justify='center' flex>
+            <Box justify='center' width='40%'>
               <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
-            <Box align='center' flex>
-              <Heading level='2'>{instance.name}</Heading>
+            <Box align='start' flex pad={{ top: 'small', right: 'xlarge' }}>
+              <Text size='xxlarge' weight='bold' wordBreak='break-all'>{instance.name}</Text>
             </Box>
-            <Box flex /> {/*empty box to center heading*/}
           </Box>
           <Box className='deployed-details-content' width='large' pad='medium' flex={false}>
             <Box className='deployed-description-box'>
               <Box>
-                <Heading level='3'><strong>Description</strong></Heading>
+                <Text size='xlarge' wordBreak='break-all'><strong>Description</strong></Text>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
               <Box direction='row' align='start' height='xxsmall' justify='center'>

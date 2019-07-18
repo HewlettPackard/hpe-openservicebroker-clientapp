@@ -24,13 +24,12 @@ const BrokerDetail = (props) => {
           pad='small'
         >
           <Box className='deploy-detail-header' direction='row' flex={false}>
-            <Box justify='center' flex>
+            <Box justify='center' width='40%'>
               <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
-            <Box align='center' flex>
-              <Heading level='2'>{broker.name}</Heading>
+            <Box align='start' flex pad={{ top: 'small', right: 'xlarge' }}>
+              <Text size='xxlarge' weight='bold' wordBreak='break-all'>{broker.name}</Text>
             </Box>
-            <Box flex /> {/*empty box to center heading*/}
           </Box>
           <Box className='deployed-details-content' width='large' pad='medium' flex={false}>
             <Box className='deployed-description-box'>

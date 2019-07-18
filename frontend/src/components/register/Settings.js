@@ -48,7 +48,7 @@ class Settings extends Component {
 			<Box pad="large" fill>
 				<Grid gap="large" columns="small" rows="small">
 					{this.state.brokerList.map(broker => (
-						<BrokerCard broker={broker} toggleDetails={this.toggleDetails} />
+						<BrokerCard broker={broker} toggleDetails={this.toggleDetails} key={broker.name} />
 					))}
 					<Box
 						elevation="medium"
@@ -59,7 +59,8 @@ class Settings extends Component {
 						height="small"
 						onClick={this.toggleRegisterForm}
 						onMouseOver={() => this.setBorder("accent-1")}
-						onMouseOut={() => this.setBorder("light-5")}
+            onMouseOut={() => this.setBorder("light-5")}
+            style={{ cursor: 'pointer' }}
 					>
 						<Box height="40%" fill="horizontal" pad="medium" align="center">
 							<Text size="38px" color="brand">
