@@ -13,6 +13,8 @@ const DeployedDetail = (props) => {
     updateInstances('delete',instance);
   }  
 
+  let statusColor = 'status-warning';
+  (instance.status === 'loaded') ? (statusColor = 'status-ok') : (statusColor = 'status-error');
 
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -44,7 +46,7 @@ const DeployedDetail = (props) => {
                   <Text size='large'>Deploying status:</Text>
                 </Box>
                 <Box flex justify='start' align='start'>
-                  <Text size='large' wordBreak='break-all'>{instance.status}</Text>
+                  <Text size='large' wordBreak='break-all' color={statusColor}>{instance.status}</Text>
                 </Box>
               </Box>
             </Box> 
@@ -76,30 +78,33 @@ const DeployedDetail = (props) => {
                 </Box>
               </Box>
             </Box> 
-            <Box className='deployed-parameters-box'>
-              <Box>
-                <Heading level='3'><strong>Inputs</strong></Heading>
-              </Box>
-              <Box background={{ color: 'accent-1' }} height='2px' />
-                { instance.inputs.map(detail => {
-                    const detailName = detail.label;
-                    const detailValue = detail.value;
-                    return (
-                      <Box direction='row' margin={{ top: 'small' }}>
-                        <Box flex justify='start'>
-                          <Text size='large'>{detailName}:</Text>
+            { (instance.inputs.length > 0) && (
+                <Box className='deployed-parameters-box'>
+                  <Box>
+                    <Heading level='3'><strong>Inputs</strong></Heading>
+                  </Box>
+                  <Box background={{ color: 'accent-1' }} height='2px' />
+                  { instance.inputs.map(detail => {
+                      const detailName = detail.label;
+                      const detailValue = detail.value;
+                      return (
+                        <Box direction='row' margin={{ top: 'small' }}>
+                          <Box flex justify='start'>
+                            <Text size='large'>{detailName}:</Text>
+                          </Box>
+                          <Box flex justify='start' align='start'>
+                            <Text size='large' wordBreak='break-all'>{detailValue}</Text>
+                          </Box>
                         </Box>
-                        <Box flex justify='start' align='start'>
-                          <Text size='large' wordBreak='break-all'>{detailValue}</Text>
-                        </Box>
-                      </Box>
-                    )}
-                  )
-                }
+                      )}
+                    )
+                  }
+                </Box>
+              )
+            }
+            <Box width='medium' align='center' alignSelf='center' margin='medium' flex={false}>
+              <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete(instance)}/>
             </Box>
-          </Box>
-          <Box width='medium' align='center' alignSelf='center' margin='medium'>
-            <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete(instance)}/>
           </Box>
         </Box>
       </Box>

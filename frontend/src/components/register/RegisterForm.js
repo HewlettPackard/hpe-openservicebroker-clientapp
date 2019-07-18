@@ -101,7 +101,8 @@ class RegisterForm extends Component {
                 <Link to="/catalog">
                   <Button
                     label="Submit"
-                    margin={{ top: "medium" }}
+                    margin='medium' 
+                    flex={false}
                     icon={<Add />}
                     onClick={this.toggleRegisterForm}
                   />
