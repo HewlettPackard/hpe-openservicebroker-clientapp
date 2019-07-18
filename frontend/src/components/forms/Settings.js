@@ -4,12 +4,14 @@ import { Add } from "grommet-icons";
 import axios from "axios";
 import BrokerCard from "../broker-card/BrokerCard";
 import BrokerDetail from "../broker-detail/BrokerDetail";
+import RegisterForm from "./RegisterForm";
 
 class Settings extends Component {
 	state = {
 		brokerList: [],
     broker: {},
     detailsOpen: false,
+    registerFormOpen: false,
     borderColor: "light-5"
   };
   
@@ -31,9 +33,13 @@ class Settings extends Component {
     this.setState({ detailsOpen: !this.state.detailsOpen, broker: broker });
   }
 
+  toggleRegisterForm = () => {
+    this.setState({ registerFormOpen: !this.state.registerFormOpen });
+  }
+
 
 	render() {
-    const { detailsOpen, broker } = this.state;;
+    const { broker, detailsOpen, registerFormOpen } = this.state;;
 
 		return (
 			<Box pad='large' fill>
@@ -49,6 +55,7 @@ class Settings extends Component {
             round="xsmall"
             width="small"
             height="small"
+            onClick={this.toggleRegisterForm}
             onMouseOver={this.setBorder}
             onMouseOut={this.setBorder}
           >
@@ -64,6 +71,9 @@ class Settings extends Component {
 				</Grid>
         { detailsOpen && 
             <BrokerDetail toggleDetails={this.toggleDetails} broker={broker} />
+        }
+        { registerFormOpen && 
+            <RegisterForm toggleRegisterForm={this.toggleRegisterForm} />
         }
 			</Box>
 		);

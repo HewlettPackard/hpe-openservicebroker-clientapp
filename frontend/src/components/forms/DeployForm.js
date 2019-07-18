@@ -226,7 +226,7 @@ class DeployForm extends Component {
               </Box>
               <Form>
                 <Link to='/deployed'>
-                  <Button label='Deploy' icon={<Add />} minstancein={{ top: 'medium' }} onClick={() => this.handleDeploy(name)} />
+                  <Button label='Deploy' icon={<Add />} margin={{ top: 'medium' }} onClick={() => this.handleDeploy(name)} />
                 </Link>
               </Form>
             </Box>
