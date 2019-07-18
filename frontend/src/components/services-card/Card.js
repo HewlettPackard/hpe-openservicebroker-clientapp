@@ -46,7 +46,7 @@ class Card extends Component {
 						flex
 						fill="horizontal"
 						pad={{ left: "medium" }}
-						overflow={{ vertical: "scroll" }}
+						overflow={{ horizontal: "auto" }}
 					>
 						<Text size="large">{service.description}</Text>
 					</Box>

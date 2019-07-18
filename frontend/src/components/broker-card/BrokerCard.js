@@ -43,7 +43,7 @@ class BrokerCard extends Component {
 						fill='horizontal'
 						justify='start'
 						align='start'
-						overflow={{ horizontal: 'scroll' }}
+						overflow={{ horizontal: 'auto' }}
 					>
 						<Text size='large'>{broker.description}</Text>
 					</Box>

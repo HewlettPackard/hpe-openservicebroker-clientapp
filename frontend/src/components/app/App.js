@@ -45,7 +45,7 @@ export default class App extends Component {
 		if (command === 'loaded') {
 			let newInstances = [...this.state.instances];
 			let newElement = newInstances.find(element => element.id === instance.id);
-			newElement.loaded = true;
+      newElement.status = 'loaded';
 			newInstances = newInstances.filter(element => element.id !== instance.id);
 			newInstances.push(newElement);
 			this.setState({ instances: [...newInstances] });

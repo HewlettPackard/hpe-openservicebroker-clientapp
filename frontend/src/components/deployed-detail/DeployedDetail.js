@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Layer, Text } from 'grommet';
+import { Box, Button, Heading, Layer, Text } from 'grommet';
 import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
   
@@ -17,7 +17,7 @@ const DeployedDetail = (props) => {
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
-        <Box flex background={{ color: 'black', opacity: 'medium' }} />
+        <Box flex background={{ color: 'black', opacity: 'medium' }} onClick={toggleDetails} />
         <Box 
           background={{ color: 'dark-1' }} 
           overflow={{ vertical: 'scroll' }}
@@ -25,46 +25,80 @@ const DeployedDetail = (props) => {
           pad='small'
         >
           <Box className='deploy-detail-header' direction='row' flex={false}>
-            <Box justify='center' width='40%'>
+            <Box justify='center' flex>
               <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
-            <Box align='start' flex pad={{ top: 'small', right: 'xlarge' }}>
-              <Text size='xxlarge' weight='bold' wordBreak='break-all'>{instance.name}</Text>
+            <Box align='center' flex pad={{ top: 'small', right: 'xlarge' }}>
+              <Text size='xxlarge' weight='bold' wordBreak='break-all' align='center'>{instance.name}</Text>
             </Box>
+            <Box flex /> {/* empty box to center title */}
           </Box>
           <Box className='deployed-details-content' width='large' pad='medium' flex={false}>
-            <Box className='deployed-description-box'>
+            <Box>
               <Box>
-                <Text size='xlarge' wordBreak='break-all'><strong>Description</strong></Text>
+                <Heading level='3'><strong>Status</strong></Heading>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
-              <Box direction='row' align='start' height='xxsmall' justify='center'>
-                <Box flex justify='center' fill='vertical'>
-                  <Text size='large'>Description: </Text>
+              <Box direction='row' margin={{ top: 'small' }}>
+                <Box flex justify='start'>
+                  <Text size='large'>Deploying status:</Text>
                 </Box>
-                <Box flex justify='center' align='start' fill='vertical'>
-                  <Text size='large'>{instance.description}</Text>
+                <Box flex justify='start' align='start'>
+                  <Text size='large' wordBreak='break-all'>{instance.status}</Text>
+                </Box>
+              </Box>
+            </Box> 
+            <Box>
+              <Box>
+                <Heading level='3'><strong>Time Created</strong></Heading>
+              </Box>
+              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box direction='row' margin={{ top: 'small' }}>
+                <Box flex justify='start'>
+                  <Text size='large'>Time and Date: </Text>
+                </Box>
+                <Box flex justify='start' align='start'>
+                  <Text size='large' wordBreak='break-all'>{instance.time}</Text>
+                </Box>
+              </Box>
+            </Box> 
+            <Box>
+              <Box>
+                <Heading level='3'><strong>Instance ID</strong></Heading>
+              </Box>
+              <Box background={{ color: 'accent-1' }} height='2px' />
+              <Box direction='row' margin={{ top: 'small' }}>
+                <Box flex justify='start'>
+                  <Text size='large'>ID given to broker: </Text>
+                </Box>
+                <Box flex justify='start' align='start'>
+                  <Text size='large' wordBreak='break-all'>{instance.id}</Text>
                 </Box>
               </Box>
             </Box> 
             <Box className='deployed-parameters-box'>
-              {/* { instance.paramters.map(detail => {
-                const detailName = detail[Object.keys(detail)[0]];
-                const detailValue = detail[detailName];
-                return (
-                  <Box direction='row'>
-                    <Box flex align='start'>
-                      {detailName}:
-                    </Box>
-                    <Box flex align='end'>
-                      {detailValue}
-                    </Box>
-                  </Box>
-                )}
-              )} */}
+              <Box>
+                <Heading level='3'><strong>Inputs</strong></Heading>
+              </Box>
+              <Box background={{ color: 'accent-1' }} height='2px' />
+                { instance.inputs.map(detail => {
+                    const detailName = detail.label;
+                    const detailValue = detail.value;
+                    return (
+                      <Box direction='row' margin={{ top: 'small' }}>
+                        <Box flex justify='start'>
+                          <Text size='large'>{detailName}:</Text>
+                        </Box>
+                        <Box flex justify='start' align='start'>
+                          <Text size='large' wordBreak='break-all'>{detailValue}</Text>
+                        </Box>
+                      </Box>
+                    )}
+                  )
+                }
             </Box>
           </Box>
-          <Box width='medium' align='center' alignSelf='center' margin='medium' flex={false}>
+          <Box width='medium' align='center' alignSelf='center' margin='medium'>
             <Button label='Delete' icon={<Subtract />} onClick={() => handleDelete(instance)}/>
           </Box>
         </Box>

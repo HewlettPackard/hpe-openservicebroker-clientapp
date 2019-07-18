@@ -16,7 +16,7 @@ const BrokerDetail = (props) => {
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
-        <Box flex background={{ color: 'black', opacity: 'medium' }} />
+        <Box flex background={{ color: 'black', opacity: 'medium' }} onClick={toggleDetails} />
         <Box 
           background={{ color: 'dark-1' }} 
           overflow={{ vertical: 'scroll' }}
@@ -24,12 +24,13 @@ const BrokerDetail = (props) => {
           pad='small'
         >
           <Box className='deploy-detail-header' direction='row' flex={false}>
-            <Box justify='center' width='40%'>
+            <Box justify='center' flex>
               <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDetails} />
             </Box>
-            <Box align='start' flex pad={{ top: 'small', right: 'xlarge' }}>
+            <Box align='center' flex pad={{ top: 'small' }}>
               <Text size='xxlarge' weight='bold' wordBreak='break-all'>{broker.name}</Text>
             </Box>
+            <Box flex /> {/* empty box to center title */}
           </Box>
           <Box className='deployed-details-content' width='large' pad='medium' flex={false}>
             <Box className='deployed-description-box'>
@@ -37,12 +38,12 @@ const BrokerDetail = (props) => {
                 <Heading level='3'><strong>Description</strong></Heading>
               </Box>
               <Box background={{ color: 'accent-1' }} height='2px' />
-              <Box direction='row' align='start' height='xxsmall' justify='center'>
-                <Box flex justify='center' fill='vertical'>
+              <Box direction='row' margin={{ top: 'small' }}>
+                <Box flex justify='start'>
                   <Text size='large'>Description: </Text>
                 </Box>
-                <Box flex justify='center' align='start' fill='vertical'>
-                  <Text size='large'>{broker.description}</Text>
+                <Box flex justify='start' align='start'>
+                  <Text size='large' wordBreak='break-all'>{broker.description}</Text>
                 </Box>
               </Box>
             </Box> 

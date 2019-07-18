@@ -43,7 +43,7 @@ class RegisterForm extends Component {
 		return (
 			<Layer full plain onEsc={toggleRegisterForm} animate={false}>
         <Box direction='row' fill>
-          <Box flex background={{ color: 'black', opacity: 'medium' }} />
+          <Box flex background={{ color: 'black', opacity: 'medium' }} onClick={toggleRegisterForm} />
           <Box 
             background={{ color: 'dark-1' }} 
             overflow={{ vertical: 'scroll' }}
@@ -57,7 +57,7 @@ class RegisterForm extends Component {
               <Box align='center' flex>
                 <Heading level='2'>Register Broker</Heading>
               </Box>
-              <Box flex /> {/*empty box to center heading*/}
+              <Box flex /> {/* empty box to center heading */}
             </Box>
             <Box className='register-form-content' width='large' pad='medium' flex={false}>
               <Form>

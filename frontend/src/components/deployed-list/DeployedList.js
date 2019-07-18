@@ -23,7 +23,7 @@ export default class Deployments extends Component {
 	componentDidMount() {
 		const { instances } = this.props;
 		for (let i = 0; i < instances.length; i++)
-			if (!instances[i].loaded) {
+			if (instances[i].status === 'loading') {
 				this.timer = setInterval(() => {
 					axios
 						.get(
