@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Box, Button, Text } from "grommet";
-import { More } from "grommet-icons";
+import React, { Component } from 'react';
+import { Box, Button, Text } from 'grommet';
+import { More } from 'grommet-icons';
 
 
 //========================================= Broker Card
 class BrokerCard extends Component {
 	state = {
-		borderColor: "light-5"
+		borderColor: 'light-5'
   };
   
   setBorder = (color) => {
@@ -19,42 +19,42 @@ class BrokerCard extends Component {
     const { broker, toggleDetails } = this.props;
 		return (
 			<Box
-				elevation="medium"
-				background={{ color: "white" }}
+				elevation='medium'
+				background={{ color: 'white' }}
 				border={{ color: borderColor }}
-				round="xsmall"
-				justify="start"
-				align="center"
-				width="small"
-				height="small"
+				round='xsmall'
+				justify='start'
+				align='center'
+				width='small'
+				height='small'
 				onMouseOver={() => this.setBorder('accent-1')}
         onMouseOut={() => this.setBorder('light-5')}
         onClick={() => toggleDetails(broker)}
-				style={{ cursor: "pointer" }}
+				style={{ cursor: 'pointer' }}
 			>
 				<Box flex>
-					<Box flex fill="horizontal" justify="center" align="center">
-						<Text size="38px" color="brand" truncate>
+					<Box flex fill='horizontal' justify='center' align='center'>
+						<Text size='38px' color='brand' truncate>
 							{broker.name}
 						</Text>
 					</Box>
 					<Box
 						flex
-						fill="horizontal"
-						justify="start"
-						align="start"
-						overflow={{ horizontal: "scroll" }}
+						fill='horizontal'
+						justify='start'
+						align='start'
+						overflow={{ horizontal: 'scroll' }}
 					>
-						<Text size="large">{broker.description}</Text>
+						<Text size='large'>{broker.description}</Text>
 					</Box>
 				</Box>
-				<Box fill="horizontal">
+				<Box fill='horizontal'>
 					<Button
-						label="Details"
+						label='Details'
 						icon={<More />}
 						plain
 						primary
-						color="light-3"
+						color='light-3'
 					/>
 				</Box>
 			</Box>

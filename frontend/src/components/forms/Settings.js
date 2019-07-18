@@ -12,9 +12,13 @@ class Settings extends Component {
     broker: {},
     detailsOpen: false,
     registerFormOpen: false,
-    borderColor: "light-5"
+    borderColor: 'light-5'
   };
   
+  setBorder = (color) => {
+    this.setState({ borderColor: color });
+  }
+
   //update the list of brokers by calling the API
 	componentDidMount() {
 		axios
@@ -56,8 +60,8 @@ class Settings extends Component {
             width="small"
             height="small"
             onClick={this.toggleRegisterForm}
-            onMouseOver={this.setBorder}
-            onMouseOut={this.setBorder}
+            onMouseOver={() => this.setBorder('accent-1')}
+            onMouseOut={() => this.setBorder('light-5')}
           >
             <Box height='40%' fill='horizontal' pad='medium' align='center'>
               <Text size="38px" color="brand">
