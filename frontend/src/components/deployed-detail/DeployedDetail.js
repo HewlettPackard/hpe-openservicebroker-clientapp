@@ -15,8 +15,11 @@ const DeployedDetail = (props) => {
   }  
 
   let statusColor = 'status-warning';
-  (instance.status === 'loaded') ? (statusColor = 'status-ok') : (statusColor = 'status-error');
-
+  if (instance.status === 'loaded') 
+    statusColor = 'status-ok';
+  if (instance.status === 'failed')
+    statusColor = 'status-error';
+    
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
