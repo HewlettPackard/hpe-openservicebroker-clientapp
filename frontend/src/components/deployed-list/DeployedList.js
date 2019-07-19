@@ -5,6 +5,7 @@ import Card from "../services-card/Card";
 import DeployedDetail from "../deployed-detail/DeployedDetail";
 import axios from "axios";
 
+
 //========================================= Deployed List
 export default class Deployments extends Component {
 	state = {

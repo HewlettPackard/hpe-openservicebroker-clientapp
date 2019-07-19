@@ -62,9 +62,9 @@ class Settings extends Component {
             onMouseOut={() => this.setBorder("light-5")}
             style={{ cursor: 'pointer' }}
 					>
-						<Box height="40%" fill="horizontal" pad="medium" align="center">
-							<Text size="38px" color="brand">
-								Register
+						<Box height="40%" fill="horizontal" pad="medium" align="center" margin={{ bottom: 'small' }}>
+							<Text size="38px" color="brand" textAlign='center'>
+								Register a broker
 							</Text>
 						</Box>
 						<Box

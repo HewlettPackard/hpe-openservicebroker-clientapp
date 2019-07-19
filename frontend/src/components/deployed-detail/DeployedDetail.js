@@ -4,6 +4,7 @@ import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
   
   
+//========================================= Deployed Service Detail
 const DeployedDetail = (props) => {
   const { instance, toggleDetails, updateInstances } = props;
 
