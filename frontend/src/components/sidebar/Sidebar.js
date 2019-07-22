@@ -30,27 +30,27 @@ const Sidebar = (props) => (
       </Box>
     </Box>
     <Box>
-      <Link to='/catalog' style={{ color:'white' }}>
+      <Link to='/catalog' style={{ color:'white', textDecoration: 'none' }}>
         <Text size='xlarge'>Catalog</Text>
       </Link>
     </Box>
     <Box>
-      <Link to='/deployed' style={{ color:'white' }}>
+      <Link to='/deployed' style={{ color:'white', textDecoration: 'none' }}>
         <Text size='xlarge'>Deployed Services</Text>
       </Link>
     </Box>
     <Box>
-      <Link to='/settings' style={{ color:'white' }}>
+      <Link to='/settings' style={{ color:'white', textDecoration: 'none' }}>
         <Text size='xlarge'>Settings</Text>
       </Link>
     </Box>
     <Box>
-      <Link to='/help' style={{ color:'white' }}>
+      <Link to='/help' style={{ color:'white', textDecoration: 'none' }}>
         <Text size='xlarge'>Help</Text>
       </Link>
     </Box>
     <Box>
-      <Link to='/' style={{ color:'white' }}>
+      <Link to='/' style={{ color:'white', textDecoration: 'none' }}>
         <Text size='xlarge'>Logout</Text>
       </Link>
     </Box>
