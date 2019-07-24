@@ -21,7 +21,11 @@ class CatalogResults extends Component {
 	//update the serviceList by calling the API
 	componentDidMount() {
 		axios
-			.get(`${config.apiUrl}/catalog`)
+			.get(`${config.apiUrl}/catalog`, {
+				headers: {
+					"X-Broker-API-Version": 2.14
+				}
+			})
 			.then(results => {
 				this.setState({
 					serviceList: [...results.data.services],

@@ -23,7 +23,11 @@ class Settings extends Component {
 	//update the list of brokers by calling the API
 	componentDidMount() {
 		axios
-			.get(`${config.apiUrl}/catalog`)
+			.get(`${config.apiUrl}/catalog`, {
+				headers: {
+					"X-Broker-API-Version": 2.14
+				}
+			})
 			.then(results => {
 				this.setState({
 					brokerList: [...results.data.services]
@@ -49,7 +53,11 @@ class Settings extends Component {
 			<Box pad="large" fill>
 				<Grid gap="large" columns="small" rows="small">
 					{this.state.brokerList.map(broker => (
-						<BrokerCard broker={broker} toggleDetails={this.toggleDetails} key={broker.name} />
+						<BrokerCard
+							broker={broker}
+							toggleDetails={this.toggleDetails}
+							key={broker.name}
+						/>
 					))}
 					<Box
 						elevation="medium"
@@ -61,10 +69,16 @@ class Settings extends Component {
 						onClick={this.toggleRegisterForm}
 						onMouseOver={() => this.setBorder("accent-1")}
 						onMouseOut={() => this.setBorder("light-5")}
-						style={{ cursor: 'pointer' }}
+						style={{ cursor: "pointer" }}
 					>
-						<Box height="40%" fill="horizontal" pad="medium" align="center" margin={{ bottom: 'small' }}>
-							<Text size="38px" color="brand" textAlign='center'>
+						<Box
+							height="40%"
+							fill="horizontal"
+							pad="medium"
+							align="center"
+							margin={{ bottom: "small" }}
+						>
+							<Text size="38px" color="brand" textAlign="center">
 								Register a broker
 							</Text>
 						</Box>
