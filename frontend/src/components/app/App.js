@@ -45,7 +45,7 @@ export default class App extends Component {
 		if (command === 'loaded') {
 			let newInstances = [...this.state.instances];
 			let newElement = newInstances.find(element => element.id === instance.id);
-      newElement.status = 'loaded';
+			newElement.status = 'loaded';
 			newInstances = newInstances.filter(element => element.id !== instance.id);
 			newInstances.push(newElement);
 			this.setState({ instances: [...newInstances] });
@@ -58,24 +58,22 @@ export default class App extends Component {
 
 		return (
 			<Router>
-				<Grommet theme={hpe} full>
-					<Box className='page' fill direction='row'>
+				<Grommet theme={hpe}>
+					<Box className='page' direction='row' style={{ minHeight: '100vh' }}>
 						{!onLoginPage && (
 							<Box>
 								<Sidebar username={username} />
 								{/* empty box to fix catalog width due to static sidebar */}
-								<Box fill='vertical' width='20rem' />
+								<Box fill='vertical' width='14rem' />
 							</Box>
 						)}
 						<Box className='non-sidebar' flex>
 							<Box
 								className='header-and-body'
-								height='120vh'
-								flex={false}
-								overflow={{ vertical: 'scroll' }}
+								flex
 							>
 								<Route path='/' component={AppBar} />
-								<Box className='body' overflow={{ vertical: 'scroll' }} flex>
+								<Box className='body' flex>
 									<Switch>
 										{/*Routing - Catalog is the home route*/}
 										<Route
@@ -113,15 +111,19 @@ export default class App extends Component {
 										<Route path='/settings' component={Settings} />
 										<Route path='/help' component={Help} />
 									</Switch>
-								</Box>{' '}
+								</Box>
 								{/*end of body box*/}
-							</Box>{' '}
+							</Box>
 							{/*end of header-and-body box*/}
-							<Footer />
-						</Box>{' '}
+							{onLoginPage &&
+								<Box width="100%" background="light-2" align="center">
+									<Footer />
+								</Box>
+							}
+						</Box>
 						{/*end of non-sidebar box*/}
-					</Box>{' '}
-					{/*end of page box*/}]{' '}
+					</Box>
+					{/*end of page box*/}
 				</Grommet>
 			</Router>
 		);
