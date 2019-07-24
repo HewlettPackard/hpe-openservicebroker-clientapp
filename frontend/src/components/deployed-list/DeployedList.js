@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Box, Grid, Text } from "grommet";
 import Card from "../services-card/Card";
 import DeployedDetail from "../deployed-detail/DeployedDetail";
+import config from '../../config';
 import axios from "axios";
-
 
 //========================================= Deployed List
 export default class Deployments extends Component {
@@ -13,7 +13,7 @@ export default class Deployments extends Component {
 		detailsOpen: false
 	};
 
-	handleDelete = () => {};
+	handleDelete = () => { };
 
 	toggleDetails = instance => {
 		this.setState({ detailsOpen: !this.state.detailsOpen, instance: instance });
@@ -28,8 +28,8 @@ export default class Deployments extends Component {
 				this.timer = setInterval(() => {
 					axios
 						.get(
-							`http://3.86.206.101:8099/v2/service_instances/${
-								instances[i].id
+							`${config.apiUrl}/service_instances/${
+							instances[i].id
 							}/last_operation`
 						)
 						.then(result => {

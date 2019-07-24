@@ -4,6 +4,7 @@ import { Box, Button, Grid, Text, TextInput } from "grommet";
 import { Sync } from "grommet-icons";
 import Card from "../services-card/Card";
 import DeployForm from "../deploy/DeployForm";
+import config from "../../config";
 import axios from "axios";
 
 //========================================= Catalog Results
@@ -20,7 +21,7 @@ class CatalogResults extends Component {
 	//update the serviceList by calling the API
 	componentDidMount() {
 		axios
-			.get("http://3.86.206.101:8099/v2/catalog")
+			.get(`${config.apiUrl}/catalog`)
 			.then(results => {
 				this.setState({
 					serviceList: [...results.data.services],

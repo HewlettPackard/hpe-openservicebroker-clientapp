@@ -1,0 +1,3 @@
+module.exports = {
+  apiUrl: "http://example.com/v2"
+};

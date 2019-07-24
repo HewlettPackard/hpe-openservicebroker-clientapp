@@ -5,6 +5,7 @@ import axios from "axios";
 import BrokerCard from "../broker-card/BrokerCard";
 import BrokerDetail from "../broker-detail/BrokerDetail";
 import RegisterForm from "./RegisterForm";
+import config from "../../config";
 
 class Settings extends Component {
 	state = {
@@ -22,7 +23,7 @@ class Settings extends Component {
 	//update the list of brokers by calling the API
 	componentDidMount() {
 		axios
-			.get("http://3.86.206.101:8099/v2/catalog")
+			.get(`${config.apiUrl}/catalog`)
 			.then(results => {
 				this.setState({
 					brokerList: [...results.data.services]
@@ -59,8 +60,8 @@ class Settings extends Component {
 						height="small"
 						onClick={this.toggleRegisterForm}
 						onMouseOver={() => this.setBorder("accent-1")}
-            onMouseOut={() => this.setBorder("light-5")}
-            style={{ cursor: 'pointer' }}
+						onMouseOut={() => this.setBorder("light-5")}
+						style={{ cursor: 'pointer' }}
 					>
 						<Box height="40%" fill="horizontal" pad="medium" align="center" margin={{ bottom: 'small' }}>
 							<Text size="38px" color="brand" textAlign='center'>
