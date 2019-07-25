@@ -1,56 +1,59 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Button, Layer, Form, FormField, Heading, Select, Text, TextInput } from 'grommet';
+import { Link, Redirect } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  Layer,
+  Form,
+  FormField,
+  Heading,
+  Select,
+  Text,
+  TextInput
+} from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
 import uuidv1 from 'uuid/v1';
 import axios from 'axios';
 import config from '../../config';
+import { prototype } from 'stream';
 
 //========================================= Deploy Form
 class DeployForm extends Component {
   state = {
     parameterValues: [],
-    parameterLabels: [],
+    parameterLabels: null,
     plans: [...this.props.service.plans],
     planLabel: '',
     name: '',
-    selectedPlan: {}
-  }
+    selectedPlan: {},
+    toDeployed: false
+  };
 
-  setPlanMenuLabel = (value) => {
+  setPlanMenuLabel = value => {
     let selectedPlan = {};
 
     this.state.plans.forEach(plan => {
-      if (plan.name === value)
-        selectedPlan = plan;
+      if (plan.name === value) selectedPlan = plan;
     });
     this.setState({ planLabel: value, selectedPlan: selectedPlan });
-  }
+  };
 
-  setParamterValue = (value, index) => {
+  setParameterValue = (value, index) => {
     let newValues = [...this.state.parameterValues];
 
     if (newValues.length < index)
-      while (newValues.length < index)
-        newValues.push(undefined);
+      while (newValues.length < index) newValues.push(undefined);
     newValues[index] = value;
     this.setState({ parameterValues: [...newValues] });
-  }
+  };
 
-  setParamterLabel = (value, index) => {
-    let newLabels = [...this.state.parameterLabels];
-
-    if (newLabels.length < index)
-      while (newLabels.length < index)
-        newLabels.push(undefined);
-    newLabels[index] = value;
-    this.setState({ parameterLabels: [...newLabels] });
-  }
+  setParameterLabels = labels => {
+    this.setState({ parameterLabels: [...labels] });
+  };
 
   isNotEmpty(obj) {
     for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return true;
+      if (obj.hasOwnProperty(key)) return true;
     }
     return false;
   }
@@ -58,10 +61,10 @@ class DeployForm extends Component {
   handleInputChange = (input, index) => {
     let temp = [...this.state.parameterValues];
     temp[index] = input;
-    this.setState({ parameterValues: [...temp] })
-  }
+    this.setState({ parameterValues: [...temp] });
+  };
 
-  handleDeploy = (name) => {
+  handleDeploy = name => {
     let instance = {};
     let val = uuidv1();
     instance.name = name;
@@ -71,52 +74,73 @@ class DeployForm extends Component {
     instance.time = `${date.toTimeString()}  ${date.toLocaleDateString()}`;
     const inputs = [];
     for (let index in this.state.parameterLabels)
-      inputs[index] = { label: this.state.parameterLabels[index], value: this.state.parameterValues[index] };
+      inputs[index] = {
+        label: this.state.parameterLabels[index],
+        value: this.state.parameterValues[index]
+      };
     instance.inputs = [...inputs];
-    console.log('inputs', inputs)
 
-    //api call 
+    //api call
     let data = {
-      'service_id': this.props.service.id,
-      'plan_id': '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
-    }
+      service_id: this.props.service.id,
+      plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
+    };
     axios
       .put(`${config.apiUrl}/service_instances/${val}`, data, {
         headers: {
-          'Content-Type': 'application/json',
-          'X-Broker-API-Version': 2.14
+          'Content-Type': 'application/json'
         }
       })
       .then(response => {
-        console.log(response);
+        console.log('successfully provisioning');
       })
       .catch(error => {
-        console.log(error);
-        instance.status = 'failed'
+        console.log('failed provisioning');
+        instance.status = 'failed';
+      })
+      .then(() => {
+        this.props.updateInstances('add', instance);
+        this.setState({ toDeployed: true });
       });
-
-    this.props.updateInstances('add', instance);
-    this.props.toggleDeploy();
-  }
-
+  };
 
   render() {
-    const { parameterValues, plans, planLabel, name, selectedPlan } = this.state;
+    const {
+      parameterValues,
+      parameterLabels,
+      plans,
+      planLabel,
+      name,
+      selectedPlan,
+      toDeployed
+    } = this.state;
     const { toggleDeploy } = this.props;
     const planNames = plans.map(plan => plan.name);
     let planProperties = [];
     if (selectedPlan.hasOwnProperty('schemas')) {
-      const properties = selectedPlan.schemas.service_instance.create.parameters.properties;
+      const properties =
+        selectedPlan.schemas.service_instance.create.parameters.properties;
       for (let property in properties) {
         let obj = { [property]: properties[property] };
         planProperties[properties[property].index] = obj;
       }
     }
+    if (parameterLabels === null) {
+      const propertyNames = planProperties.map(property => {
+        return Object.keys(property);
+      });
+      if (propertyNames.length > 0) this.setParameterLabels(propertyNames);
+    }
 
     return (
       <Layer full plain onEsc={toggleDeploy} animate={false}>
+        {toDeployed && <Redirect to='/deployed' />}
         <Box direction='row' fill>
-          <Box flex background={{ color: 'black', opacity: 'medium' }} onClick={toggleDeploy} />
+          <Box
+            flex
+            background={{ color: 'black', opacity: 'medium' }}
+            onClick={toggleDeploy}
+          />
           <Box
             background={{ color: 'dark-1' }}
             overflow={{ vertical: 'scroll' }}
@@ -125,7 +149,10 @@ class DeployForm extends Component {
           >
             <Box className='deploy-form-header' direction='row' flex={false}>
               <Box justify='center' flex>
-                <Button icon={<FormClose size='large' color='accent-1' />} onClick={toggleDeploy} />
+                <Button
+                  icon={<FormClose size='large' color='accent-1' />}
+                  onClick={toggleDeploy}
+                />
               </Box>
               <Box align='center' flex>
                 <Heading level='2'>Deploy Service</Heading>
@@ -144,10 +171,12 @@ class DeployForm extends Component {
                 />
               </Form>
               <Box width='large'>
-                {this.isNotEmpty(selectedPlan) &&
+                {this.isNotEmpty(selectedPlan) && (
                   <Box className='deploy-form-description-box'>
                     <Box>
-                      <Heading level='3'><strong>Description</strong></Heading>
+                      <Heading level='3'>
+                        <strong>Description</strong>
+                      </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     <Box direction='row' margin={{ top: 'small' }}>
@@ -155,36 +184,45 @@ class DeployForm extends Component {
                         <Text size='large'>Description: </Text>
                       </Box>
                       <Box flex justify='center' align='start' fill='vertical'>
-                        <Text size='large' wordBreak='break-all'>{selectedPlan.description}</Text>
+                        <Text size='large' wordBreak='break-all'>
+                          {selectedPlan.description}
+                        </Text>
                       </Box>
                     </Box>
                   </Box>
-                }
-                {this.isNotEmpty(selectedPlan) &&
-                  (!selectedPlan.free) &&
+                )}
+                {this.isNotEmpty(selectedPlan) && !selectedPlan.free && (
                   <Box className='prices-box'>
                     <Box>
-                      <Heading level='3'><strong>Price Options</strong></Heading>
+                      <Heading level='3'>
+                        <strong>Price Options</strong>
+                      </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     {selectedPlan.metadata.costs.map(cost => (
-                      <Box direction='row' margin={{ top: 'small' }}>
+                      <Box
+                        direction='row'
+                        margin={{ top: 'small' }}
+                        key={cost.amount.usd}
+                      >
                         <Box flex justify='start'>
                           <Text size='large'>Price: </Text>
                         </Box>
                         <Box flex justify='center' align='start'>
-                          <Text size='large' wordBreak='break-all'>{`$${cost.amount.usd} for ${cost.unit}`}</Text>
+                          <Text size='large' wordBreak='break-all'>{`$${
+                            cost.amount.usd
+                          } for ${cost.unit}`}</Text>
                         </Box>
                       </Box>
-                    ))
-                    }
+                    ))}
                   </Box>
-                }
-                {this.isNotEmpty(selectedPlan) &&
-                  (selectedPlan.free) &&
+                )}
+                {this.isNotEmpty(selectedPlan) && selectedPlan.free && (
                   <Box className='prices-box'>
                     <Box>
-                      <Heading level='3'><strong>Price Options</strong></Heading>
+                      <Heading level='3'>
+                        <strong>Price Options</strong>
+                      </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     <Box direction='row' margin={{ top: 'small' }}>
@@ -196,62 +234,85 @@ class DeployForm extends Component {
                       </Box>
                     </Box>
                   </Box>
-                }
-                {this.isNotEmpty(selectedPlan) &&
+                )}
+                {this.isNotEmpty(selectedPlan) && (
                   <Box className='parameters-box'>
                     <Box>
-                      <Heading level='3'><strong>Inputs</strong></Heading>
+                      <Heading level='3'>
+                        <strong>Inputs</strong>
+                      </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     <Form>
-                      <FormField label='Name'>
-                        <TextInput placeholder='Name the instance' onChange={(input) => { this.setState({ name: input.target.value }) }} />
+                      <FormField label='Name' required>
+                        <TextInput
+                          placeholder='Name the instance'
+                          onChange={input => {
+                            this.setState({ name: input.target.value });
+                          }}
+                        />
                       </FormField>
                       {planProperties.map(property => {
                         const propertyName = property[Object.keys(property)[0]];
+
                         if (propertyName.type === 'string') {
                           return (
-                            <FormField label={Object.keys(property)[0]} key={Object.keys(property)[0]}>
+                            <FormField
+                              required
+                              label={Object.keys(property)[0]}
+                              key={Object.keys(property)[0]}
+                            >
                               <TextInput
                                 plain
                                 placeholder={propertyName.description}
-                                onChange={(input) => {
-                                  this.handleInputChange(input.target.value, propertyName.index);
-                                  this.setParamterLabel(Object.keys(property)[0], propertyName.index);
+                                onChange={input => {
+                                  this.handleInputChange(
+                                    input.target.value,
+                                    propertyName.index
+                                  );
                                 }}
                               />
                             </FormField>
-                          )
-                        }
-                        else if (propertyName.type === 'object') {
-                          let label = (parameterValues !== undefined) ?
-                            parameterValues[propertyName.index] :
-                            '';
+                          );
+                        } else if (propertyName.type === 'object') {
+                          let label =
+                            parameterValues !== undefined
+                              ? parameterValues[propertyName.index]
+                              : '';
                           return (
-                            <FormField label={Object.keys(property)[0]} key={Object.keys(property)[0]}>
+                            <FormField
+                              required
+                              label={Object.keys(property)[0]}
+                              key={Object.keys(property)[0]}
+                            >
                               <Select
                                 plain
                                 placeholder={propertyName.description}
                                 options={propertyName.allowedValues}
-                                onChange={(option) => {
-                                  this.setParamterValue(option.value, propertyName.index);
-                                  this.setParamterLabel(Object.keys(property)[0], propertyName.index);
+                                onChange={option => {
+                                  this.setParameterValue(
+                                    option.value,
+                                    propertyName.index
+                                  );
                                 }}
                                 value={label}
                               />
                             </FormField>
-                          )
+                          );
                         }
-                      })
-                      }
+                      })}
                     </Form>
                   </Box>
-                }
+                )}
               </Box>
               <Form>
-                <Link to='/deployed'>
-                  <Button label='Deploy' icon={<Add />} margin='medium' flex={false} onClick={() => this.handleDeploy(name)} />
-                </Link>
+                <Button
+                  label='Deploy'
+                  icon={<Add />}
+                  margin='medium'
+                  flex={false}
+                  onClick={() => this.handleDeploy(name)}
+                />
               </Form>
             </Box>
           </Box>
