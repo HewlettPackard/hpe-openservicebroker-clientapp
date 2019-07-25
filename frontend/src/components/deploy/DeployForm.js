@@ -27,7 +27,9 @@ class DeployForm extends Component {
     name: '',
     selectedPlan: {},
     toDeployed: false,
-    sameNameError: false
+    sameNameError: false,
+    emptyValueError: false,
+    emptyNameError: false
   };
 
   setPlanMenuLabel = value => {
@@ -66,6 +68,17 @@ class DeployForm extends Component {
   };
 
   handleDeploy = name => {
+    this.setState({
+      emptyNameError: false,
+      emptyValueError: false,
+      sameNameError: false
+    });
+
+    if (this.state.name === '') {
+      this.setState({ emptyNameError: true });
+      return;
+    }
+
     const { instances } = this.props;
     for (let i = 0; i < instances.length; i++) {
       if (instances[i].name === name) {
@@ -82,11 +95,21 @@ class DeployForm extends Component {
     var date = new Date();
     instance.time = `${date.toTimeString()}  ${date.toLocaleDateString()}`;
     const inputs = [];
-    for (let index in this.state.parameterLabels)
+
+    for (let index in this.state.parameterLabels) {
+      if (
+        this.state.parameterValues[index] === undefined ||
+        this.state.parameterValues[index] === ''
+      ) {
+        this.setState({ emptyValueError: true });
+        return;
+      }
+
       inputs[index] = {
         label: this.state.parameterLabels[index],
         value: this.state.parameterValues[index]
       };
+    }
     instance.inputs = [...inputs];
 
     //api call
@@ -122,7 +145,9 @@ class DeployForm extends Component {
       name,
       selectedPlan,
       toDeployed,
-      sameNameError
+      sameNameError,
+      emptyValueError,
+      emptyNameError
     } = this.state;
     const { toggleDeploy } = this.props;
     const planNames = plans.map(plan => plan.name);
@@ -324,10 +349,24 @@ class DeployForm extends Component {
                   onClick={() => this.handleDeploy(name)}
                 />
               </Form>
+              {emptyNameError && (
+                <Box>
+                  <Text wordBreak='break-all' color='status-error' size='large'>
+                    You must name the instance.
+                  </Text>
+                </Box>
+              )}
               {sameNameError && (
                 <Box>
                   <Text wordBreak='break-all' color='status-error' size='large'>
                     This name is already used for another instance.
+                  </Text>
+                </Box>
+              )}
+              {emptyValueError && (
+                <Box>
+                  <Text wordBreak='break-all' color='status-error' size='large'>
+                    All fields must be filled.
                   </Text>
                 </Box>
               )}

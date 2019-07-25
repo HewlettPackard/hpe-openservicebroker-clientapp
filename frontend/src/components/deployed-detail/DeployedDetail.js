@@ -134,7 +134,11 @@ const DeployedDetail = props => {
                   const detailName = detail.label;
                   const detailValue = detail.value;
                   return (
-                    <Box direction='row' margin={{ top: 'small' }}>
+                    <Box
+                      direction='row'
+                      margin={{ top: 'small' }}
+                      key={detailName}
+                    >
                       <Box flex justify='start'>
                         <Text size='large'>{detailName}:</Text>
                       </Box>
