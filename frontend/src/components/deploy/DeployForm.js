@@ -26,7 +26,8 @@ class DeployForm extends Component {
     planLabel: '',
     name: '',
     selectedPlan: {},
-    toDeployed: false
+    toDeployed: false,
+    sameNameError: false
   };
 
   setPlanMenuLabel = value => {
@@ -65,6 +66,14 @@ class DeployForm extends Component {
   };
 
   handleDeploy = name => {
+    const { instances } = this.props;
+    for (let i = 0; i < instances.length; i++) {
+      if (instances[i].name === name) {
+        this.setState({ sameNameError: true });
+        return;
+      }
+    }
+
     let instance = {};
     let val = uuidv1();
     instance.name = name;
@@ -112,7 +121,8 @@ class DeployForm extends Component {
       planLabel,
       name,
       selectedPlan,
-      toDeployed
+      toDeployed,
+      sameNameError
     } = this.state;
     const { toggleDeploy } = this.props;
     const planNames = plans.map(plan => plan.name);
@@ -314,6 +324,13 @@ class DeployForm extends Component {
                   onClick={() => this.handleDeploy(name)}
                 />
               </Form>
+              {sameNameError && (
+                <Box>
+                  <Text wordBreak='break-all' color='status-error' size='large'>
+                    This name is already used for another instance.
+                  </Text>
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

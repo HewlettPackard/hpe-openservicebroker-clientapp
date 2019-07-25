@@ -78,7 +78,7 @@ class CatalogResults extends Component {
       showList,
       value
     } = this.state;
-    const { updateInstances } = this.props;
+    const { instances, updateInstances } = this.props;
     let showEmptyMessage = false;
     if (serviceList.length === 0) showEmptyMessage = true;
 
@@ -139,6 +139,7 @@ class CatalogResults extends Component {
             toggleDeploy={this.toggleDeploy}
             service={service}
             updateInstances={updateInstances}
+            instances={instances}
           />
         )}
       </Box>

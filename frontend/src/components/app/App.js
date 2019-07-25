@@ -94,6 +94,7 @@ export default class App extends Component {
                       render={() => (
                         <CatalogResults
                           updateInstances={this.updateInstances}
+                          instances={instances}
                         />
                       )}
                     />
