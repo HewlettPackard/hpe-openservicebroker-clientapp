@@ -132,6 +132,7 @@ class DeployForm extends Component {
       })
       .then(() => {
         this.props.updateInstances('add', instance);
+        this.props.setActivePath('/deployed');
         this.setState({ toDeployed: true });
       });
   };

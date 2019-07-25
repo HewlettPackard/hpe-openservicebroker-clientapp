@@ -78,7 +78,7 @@ class CatalogResults extends Component {
       showList,
       value
     } = this.state;
-    const { instances, updateInstances } = this.props;
+    const { setActivePath, instances, updateInstances } = this.props;
     let showEmptyMessage = false;
     if (serviceList.length === 0) showEmptyMessage = true;
 
@@ -140,6 +140,7 @@ class CatalogResults extends Component {
             service={service}
             updateInstances={updateInstances}
             instances={instances}
+            setActivePath={setActivePath}
           />
         )}
       </Box>

@@ -18,7 +18,8 @@ export default class App extends Component {
   state = {
     username: '',
     onLoginPage: false,
-    instances: []
+    instances: [],
+    activePath: '/catalog'
   };
 
   logIn = input => {
@@ -27,6 +28,10 @@ export default class App extends Component {
 
   hideSideBar = () => {
     this.setState({ onLoginPage: true });
+  };
+
+  setActivePath = path => {
+    this.setState({ activePath: path });
   };
 
   updateInstances = (command, instance) => {
@@ -63,6 +68,7 @@ export default class App extends Component {
               <Box>
                 <Sidebar
                   username={username}
+                  activePath={activePath}
                   setActivePath={this.setActivePath}
                 />
                 {/* empty box to fix catalog width due to static sidebar */}
@@ -95,6 +101,7 @@ export default class App extends Component {
                         <CatalogResults
                           updateInstances={this.updateInstances}
                           instances={instances}
+                          setActivePath={this.setActivePath}
                         />
                       )}
                     />
