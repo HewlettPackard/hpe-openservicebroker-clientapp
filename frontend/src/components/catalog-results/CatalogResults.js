@@ -90,7 +90,11 @@ class CatalogResults extends Component {
               You do not have any brokers registered. Register a broker to
               access services.
             </Text>
-            <Link to='/settings' style={{ color: '#01a982' }}>
+            <Link
+              to='/settings'
+              style={{ color: '#01a982' }}
+              onClick={() => setActivePath('/settings')}
+            >
               <Text size='large' color='brand'>
                 Register Broker
               </Text>

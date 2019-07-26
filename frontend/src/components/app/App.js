@@ -111,6 +111,7 @@ export default class App extends Component {
                         <DeployedList
                           updateInstances={this.updateInstances}
                           instances={instances}
+                          setActivePath={this.setActivePath}
                         />
                       )}
                     />

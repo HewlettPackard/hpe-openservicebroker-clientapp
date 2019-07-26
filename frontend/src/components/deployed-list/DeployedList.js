@@ -65,8 +65,8 @@ export default class Deployments extends Component {
   }
 
   render() {
-    const { detailsOpen, instance } = this.state;
-    const { instances } = this.props;
+    const { detailsOpen, instance, updateInstances } = this.state;
+    const { instances, setActivePath } = this.props;
 
     return (
       <Box pad='large' fill>
@@ -92,7 +92,11 @@ export default class Deployments extends Component {
               You do not have any deployed services. Deploy a service in the
               catalog.
             </Text>
-            <Link to='/catalog' style={{ color: '#01a982' }}>
+            <Link
+              to='/catalog'
+              style={{ color: '#01a982' }}
+              onClick={() => setActivePath('/catalog')}
+            >
               <Text size='large' color='brand'>
                 Catalog
               </Text>
@@ -103,7 +107,7 @@ export default class Deployments extends Component {
           <DeployedDetail
             toggleDetails={this.toggleDetails}
             instance={instance}
-            updateInstances={this.props.updateInstances}
+            updateInstances={updateInstances}
           />
         )}
       </Box>
