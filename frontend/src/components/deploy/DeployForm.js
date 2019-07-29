@@ -89,7 +89,6 @@ class DeployForm extends Component {
 
     let instance = {};
     let val = uuidv1();
-    console.log(val);
     instance.name = name;
     instance.id = val;
     instance.status = 'loading';
