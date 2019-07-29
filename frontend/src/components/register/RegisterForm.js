@@ -46,6 +46,7 @@ class RegisterForm extends Component {
 
 	render() {
 		const { toggleRegisterForm } = this.props;
+		const { sname, url } = this.state;
 
 		return (
 			<Layer full plain onEsc={toggleRegisterForm} animate={false}>
@@ -126,7 +127,7 @@ class RegisterForm extends Component {
 									margin="medium"
 									flex={false}
 									icon={<Add />}
-									onClick={() => toggleRegisterForm()}
+									onClick={() => toggleRegisterForm(sname, url)}
 								/>
 							</Box>
 						</Box>

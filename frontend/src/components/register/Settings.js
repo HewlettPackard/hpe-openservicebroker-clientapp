@@ -9,7 +9,10 @@ import config from "../../config";
 
 class Settings extends Component {
 	state = {
-		brokerList: [],
+		brokerList: [
+			{ name: "grommet", description: "grommet description" },
+			{ name: "devops", description: "devops description" }
+		],
 		broker: {},
 		detailsOpen: false,
 		registerFormOpen: false,
@@ -21,28 +24,37 @@ class Settings extends Component {
 	};
 
 	//update the list of brokers by calling the API
-	componentDidMount() {
-		axios
-			.get(`${config.apiUrl}/catalog`, {
-				headers: {
-					"X-Broker-API-Version": 2.14
-				}
-			})
-			.then(results => {
-				this.setState({
-					brokerList: [...results.data.services]
-				});
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	}
+	// componentDidMount() {
+	// 	axios
+	// 		.get(`${config.apiUrl}/catalog`, {
+	// 			headers: {
+	// 				"X-Broker-API-Version": 2.14
+	// 			}
+	// 		})
+	// 		.then(results => {
+	// 			this.setState({
+	// 				brokerList: [...results.data.services]
+	// 			});
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// }
 
 	toggleDetails = broker => {
 		this.setState({ detailsOpen: !this.state.detailsOpen, broker: broker });
 	};
 
-	toggleRegisterForm = () => {
+	toggleRegisterForm = (serviceName, url) => {
+		console.log(serviceName, url);
+		if (serviceName !== undefined && url !== undefined) {
+			this.setState(prevState => {
+				return {
+					brokerList: prevState.brokerList.concat([{ name: serviceName }])
+				};
+			});
+		}
+
 		this.setState({ registerFormOpen: !this.state.registerFormOpen });
 	};
 
