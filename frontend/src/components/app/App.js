@@ -64,6 +64,10 @@ export default class App extends Component {
     }
   };
 
+  componentDidMount() {
+    this.setState({ activePath: window.location.pathname });
+  }
+
   //render the app
   render() {
     const { activePath, onLoginPage, instances, username } = this.state;
