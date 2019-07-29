@@ -34,17 +34,31 @@ class RegisterForm extends Component {
       uname: this.state.uname,
       pwd: this.state.pwd
     };
+
+    var date = new Date();
+
+    let broker = {
+      name: this.state.name,
+      status: 'loading',
+      time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
+      inputs: [
+        { url: this.state.url },
+        { uname: this.state.uname },
+        { pwd: this.state.pwd }
+      ]
+    };
+
     axios
       .post('http://3.86.206.101:7099/register', data)
       .then(response => {
         console.log(response);
+        broker.status = 'loaded';
       })
       .catch(error => {
         console.log(error);
+        broker.status = 'failed';
       })
       .then(() => {
-        const broker = { ...data };
-        console.log('broker', broker);
         this.props.updateBrokers('add', broker);
         this.props.toggleRegisterForm();
       });

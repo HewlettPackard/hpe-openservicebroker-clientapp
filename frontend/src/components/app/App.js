@@ -20,8 +20,18 @@ export default class App extends Component {
     onLoginPage: false,
     instances: [],
     brokers: [
-      { name: 'grommet', description: 'grommet description' },
-      { name: 'devops', description: 'devops description' }
+      {
+        name: 'grommet',
+        description: 'grommet description',
+        inputs: [],
+        status: 'loaded'
+      },
+      {
+        name: 'devops',
+        description: 'devops description',
+        inputs: [],
+        status: 'loaded'
+      }
     ],
     activePath: '/catalog'
   };
