@@ -56,10 +56,10 @@ const Sidebar = props => (
         >
           {props.activePath === '/settings' ? (
             <Text size='xlarge' color='accent-1'>
-              Settings
+              Broker Settings
             </Text>
           ) : (
-            <Text size='xlarge'>Settings</Text>
+            <Text size='xlarge'>Broker Settings</Text>
           )}
         </Link>
       </Box>

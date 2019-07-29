@@ -26,9 +26,9 @@ export default class Deployments extends Component {
     this.timers.length = instances.length;
     for (let i = 0; i < instances.length; i++) {
       this.timers[i] = null;
-      console.log('instances[i]', instances[i]);
+      console.log(`instances[${i}]`, instances[i]);
       if (instances[i].status === 'loading') {
-        console.log('setting timer');
+        console.log(`setting timer for instance[${i}]`);
         this.timers[i] = setInterval(() => {
           axios
             .get(
@@ -37,16 +37,25 @@ export default class Deployments extends Component {
               }/last_operation`
             )
             .then(result => {
+              console.log('last op result', result);
               if (result.data.state === 'succeeded') {
                 this.props.updateInstances('loaded', instances[i]);
                 console.log(
-                  `cleared interval for timer[${i}] due to successful deployment`
+                  `clear interval for timer[${i}] due to successful deployment`
+                );
+              }
+              if (result.data.state === 'failed') {
+                this.props.updateInstances('failed', instances[i]);
+                console.log(
+                  `clear interval for timer[${i}] due to failed deployment`
                 );
               }
             })
             .catch(error => {
-              console.log(error);
-              console.log(`cleared interval for timer[${i}] due to error`);
+              // console.log(error);
+              console.log(
+                `cleared interval for timer[${i}] due to error getting last op`
+              );
             });
         }, 5000);
       }
@@ -57,16 +66,15 @@ export default class Deployments extends Component {
     const { instances } = this.props;
     for (let i = 0; i < instances.length; i++) {
       if (instances[i].status !== 'loading' && this.timers[i] !== null) {
-        console.log('this.timers[i]', this.timers[i]);
         clearInterval(this.timers[i]);
-        console.log(`cleared interval for timer[${i}]`);
+        console.log(`cleared timer[${i}] because the instance has loaded`);
       }
     }
   }
 
   render() {
-    const { detailsOpen, instance, updateInstances } = this.state;
-    const { instances, setActivePath } = this.props;
+    const { detailsOpen, instance } = this.state;
+    const { instances, setActivePath, updateInstances } = this.props;
 
     return (
       <Box pad='large' fill>
