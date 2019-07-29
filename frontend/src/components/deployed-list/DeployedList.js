@@ -67,7 +67,7 @@ export default class Deployments extends Component {
             });
           if (
             this.pollingCounters[i] > instances[i].maxPolling &&
-            instances[i].maxPolling != undefined
+            instances[i].maxPolling !== undefined
           ) {
             updateInstances('failed', instances[i]);
             console.log(

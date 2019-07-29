@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -11,11 +10,12 @@ import {
 } from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
 import axios from 'axios';
+import config from '../../config';
 
 //========================================= Register Form
 class RegisterForm extends Component {
   state = {
-    sname: '',
+    name: '',
     url: '',
     uname: '',
     pwd: ''
@@ -49,7 +49,7 @@ class RegisterForm extends Component {
     };
 
     axios
-      .post('http://3.86.206.101:7099/register', data)
+      .post(`${config.apiUrl}/register`, data)
       .then(response => {
         console.log(response);
         broker.status = 'loaded';

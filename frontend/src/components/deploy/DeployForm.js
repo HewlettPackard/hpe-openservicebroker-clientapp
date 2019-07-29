@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -15,7 +15,6 @@ import { Add, FormClose } from 'grommet-icons';
 import uuidv1 from 'uuid/v1';
 import axios from 'axios';
 import config from '../../config';
-import { prototype } from 'stream';
 
 //========================================= Deploy Form
 class DeployForm extends Component {
@@ -285,6 +284,7 @@ class DeployForm extends Component {
                       <FormField label='Name' required>
                         <TextInput
                           placeholder='Name the instance'
+                          value={name}
                           onChange={input => {
                             this.setState({ name: input.target.value });
                           }}
