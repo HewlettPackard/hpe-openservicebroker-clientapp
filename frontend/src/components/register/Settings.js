@@ -10,10 +10,6 @@ import config from '../../config';
 //========================================= Settings
 class Settings extends Component {
   state = {
-    brokerList: [
-      { name: 'grommet', description: 'grommet description' },
-      { name: 'devops', description: 'devops description' }
-    ],
     broker: {},
     detailsOpen: false,
     registerFormOpen: false,
@@ -46,25 +42,18 @@ class Settings extends Component {
     this.setState({ detailsOpen: !this.state.detailsOpen, broker: broker });
   };
 
-  toggleRegisterForm = (serviceName, url) => {
-    if (serviceName !== undefined && url !== undefined) {
-      this.setState(prevState => {
-        return {
-          brokerList: prevState.brokerList.concat([{ name: serviceName }])
-        };
-      });
-    }
-
+  toggleRegisterForm = () => {
     this.setState({ registerFormOpen: !this.state.registerFormOpen });
   };
 
   render() {
     const { broker, detailsOpen, registerFormOpen } = this.state;
+    const { brokers, updateBrokers } = this.props;
 
     return (
       <Box pad='large' fill>
         <Grid gap='large' columns='small' rows='small'>
-          {this.state.brokerList.map(broker => (
+          {brokers.map(broker => (
             <BrokerCard
               broker={broker}
               toggleDetails={this.toggleDetails}
@@ -109,7 +98,10 @@ class Settings extends Component {
           <BrokerDetail toggleDetails={this.toggleDetails} broker={broker} />
         )}
         {registerFormOpen && (
-          <RegisterForm toggleRegisterForm={this.toggleRegisterForm} />
+          <RegisterForm
+            toggleRegisterForm={this.toggleRegisterForm}
+            updateBrokers={updateBrokers}
+          />
         )}
       </Box>
     );

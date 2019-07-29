@@ -27,9 +27,9 @@ class RegisterForm extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = () => {
     let data = {
-      sname: this.state.sname,
+      name: this.state.name,
       url: this.state.url,
       uname: this.state.uname,
       pwd: this.state.pwd
@@ -37,17 +37,22 @@ class RegisterForm extends Component {
     axios
       .post('http://3.86.206.101:7099/register', data)
       .then(response => {
-        this.props.toggleRegisterForm();
         console.log(response);
       })
       .catch(error => {
         console.log(error);
+      })
+      .then(() => {
+        const broker = { ...data };
+        console.log('broker', broker);
+        this.props.updateBrokers('add', broker);
+        this.props.toggleRegisterForm();
       });
   };
 
   render() {
     const { toggleRegisterForm } = this.props;
-    const { sname, url } = this.state;
+    const { name, url } = this.state;
 
     return (
       <Layer full plain onEsc={toggleRegisterForm} animate={false}>
@@ -84,9 +89,9 @@ class RegisterForm extends Component {
               <Form>
                 <FormField label='Broker name'>
                   <TextInput
-                    id='sname'
+                    id='name'
                     placeholder='Name the broker'
-                    value={sname}
+                    value={name}
                     onChange={this.handleChange}
                   />
                 </FormField>
@@ -128,7 +133,7 @@ class RegisterForm extends Component {
                   margin='medium'
                   flex={false}
                   icon={<Add />}
-                  onClick={() => this.handleSubmit(sname, url)}
+                  onClick={() => this.handleSubmit(name, url)}
                 />
               </Box>
             </Box>

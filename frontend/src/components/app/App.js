@@ -19,6 +19,10 @@ export default class App extends Component {
     username: '',
     onLoginPage: false,
     instances: [],
+    brokers: [
+      { name: 'grommet', description: 'grommet description' },
+      { name: 'devops', description: 'devops description' }
+    ],
     activePath: '/catalog'
   };
 
@@ -37,7 +41,7 @@ export default class App extends Component {
   updateInstances = (command, instance) => {
     if (command === 'add') {
       let newInstances = [...this.state.instances];
-      if (instance.name !== '') newInstances.push(instance);
+      newInstances.push(instance);
       this.setState({ instances: [...newInstances] });
     }
     if (command === 'delete') {
@@ -64,13 +68,33 @@ export default class App extends Component {
     }
   };
 
+  updateBrokers = (command, broker) => {
+    if (command === 'add') {
+      let newBrokers = [...this.state.brokers];
+      newBrokers.push(broker);
+      this.setState({ brokers: [...newBrokers] });
+    }
+    if (command === 'delete') {
+      let newBrokers = [...this.state.brokers];
+      for (let i = 0; i < newBrokers.length; i++)
+        if (newBrokers[i].name === broker.name) newBrokers.splice(i, 1);
+      this.setState({ brokers: [...newBrokers] });
+    }
+  };
+
   componentDidMount() {
     this.setState({ activePath: window.location.pathname });
   }
 
   //render the app
   render() {
-    const { activePath, onLoginPage, instances, username } = this.state;
+    const {
+      activePath,
+      onLoginPage,
+      instances,
+      brokers,
+      username
+    } = this.state;
 
     return (
       <Router>
@@ -127,7 +151,15 @@ export default class App extends Component {
                         />
                       )}
                     />
-                    <Route path='/settings' component={Settings} />
+                    <Route
+                      path='/settings'
+                      render={() => (
+                        <Settings
+                          updateBrokers={this.updateBrokers}
+                          brokers={brokers}
+                        />
+                      )}
+                    />
                     <Route path='/help' component={Help} />
                   </Switch>
                 </Box>
