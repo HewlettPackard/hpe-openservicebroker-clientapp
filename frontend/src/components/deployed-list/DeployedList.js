@@ -20,16 +20,23 @@ export default class Deployments extends Component {
   };
 
   timers = [];
+  pollingCounters = [];
 
   componentDidMount() {
-    const { instances } = this.props;
+    const { instances, updateInstances } = this.props;
     this.timers.length = instances.length;
+    this.pollingCounters.length = instances.length;
+
     for (let i = 0; i < instances.length; i++) {
       this.timers[i] = null;
+      this.pollingCounters[i] = 0;
       console.log(`instances[${i}]`, instances[i]);
+
       if (instances[i].status === 'loading') {
         console.log(`setting timer for instance[${i}]`);
+
         this.timers[i] = setInterval(() => {
+          this.pollingCounters[i]++;
           axios
             .get(
               `${config.apiUrl}/service_instances/${
@@ -39,13 +46,13 @@ export default class Deployments extends Component {
             .then(result => {
               console.log('last op result', result);
               if (result.data.state === 'succeeded') {
-                this.props.updateInstances('loaded', instances[i]);
+                updateInstances('loaded', instances[i]);
                 console.log(
                   `clear interval for timer[${i}] due to successful deployment`
                 );
               }
               if (result.data.state === 'failed') {
-                this.props.updateInstances('failed', instances[i]);
+                updateInstances('failed', instances[i]);
                 console.log(
                   `clear interval for timer[${i}] due to failed deployment`
                 );
@@ -53,10 +60,20 @@ export default class Deployments extends Component {
             })
             .catch(error => {
               // console.log(error);
+              updateInstances('failed', instances[i]);
               console.log(
                 `cleared interval for timer[${i}] due to error getting last op`
               );
             });
+          if (
+            this.pollingCounters[i] > instances[i].maxPolling &&
+            instances[i].maxPolling != undefined
+          ) {
+            updateInstances('failed', instances[i]);
+            console.log(
+              `clear interval for timer[${i}] due to maxiumum last op polling`
+            );
+          }
         }, 5000);
       }
     }

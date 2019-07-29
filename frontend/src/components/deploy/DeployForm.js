@@ -111,6 +111,7 @@ class DeployForm extends Component {
       };
     }
     instance.inputs = [...inputs];
+    instance.maxPolling = this.props.service.maximum_polling_duration;
 
     //api call
     let data = {
