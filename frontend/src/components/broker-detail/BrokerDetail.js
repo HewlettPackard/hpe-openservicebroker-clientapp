@@ -5,11 +5,11 @@ import axios from 'axios';
 
 //========================================= Broker Details
 const BrokerDetail = props => {
-  const { broker, toggleDetails } = props;
+  const { broker, toggleDetails, updateBrokers } = props;
 
-  const handleDelete = () => {
-    ///API stuff
-    props.toggleDetails();
+  const handleDelete = name => {
+    updateBrokers('delete', broker);
+    toggleDetails();
   };
 
   let statusColor = 'status-warning';

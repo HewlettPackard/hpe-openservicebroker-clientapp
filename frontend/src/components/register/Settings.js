@@ -95,7 +95,11 @@ class Settings extends Component {
           </Box>
         </Grid>
         {detailsOpen && (
-          <BrokerDetail toggleDetails={this.toggleDetails} broker={broker} />
+          <BrokerDetail
+            toggleDetails={this.toggleDetails}
+            broker={broker}
+            updateBrokers={updateBrokers}
+          />
         )}
         {registerFormOpen && (
           <RegisterForm
