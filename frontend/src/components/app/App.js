@@ -12,120 +12,135 @@ import DeployedList from '../deployed-list/DeployedList';
 import Help from '../help/Help';
 import '../app/App.css';
 
-
 //========================================= App
 export default class App extends Component {
-	//set initial state
-	state = {
-		username: '',
-		onLoginPage: false,
-		instances: []
-	};
+  //set initial state
+  state = {
+    username: '',
+    onLoginPage: false,
+    instances: [],
+    activePath: '/catalog'
+  };
 
-	logIn = input => {
-		this.setState({ username: input, onLoginPage: false });
-	};
+  logIn = input => {
+    this.setState({ username: input, onLoginPage: false });
+  };
 
-	hideSideBar = () => {
-		this.setState({ onLoginPage: true });
-	};
+  hideSideBar = () => {
+    this.setState({ onLoginPage: true });
+  };
 
-	updateInstances = (command, instance) => {
-		if (command === 'add') {
-			let newInstances = [...this.state.instances];
-			if (instance.name !== '') newInstances.push(instance);
-			this.setState({ instances: [...newInstances] });
-		}
-		if (command === 'delete') {
-			let newInstances = [...this.state.instances];
-			for (let i = 0; i < newInstances.length; i++)
-				if (newInstances[i].name === instance.name) newInstances.splice(i, 1);
-			this.setState({ instances: [...newInstances] });
-		}
-		if (command === 'loaded') {
-			let newInstances = [...this.state.instances];
-			let newElement = newInstances.find(element => element.id === instance.id);
-			newElement.status = 'loaded';
-			newInstances = newInstances.filter(element => element.id !== instance.id);
-			newInstances.push(newElement);
-			this.setState({ instances: [...newInstances] });
-		}
-	};
+  setActivePath = path => {
+    this.setState({ activePath: path });
+  };
 
-	//render the app
-	render() {
-		const { onLoginPage, instances, username } = this.state;
+  updateInstances = (command, instance) => {
+    if (command === 'add') {
+      let newInstances = [...this.state.instances];
+      if (instance.name !== '') newInstances.push(instance);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'delete') {
+      let newInstances = [...this.state.instances];
+      for (let i = 0; i < newInstances.length; i++)
+        if (newInstances[i].name === instance.name) newInstances.splice(i, 1);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'loaded') {
+      let newInstances = [...this.state.instances];
+      let newElement = newInstances.find(element => element.id === instance.id);
+      newElement.status = 'loaded';
+      newInstances = newInstances.filter(element => element.id !== instance.id);
+      newInstances.push(newElement);
+      this.setState({ instances: [...newInstances] });
+    }
+    if (command === 'failed') {
+      let newInstances = [...this.state.instances];
+      let newElement = newInstances.find(element => element.id === instance.id);
+      newElement.status = 'failed';
+      newInstances = newInstances.filter(element => element.id !== instance.id);
+      newInstances.push(newElement);
+      this.setState({ instances: [...newInstances] });
+    }
+  };
 
-		return (
-			<Router>
-				<Grommet theme={hpe}>
-					<Box className='page' direction='row' style={{ minHeight: '100vh' }}>
-						{!onLoginPage && (
-							<Box>
-								<Sidebar username={username} />
-								{/* empty box to fix catalog width due to static sidebar */}
-								<Box fill='vertical' width='14rem' />
-							</Box>
-						)}
-						<Box className='non-sidebar' flex>
-							<Box
-								className='header-and-body'
-								flex
-							>
-								<Route path='/' component={AppBar} />
-								<Box className='body' flex>
-									<Switch>
-										{/*Routing - Catalog is the home route*/}
-										<Route
-											exact
-											path='/'
-											render={() => (
-												<LoginForm
-													logIn={this.logIn}
-													hideSideBar={this.hideSideBar}
-												/>
-											)}
-										/>
-										<Route
-											path='/login'
-											render={() => <LoginForm logIn={this.logIn} />}
-											hideSideBar={this.hideSideBar}
-										/>
-										<Route
-											path='/catalog'
-											render={() => (
-												<CatalogResults
-													updateInstances={this.updateInstances}
-												/>
-											)}
-										/>
-										<Route
-											path='/deployed'
-											render={() => (
-												<DeployedList
-													updateInstances={this.updateInstances}
-													instances={instances}
-												/>
-											)}
-										/>
-										<Route path='/settings' component={Settings} />
-										<Route path='/help' component={Help} />
-									</Switch>
-								</Box>
-								{/*end of body box*/}
-							</Box>
-							{/*end of header-and-body box*/}
-							{onLoginPage &&
-								<Box width="100%" background="light-2" align="center">
-									<Footer />
-								</Box>
-							}
-						</Box>
-						{/*end of non-sidebar box*/}
-					</Box>
-					{/*end of page box*/}
-				</Grommet>
-			</Router>
-		);
-	}
+  componentDidMount() {
+    this.setState({ activePath: window.location.pathname });
+  }
+
+  //render the app
+  render() {
+    const { activePath, onLoginPage, instances, username } = this.state;
+
+    return (
+      <Router>
+        <Grommet theme={hpe}>
+          <Box className='page' direction='row' style={{ minHeight: '100vh' }}>
+            {!onLoginPage && (
+              <Box>
+                <Sidebar
+                  username={username}
+                  activePath={activePath}
+                  setActivePath={this.setActivePath}
+                />
+                {/* empty box to fix catalog width due to static sidebar */}
+                <Box fill='vertical' width='14rem' />
+              </Box>
+            )}
+            <Box className='non-sidebar' flex>
+              <Box className='header-and-body' flex>
+                <Route path='/' component={AppBar} />
+                <Box className='body' flex>
+                  <Switch>
+                    <Route
+                      exact
+                      path='/'
+                      render={() => (
+                        <LoginForm
+                          logIn={this.logIn}
+                          hideSideBar={this.hideSideBar}
+                        />
+                      )}
+                    />
+                    <Route
+                      path='/login'
+                      render={() => <LoginForm logIn={this.logIn} />}
+                      hideSideBar={this.hideSideBar}
+                    />
+                    <Route
+                      path='/catalog'
+                      render={() => (
+                        <CatalogResults
+                          updateInstances={this.updateInstances}
+                          instances={instances}
+                          setActivePath={this.setActivePath}
+                        />
+                      )}
+                    />
+                    <Route
+                      path='/deployed'
+                      render={() => (
+                        <DeployedList
+                          updateInstances={this.updateInstances}
+                          instances={instances}
+                          setActivePath={this.setActivePath}
+                        />
+                      )}
+                    />
+                    <Route path='/settings' component={Settings} />
+                    <Route path='/help' component={Help} />
+                  </Switch>
+                </Box>
+              </Box>
+              {onLoginPage && (
+                <Box width='100%' background='light-2' align='center'>
+                  <Footer />
+                </Box>
+              )}
+            </Box>
+          </Box>
+        </Grommet>
+      </Router>
+    );
+  }
 }

@@ -31,9 +31,6 @@ class CatalogResults extends Component {
 					serviceList: [...results.data.services],
 					showList: [...results.data.services]
 				});
-			})
-			.catch(error => {
-				console.log(error);
 			});
 	}
 
@@ -81,7 +78,7 @@ class CatalogResults extends Component {
 			showList,
 			value
 		} = this.state;
-		const { updateInstances } = this.props;
+		const { setActivePath, instances, updateInstances } = this.props;
 		let showEmptyMessage = false;
 		if (serviceList.length === 0) showEmptyMessage = true;
 
@@ -93,7 +90,11 @@ class CatalogResults extends Component {
 							You do not have any brokers registered. Register a broker to
 							access services.
 						</Text>
-						<Link to="/settings" style={{ color: "#01a982" }}>
+						<Link
+							to="/settings"
+							style={{ color: "#01a982" }}
+							onClick={() => setActivePath("/settings")}
+						>
 							<Text size="large" color="brand">
 								Register Broker
 							</Text>
@@ -142,6 +143,8 @@ class CatalogResults extends Component {
 						toggleDeploy={this.toggleDeploy}
 						service={service}
 						updateInstances={updateInstances}
+						instances={instances}
+						setActivePath={setActivePath}
 					/>
 				)}
 			</Box>

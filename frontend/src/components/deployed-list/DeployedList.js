@@ -19,42 +19,62 @@ export default class Deployments extends Component {
 		this.setState({ detailsOpen: !this.state.detailsOpen, instance: instance });
 	};
 
-	timer = {};
+	timers = [];
 
 	componentDidMount() {
 		const { instances } = this.props;
-		for (let i = 0; i < instances.length; i++)
+		this.timers.length = instances.length;
+		for (let i = 0; i < instances.length; i++) {
+			this.timers[i] = null;
+			console.log(`instances[${i}]`, instances[i]);
 			if (instances[i].status === "loading") {
-				this.timer = setInterval(() => {
+				console.log(`setting timer for instance[${i}]`);
+				this.timers[i] = setInterval(() => {
 					axios
 						.get(
 							`${config.apiUrl}/service_instances/${
 								instances[i].id
-							}/last_operation`,
-							{
-								headers: {
-									"X-Broker-API-Version": 2.14
-								}
-							}
+							}/last_operation`
 						)
 						.then(result => {
-							if (result.data.state === "succeeded")
+							console.log("last op result", result);
+							if (result.data.state === "succeeded") {
 								this.props.updateInstances("loaded", instances[i]);
+								console.log(
+									`clear interval for timer[${i}] due to successful deployment`
+								);
+							}
+							if (result.data.state === "failed") {
+								this.props.updateInstances("failed", instances[i]);
+								console.log(
+									`clear interval for timer[${i}] due to failed deployment`
+								);
+							}
 						})
 						.catch(error => {
-							console.log(error);
+							// console.log(error);
+							console.log(
+								`cleared interval for timer[${i}] due to error getting last op`
+							);
 						});
 				}, 5000);
 			}
+		}
 	}
 
 	componentDidUpdate() {
-		clearInterval(this.timer);
+		const { instances } = this.props;
+		for (let i = 0; i < instances.length; i++) {
+			if (instances[i].status !== "loading" && this.timers[i] !== null) {
+				clearInterval(this.timers[i]);
+				console.log(`cleared timer[${i}] because the instance has loaded`);
+			}
+		}
 	}
 
 	render() {
 		const { detailsOpen, instance } = this.state;
-		const { instances } = this.props;
+		const { instances, setActivePath, updateInstances } = this.props;
 
 		return (
 			<Box pad="large" fill>
@@ -80,7 +100,11 @@ export default class Deployments extends Component {
 							You do not have any deployed services. Deploy a service in the
 							catalog.
 						</Text>
-						<Link to="/catalog" style={{ color: "#01a982" }}>
+						<Link
+							to="/catalog"
+							style={{ color: "#01a982" }}
+							onClick={() => setActivePath("/catalog")}
+						>
 							<Text size="large" color="brand">
 								Catalog
 							</Text>
@@ -91,7 +115,7 @@ export default class Deployments extends Component {
 					<DeployedDetail
 						toggleDetails={this.toggleDetails}
 						instance={instance}
-						updateInstances={this.props.updateInstances}
+						updateInstances={updateInstances}
 					/>
 				)}
 			</Box>

@@ -7,6 +7,7 @@ import BrokerDetail from "../broker-detail/BrokerDetail";
 import RegisterForm from "./RegisterForm";
 import config from "../../config";
 
+//========================================= Settings
 class Settings extends Component {
 	state = {
 		brokerList: [
