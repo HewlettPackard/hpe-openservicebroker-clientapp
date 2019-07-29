@@ -23,13 +23,13 @@ export default class App extends Component {
       {
         name: 'grommet',
         description: 'grommet description',
-        inputs: [],
+        inputs: [{ url: '' }, { uname: '' }, { pwd: '' }],
         status: 'loaded'
       },
       {
         name: 'devops',
         description: 'devops description',
-        inputs: [],
+        inputs: [{ url: '' }, { uname: '' }, { pwd: '' }],
         status: 'loaded'
       }
     ],
@@ -78,7 +78,7 @@ export default class App extends Component {
     }
   };
 
-  updateBrokers = (command, broker) => {
+  updateBrokers = (command, broker, editedBroker) => {
     if (command === 'add') {
       let newBrokers = [...this.state.brokers];
       newBrokers.push(broker);
@@ -88,6 +88,15 @@ export default class App extends Component {
       let newBrokers = [...this.state.brokers];
       for (let i = 0; i < newBrokers.length; i++)
         if (newBrokers[i].name === broker.name) newBrokers.splice(i, 1);
+      this.setState({ brokers: [...newBrokers] });
+    }
+    if (command === 'edit') {
+      let newBrokers = [...this.state.brokers];
+      for (let i = 0; i < newBrokers.length; i++)
+        if (newBrokers[i].name === broker.name) {
+          newBrokers.splice(i, 1);
+          newBrokers.push(editedBroker);
+        }
       this.setState({ brokers: [...newBrokers] });
     }
   };
