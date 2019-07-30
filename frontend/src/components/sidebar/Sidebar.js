@@ -11,9 +11,10 @@ const Sidebar = props => (
     border={{ color: 'white', side: 'left' }}
     fill='vertical'
     align='start'
+    gaop='small'
     style={{ position: 'fixed', boxShadow: '2px 0 8px grey' }}
   >
-    <Box pad='medium' gap='small'>
+    <Box pad='medium' gap='small' flex={false}>
       <Box gap='small' direction='row'>
         <Cloud size='large' />
         <Heading margin='none'>OSBG</Heading>
@@ -90,6 +91,7 @@ const Sidebar = props => (
     </Box>
     <Box flex justify='end' align='start'>
       <Box
+        flex={false}
         pad={{ horizontal: 'small' }}
         className='user-icon-and-name'
         gap='xsmall'
