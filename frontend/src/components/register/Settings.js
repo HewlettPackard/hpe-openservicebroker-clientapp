@@ -103,6 +103,7 @@ class Settings extends Component {
         )}
         {registerFormOpen && (
           <RegisterForm
+            brokers={brokers}
             toggleRegisterForm={this.toggleRegisterForm}
             updateBrokers={updateBrokers}
           />

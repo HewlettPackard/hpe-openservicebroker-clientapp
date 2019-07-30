@@ -6,6 +6,7 @@ import {
   FormField,
   Heading,
   Layer,
+  Text,
   TextInput
 } from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
@@ -18,7 +19,10 @@ class RegisterForm extends Component {
     name: '',
     url: '',
     uname: '',
-    pwd: ''
+    pwd: '',
+    emptyNameError: false,
+    emptyValueError: false,
+    sameNameError: false
   };
 
   handleChange = e => {
@@ -28,24 +32,46 @@ class RegisterForm extends Component {
   };
 
   handleSubmit = () => {
+    const { name, url, uname, pwd } = this.state;
+
+    this.setState({
+      emptyNameError: false,
+      emptyValueError: false,
+      sameNameError: false
+    });
+
+    if (this.state.name === '') {
+      this.setState({ emptyNameError: true });
+      return;
+    }
+
+    const { brokers } = this.props;
+    for (let i = 0; i < brokers.length; i++) {
+      if (brokers[i].name === this.state.name) {
+        this.setState({ sameNameError: true });
+        return;
+      }
+    }
+
+    if (url === '' || uname === '' || pwd === '') {
+      this.setState({ emptyValueError: true });
+      return;
+    }
+
     let data = {
-      name: this.state.name,
-      url: this.state.url,
-      uname: this.state.uname,
-      pwd: this.state.pwd
+      name: name,
+      url: url,
+      uname: uname,
+      pwd: pwd
     };
 
     var date = new Date();
 
     let broker = {
-      name: this.state.name,
+      name: name,
       status: 'loading',
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
-      inputs: [
-        { url: this.state.url },
-        { uname: this.state.uname },
-        { pwd: this.state.pwd }
-      ]
+      inputs: [{ url: url }, { uname: uname }, { pwd: pwd }]
     };
 
     axios
@@ -66,7 +92,13 @@ class RegisterForm extends Component {
 
   render() {
     const { toggleRegisterForm } = this.props;
-    const { name, url } = this.state;
+    const {
+      name,
+      url,
+      emptyNameError,
+      sameNameError,
+      emptyValueError
+    } = this.state;
 
     return (
       <Layer full plain onEsc={toggleRegisterForm} animate={false}>
@@ -149,6 +181,41 @@ class RegisterForm extends Component {
                   icon={<Add />}
                   onClick={() => this.handleSubmit(name, url)}
                 />
+              </Box>
+              <Box align='center'>
+                {emptyNameError && (
+                  <Box>
+                    <Text
+                      wordBreak='break-all'
+                      color='status-error'
+                      size='large'
+                    >
+                      You must name the broker.
+                    </Text>
+                  </Box>
+                )}
+                {sameNameError && (
+                  <Box>
+                    <Text
+                      wordBreak='break-all'
+                      color='status-error'
+                      size='large'
+                    >
+                      This name is already used for another broker.
+                    </Text>
+                  </Box>
+                )}
+                {emptyValueError && (
+                  <Box>
+                    <Text
+                      wordBreak='break-all'
+                      color='status-error'
+                      size='large'
+                    >
+                      All fields must be filled.
+                    </Text>
+                  </Box>
+                )}
               </Box>
             </Box>
           </Box>
