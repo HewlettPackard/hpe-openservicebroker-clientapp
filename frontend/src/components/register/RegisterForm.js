@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Form, FormField, Heading, Layer, Text } from 'grommet';
 import { Add, Checkmark, Close, FormClose } from 'grommet-icons';
 import axios from 'axios';
@@ -16,6 +16,8 @@ const RegisterForm = props => {
     toggleRegisterForm,
     updateBrokers
   } = props;
+
+  const [canPress, setCanPress] = useState(true);
 
   const validateName = fieldVal => {
     if (broker === undefined) {
@@ -97,7 +99,12 @@ const RegisterForm = props => {
               pad='medium'
               flex={false}
             >
-              <Form onSubmit={({ value }) => handleSubmit(value)}>
+              <Form
+                onSubmit={({ value }) => {
+                  handleSubmit(value);
+                  setCanPress(false);
+                }}
+              >
                 <FormField
                   name='name'
                   label='Broker name'
@@ -132,6 +139,7 @@ const RegisterForm = props => {
                     label='Submit'
                     type='submit'
                     margin='medium'
+                    disabled={!canPress}
                     icon={<Add />}
                   />
                 </Box>
