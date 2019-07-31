@@ -20,9 +20,11 @@ class BrokerDetail extends Component {
     this.props.toggleDetails();
   };
 
-  handleDelete = () => {
-    this.props.updateBrokers('delete', this.props.broker);
-    this.props.toggleDetails();
+  handleDelete = confirmed => {
+    if (confirmed) {
+      this.props.updateBrokers('delete', this.props.broker);
+      this.props.toggleDetails();
+    }
   };
 
   toggleEdit = () => {
@@ -156,7 +158,15 @@ class BrokerDetail extends Component {
                   <Button
                     label='Delete'
                     icon={<Subtract />}
-                    onClick={() => this.handleDelete()}
+                    onClick={() =>
+                      this.handleDelete(
+                        window.confirm(
+                          `Are you sure you want to delete ${
+                            this.props.broker.name
+                          } ?`
+                        )
+                      )
+                    }
                   />
                 </Box>
               </Box>
