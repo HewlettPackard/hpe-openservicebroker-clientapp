@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Box,
-  Button,
-  Form,
-  FormField,
-  Layer,
-  Heading,
-  Text,
-  TextInput
-} from 'grommet';
-import { Checkmark, Close, FormClose, Edit, Subtract } from 'grommet-icons';
+import { Box, Button, Layer, Heading, Text } from 'grommet';
+import { FormClose, Edit, Subtract } from 'grommet-icons';
+import RegisterForm from '../register/RegisterForm';
 import axios from 'axios';
 
 //========================================= Broker Details
 class BrokerDetail extends Component {
   state = {
-    editing: false,
-    name: this.props.broker.name,
-    url: this.props.broker.inputs[0].url,
-    uname: this.props.broker.inputs[1].uname,
-    pwd: this.props.broker.inputs[2].pwd
+    editing: false
+  };
+
+  submitEdit = ({ name, url, uname, pwd }) => {
+    const updatedBroker = {
+      name,
+      inputs: [{ url }, { uname }, { pwd }]
+    };
+
+    this.props.updateBrokers('edit', this.props.broker, updatedBroker);
+    this.props.toggleDetails();
   };
 
   handleDelete = () => {
@@ -27,33 +25,16 @@ class BrokerDetail extends Component {
     this.props.toggleDetails();
   };
 
-  handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
-
   toggleEdit = () => {
     this.setState({ editing: !this.state.editing });
   };
 
-  submitEdit = () => {
-    const updatedBroker = {
-      name: this.state.name,
-      inputs: [
-        { url: this.state.url },
-        { uname: this.state.uname },
-        { pwd: this.state.pwd }
-      ]
-    };
-
-    this.props.updateBrokers('edit', this.props.broker, updatedBroker);
-    this.props.toggleDetails();
-  };
-
   render() {
-    const { editing, name, url, uname, pwd } = this.state;
-    const { broker, toggleDetails } = this.props;
+    const { editing } = this.state;
+    const { broker, brokers, toggleDetails } = this.props;
+    const name = broker.name;
+    const status = broker.status;
+    const description = broker.description;
 
     let statusColor = 'status-warning';
     if (broker.status === 'loaded') statusColor = 'status-ok';
@@ -88,7 +69,7 @@ class BrokerDetail extends Component {
                   </Box>
                   <Box align='center' flex pad={{ top: 'small' }}>
                     <Text size='xxlarge' weight='bold' wordBreak='break-all'>
-                      {broker.name}
+                      {name}
                     </Text>
                   </Box>
                   <Box flex /> {/* empty box to center title */}
@@ -112,7 +93,7 @@ class BrokerDetail extends Component {
                       </Box>
                       <Box flex justify='start' align='start'>
                         <Text size='large' wordBreak='break-all'>
-                          {broker.description}
+                          {description}
                         </Text>
                       </Box>
                     </Box>
@@ -133,7 +114,7 @@ class BrokerDetail extends Component {
                         wordBreak='break-all'
                         color={statusColor}
                       >
-                        {broker.status}
+                        {status}
                       </Text>
                     </Box>
                   </Box>
@@ -166,26 +147,12 @@ class BrokerDetail extends Component {
                     })}
                   </Box>
                 </Box>
-                <Box
-                  width='medium'
-                  align='center'
-                  alignSelf='center'
-                  margin='medium'
-                  flex={false}
-                >
+                <Box margin='small' align='center' gap='medium'>
                   <Button
                     label='Edit'
                     icon={<Edit />}
                     onClick={() => this.toggleEdit()}
                   />
-                </Box>
-                <Box
-                  width='medium'
-                  align='center'
-                  alignSelf='center'
-                  margin='medium'
-                  flex={false}
-                >
                   <Button
                     label='Delete'
                     icon={<Subtract />}
@@ -198,100 +165,14 @@ class BrokerDetail extends Component {
         )}
 
         {editing && (
-          <Layer full plain onEsc={toggleDetails} animate={false}>
-            <Box direction='row' fill>
-              <Box
-                flex
-                background={{ color: 'black', opacity: 'medium' }}
-                onClick={toggleDetails}
-              />
-              <Box
-                background={{ color: 'dark-1' }}
-                overflow={{ vertical: 'scroll' }}
-                width='large'
-                pad='small'
-              >
-                <Box className='editing-header' direction='row' flex={false}>
-                  <Box justify='center' flex>
-                    <Button
-                      icon={<FormClose size='large' color='accent-1' />}
-                      onClick={toggleDetails}
-                    />
-                  </Box>
-                  <Box align='center' flex pad={{ top: 'small' }}>
-                    <Text size='xxlarge' weight='bold' wordBreak='break-all'>
-                      Edit {broker.name}
-                    </Text>
-                  </Box>
-                  <Box flex /> {/* empty box to center title */}
-                </Box>
-                <Box
-                  className='editing-content'
-                  width='large'
-                  pad='medium'
-                  flex={false}
-                >
-                  <Form>
-                    <FormField label='Broker name'>
-                      <TextInput
-                        id='name'
-                        value={name}
-                        onChange={this.handleChange}
-                      />
-                    </FormField>
-                    <FormField label='URL'>
-                      <TextInput
-                        id='url'
-                        value={url}
-                        onChange={this.handleChange}
-                      />
-                    </FormField>
-                    <FormField label='Username'>
-                      <TextInput
-                        id='uname'
-                        value={uname}
-                        onChange={this.handleChange}
-                      />
-                    </FormField>
-                    <FormField label='Password'>
-                      <TextInput
-                        type='password'
-                        id='pwd'
-                        value={pwd}
-                        onChange={this.handleChange}
-                      />
-                    </FormField>
-                  </Form>
-                </Box>
-                <Box
-                  width='medium'
-                  align='center'
-                  alignSelf='center'
-                  margin='medium'
-                  flex={false}
-                >
-                  <Button
-                    label='Submit Changes'
-                    icon={<Checkmark />}
-                    onClick={() => this.submitEdit()}
-                  />
-                </Box>
-                <Box
-                  width='medium'
-                  align='center'
-                  alignSelf='center'
-                  margin='medium'
-                  flex={false}
-                >
-                  <Button
-                    label='Cancel'
-                    icon={<Close />}
-                    onClick={() => this.toggleEdit()}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </Layer>
+          <RegisterForm
+            editing={true}
+            broker={broker}
+            brokers={brokers}
+            toggleDetails={toggleDetails}
+            toggleEdit={this.toggleEdit}
+            submitEdit={this.submitEdit}
+          />
         )}
       </Box>
     );

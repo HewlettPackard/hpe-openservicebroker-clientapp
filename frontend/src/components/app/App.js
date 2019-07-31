@@ -23,13 +23,21 @@ export default class App extends Component {
       {
         name: 'grommet',
         description: 'grommet description',
-        inputs: [{ url: '' }, { uname: '' }, { pwd: '' }],
+        inputs: [
+          { url: 'https://url' },
+          { uname: 'username' },
+          { pwd: 'password' }
+        ],
         status: 'loaded'
       },
       {
         name: 'devops',
         description: 'devops description',
-        inputs: [{ url: '' }, { uname: '' }, { pwd: '' }],
+        inputs: [
+          { url: 'https://url' },
+          { uname: 'username' },
+          { pwd: 'password' }
+        ],
         status: 'loaded'
       }
     ],

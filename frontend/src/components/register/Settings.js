@@ -98,6 +98,7 @@ class Settings extends Component {
           <BrokerDetail
             toggleDetails={this.toggleDetails}
             broker={broker}
+            brokers={brokers}
             updateBrokers={updateBrokers}
           />
         )}
