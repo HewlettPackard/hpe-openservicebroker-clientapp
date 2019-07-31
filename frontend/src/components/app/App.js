@@ -110,7 +110,9 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({ activePath: window.location.pathname });
+    if (window.location.pathname === '/')
+      this.setState({ activePath: '/catalog' });
+    else this.setState({ activePath: window.location.pathname });
   }
 
   //render the app
