@@ -12,7 +12,7 @@ const Sidebar = props => (
     align='start'
     height='100vh'
     gap='small'
-    style={{ boxShadow: '2px 0 8px grey' }}
+    style={{ minHeight: '30rem', boxShadow: '2px 0 8px grey' }}
   >
     <Box pad='medium' gap='small' flex={false}>
       <Box margin={{ bottom: 'small' }}>
