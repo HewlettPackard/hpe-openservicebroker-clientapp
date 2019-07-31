@@ -25,6 +25,7 @@ class DeployForm extends Component {
     planLabel: '',
     name: '',
     selectedPlan: {},
+    canPress: true,
     toDeployed: false,
     sameNameError: false,
     emptyValueError: false,
@@ -68,20 +69,21 @@ class DeployForm extends Component {
 
   handleDeploy = name => {
     this.setState({
+      canPress: false,
       emptyNameError: false,
       emptyValueError: false,
       sameNameError: false
     });
 
     if (this.state.name === '') {
-      this.setState({ emptyNameError: true });
+      this.setState({ emptyNameError: true, canPress: true });
       return;
     }
 
     const { instances } = this.props;
     for (let i = 0; i < instances.length; i++) {
       if (instances[i].name === name) {
-        this.setState({ sameNameError: true });
+        this.setState({ sameNameError: true, canPress: true });
         return;
       }
     }
@@ -100,7 +102,7 @@ class DeployForm extends Component {
         this.state.parameterValues[index] === undefined ||
         this.state.parameterValues[index] === ''
       ) {
-        this.setState({ emptyValueError: true });
+        this.setState({ emptyValueError: true, canPress: true });
         return;
       }
 
@@ -147,6 +149,7 @@ class DeployForm extends Component {
       name,
       selectedPlan,
       toDeployed,
+      canPress,
       sameNameError,
       emptyValueError,
       emptyNameError
@@ -349,6 +352,7 @@ class DeployForm extends Component {
                   icon={<Add />}
                   margin='medium'
                   flex={false}
+                  disabled={!canPress}
                   onClick={() => this.handleDeploy(name)}
                 />
               </Form>
