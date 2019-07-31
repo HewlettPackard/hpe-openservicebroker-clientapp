@@ -9,15 +9,17 @@ const Sidebar = props => (
   <Box
     background={{ color: 'dark-1' }}
     border={{ color: 'white', side: 'left' }}
-    fill='vertical'
     align='start'
-    gaop='small'
-    style={{ position: 'fixed', boxShadow: '2px 0 8px grey' }}
+    height='100vh'
+    gap='small'
+    style={{ boxShadow: '2px 0 8px grey' }}
   >
     <Box pad='medium' gap='small' flex={false}>
-      <Box gap='small' direction='row'>
+      <Box margin={{ bottom: 'small' }}>
         <Cloud size='large' />
-        <Heading margin='none'>OSBG</Heading>
+        <Heading margin='none' level='2'>
+          OSB Client App
+        </Heading>
       </Box>
       <Box>
         <Link

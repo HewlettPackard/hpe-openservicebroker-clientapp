@@ -118,19 +118,15 @@ export default class App extends Component {
     return (
       <Router>
         <Grommet theme={hpe}>
-          <Box className='page' direction='row' style={{ minHeight: '100vh' }}>
+          <Box className='page' direction='row' height='100vh'>
             {!onLoginPage && (
-              <Box>
-                <Sidebar
-                  username={username}
-                  activePath={activePath}
-                  setActivePath={this.setActivePath}
-                />
-                {/* empty box to fix catalog width due to static sidebar */}
-                <Box fill='vertical' width='14rem' />
-              </Box>
+              <Sidebar
+                username={username}
+                activePath={activePath}
+                setActivePath={this.setActivePath}
+              />
             )}
-            <Box className='non-sidebar' flex>
+            <Box className='non-sidebar' flex overflow='auto'>
               <Box className='header-and-body' flex>
                 <Route path='/' component={AppBar} />
                 <Box className='body' flex>

@@ -34,7 +34,38 @@ const Help = () => (
         where you will fill in the necessary information to deploy an instance
         of that service. You can manage your instances in the Deployed Services
         page. You can also manage your registered brokers, or add a new one, in
-        the Settings page.
+        the Settings page. You must first register a service broker to access
+        its services. Do this in the Settings page. Once registered, the Catalog
+        page will show you what the broker offers. Click on a service to reach
+        the Deployment page, where you will fill in the necessary information to
+        deploy an instance of that service. You can manage your instances in the
+        Deployed Services page. You can also manage your registered brokers, or
+        add a new one, in the Settings page.You must first register a service
+        broker to access its services. Do this in the Settings page. Once
+        registered, the Catalog page will show you what the broker offers. Click
+        on a service to reach the Deployment page, where you will fill in the
+        necessary information to deploy an instance of that service. You can
+        manage your instances in the Deployed Services page. You can also manage
+        your registered brokers, or add a new one, in the Settings page.You must
+        first register a service broker to access its services. Do this in the
+        Settings page. Once registered, the Catalog page will show you what the
+        broker offers. Click on a service to reach the Deployment page, where
+        you will fill in the necessary information to deploy an instance of that
+        service. You can manage your instances in the Deployed Services page.
+        You can also manage your registered brokers, or add a new one, in the
+        Settings page.You must first register a service broker to access its
+        services. Do this in the Settings page. Once registered, the Catalog
+        page will show you what the broker offers. Click on a service to reach
+        the Deployment page, where you will fill in the necessary information to
+        deploy an instance of that service. You can manage your instances in the
+        Deployed Services page. You can also manage your registered brokers, or
+        add a new one, in the Settings page.You must first register a service
+        broker to access its services. Do this in the Settings page. Once
+        registered, the Catalog page will show you what the broker offers. Click
+        on a service to reach the Deployment page, where you will fill in the
+        necessary information to deploy an instance of that service. You can
+        manage your instances in the Deployed Services page. You can also manage
+        your registered brokers, or add a new one, in the Settings page.
       </Paragraph>
     </Box>
     <Box flex={false} margin={{ bottom: 'large' }}>
