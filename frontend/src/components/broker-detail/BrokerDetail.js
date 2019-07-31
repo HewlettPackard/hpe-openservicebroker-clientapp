@@ -149,9 +149,10 @@ class BrokerDetail extends Component {
                     })}
                   </Box>
                 </Box>
-                <Box margin='small' align='center' gap='medium'>
+                <Box margin='small' align='center' flex={false}>
                   <Button
                     label='Edit'
+                    margin='medium'
                     icon={<Edit />}
                     onClick={() => this.toggleEdit()}
                   />
