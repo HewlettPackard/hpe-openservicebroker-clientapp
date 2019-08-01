@@ -8,21 +8,23 @@ import axios from 'axios';
 const DeployedDetail = props => {
   const { instance, toggleDetails, updateInstances } = props;
 
-  const handleDelete = () => {
-    toggleDetails();
-    updateInstances('delete', instance);
-    axios
-      .delete(`${config.apiUrl}/catalog/service_instances/${instance.id}`, {
-        headers: {
-          'X-Broker-API-Version': 2.14
-        }
-      })
-      .then(results => {
-        console.log('success deprovisioning');
-      })
-      .catch(error => {
-        console.log('failed deprovisioning');
-      });
+  const handleDelete = confirmed => {
+    if (confirmed) {
+      toggleDetails();
+      updateInstances('delete', instance);
+      axios
+        .delete(`${config.apiUrl}/catalog/service_instances/${instance.id}`, {
+          headers: {
+            'X-Broker-API-Version': 2.14
+          }
+        })
+        .then(results => {
+          console.log('success deprovisioning');
+        })
+        .catch(error => {
+          console.log('failed deprovisioning');
+        });
+    }
   };
 
   let statusColor = 'status-warning';
@@ -162,7 +164,13 @@ const DeployedDetail = props => {
               <Button
                 label='Delete'
                 icon={<Subtract />}
-                onClick={() => handleDelete(instance)}
+                onClick={() =>
+                  handleDelete(
+                    window.confirm(
+                      `Are you sure you want to delete ${instance.name} ?`
+                    )
+                  )
+                }
               />
             </Box>
           </Box>
