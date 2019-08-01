@@ -142,7 +142,7 @@ class BrokerDetail extends Component {
                           <Box flex justify='start' align='start'>
                             {detailName === 'password' ? (
                               <Text size='large' wordBreak='break-all'>
-                                {String(detailValue).replace(/.+/gi, '*******')}
+                                {'*******'}
                               </Text>
                             ) : (
                               <Text size='large' wordBreak='break-all'>

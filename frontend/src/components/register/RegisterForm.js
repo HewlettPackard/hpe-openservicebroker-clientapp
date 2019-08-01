@@ -132,6 +132,7 @@ const RegisterForm = props => {
                   name='password'
                   label='Password'
                   placeholder='Password used to login to broker'
+                  type='password'
                   required
                 />
                 <Box align='center'>
