@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Button, Form, FormField, Heading, Layer, Text } from 'grommet';
 import { Add, Checkmark, Close, FormClose } from 'grommet-icons';
 import axios from 'axios';
-import config from '../../config';
 
 //========================================= Register Form
 const RegisterForm = props => {
@@ -14,7 +13,8 @@ const RegisterForm = props => {
     toggleEdit,
     submitEdit,
     toggleRegisterForm,
-    updateBrokers
+    updateBrokers,
+    updateServices
   } = props;
 
   const [canPress, setCanPress] = useState(true);
@@ -34,8 +34,8 @@ const RegisterForm = props => {
   };
 
   const validateURL = fieldVal => {
-    const regexp = /https:\/\/.+/;
-    if (!regexp.test(fieldVal)) return 'must begin with https://';
+    const regexp = /https?:\/\/.+/;
+    if (!regexp.test(fieldVal)) return 'must begin with http:// or https://';
     for (let i = 0; i < brokers.length; i++)
       if (brokers[i].inputs[0].url === fieldVal)
         return 'This url is already used for another broker.';
@@ -49,14 +49,6 @@ const RegisterForm = props => {
   };
 
   const handleSubmit = ({ name, url, username, password, description }) => {
-    let data = {
-      name,
-      url,
-      username,
-      password,
-      description
-    };
-
     var date = new Date();
 
     let broker = {
@@ -68,13 +60,16 @@ const RegisterForm = props => {
     };
 
     axios
-      .post(`${config.apiUrl}/register`, data)
-      .then(response => {
-        console.log(response);
+      .get(`${url}/catalog`, {
+        headers: {
+          'X-Broker-API-Version': 2.14
+        }
+      })
+      .then(results => {
         broker.status = 'loaded';
+        updateServices(results.data.services);
       })
       .catch(error => {
-        console.log(error);
         broker.status = 'failed';
       })
       .then(() => {

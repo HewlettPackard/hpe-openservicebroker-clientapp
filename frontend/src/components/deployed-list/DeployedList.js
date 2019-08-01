@@ -113,7 +113,7 @@ export default class Deployments extends Component {
             align='center'
             gap='medium'
           >
-            <Text size='xlarge' color=''>
+            <Text size='xlarge' color='' textAlign='center'>
               You do not have any deployed services. Deploy a service in the
               catalog.
             </Text>

@@ -48,7 +48,7 @@ class Settings extends Component {
 
   render() {
     const { broker, detailsOpen, registerFormOpen } = this.state;
-    const { brokers, updateBrokers } = this.props;
+    const { brokers, updateBrokers, updateServices } = this.props;
 
     return (
       <Box pad='large' fill>
@@ -107,6 +107,7 @@ class Settings extends Component {
             brokers={brokers}
             toggleRegisterForm={this.toggleRegisterForm}
             updateBrokers={updateBrokers}
+            updateServices={updateServices}
           />
         )}
       </Box>

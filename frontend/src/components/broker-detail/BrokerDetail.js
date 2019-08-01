@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Button, Layer, Heading, Text } from 'grommet';
-import { FormClose, Edit, Subtract } from 'grommet-icons';
+import { FormClose, Edit, Subtract, Update } from 'grommet-icons';
 import RegisterForm from '../register/RegisterForm';
 import axios from 'axios';
 
@@ -36,6 +36,31 @@ class BrokerDetail extends Component {
       this.props.updateBrokers('delete', this.props.broker);
       this.props.toggleDetails();
     }
+  };
+
+  handleUpdate = () => {
+    const { broker, toggleDetails, updateBrokers, updateServices } = this.props;
+    console.log('broker', broker);
+    let updatedBroker = { ...broker };
+    console.log('updatedBroker', updatedBroker);
+    axios
+      .get(`${broker.inputs[0].url}/catalog`, {
+        headers: {
+          'X-Broker-API-Version': 2.14
+        }
+      })
+      .then(results => {
+        updatedBroker.status = 'loaded';
+        updateServices(results.data.services);
+      })
+      .catch(error => {
+        updatedBroker.status = 'failed';
+      })
+      .then(() => {
+        updateBrokers('edit', broker, updatedBroker);
+        toggleDetails();
+        console.log('updatedBroker', updatedBroker);
+      });
   };
 
   toggleEdit = () => {
@@ -185,9 +210,14 @@ class BrokerDetail extends Component {
                 <Box margin='small' align='center' flex={false}>
                   <Button
                     label='Edit'
-                    margin='medium'
                     icon={<Edit />}
                     onClick={() => this.toggleEdit()}
+                  />
+                  <Button
+                    label='Update'
+                    margin='medium'
+                    icon={<Update />}
+                    onClick={() => this.handleUpdate()}
                   />
                   <Button
                     label='Delete'

@@ -19,6 +19,7 @@ export default class App extends Component {
     username: '',
     onLoginPage: false,
     instances: [],
+    services: [],
     brokers: [
       {
         name: 'grommet',
@@ -109,6 +110,12 @@ export default class App extends Component {
     }
   };
 
+  updateServices = newServices => {
+    if (this.state.services.length > 0)
+      this.setState({ services: [this.state.services, ...newServices] });
+    else this.setState({ services: [...newServices] });
+  };
+
   componentDidMount() {
     if (window.location.pathname === '/')
       this.setState({ activePath: '/catalog' });
@@ -121,6 +128,7 @@ export default class App extends Component {
       activePath,
       onLoginPage,
       instances,
+      services,
       brokers,
       username
     } = this.state;
@@ -162,6 +170,7 @@ export default class App extends Component {
                         <CatalogResults
                           updateInstances={this.updateInstances}
                           instances={instances}
+                          services={services}
                           setActivePath={this.setActivePath}
                         />
                       )}
@@ -181,6 +190,7 @@ export default class App extends Component {
                       render={() => (
                         <Settings
                           updateBrokers={this.updateBrokers}
+                          updateServices={this.updateServices}
                           brokers={brokers}
                         />
                       )}
