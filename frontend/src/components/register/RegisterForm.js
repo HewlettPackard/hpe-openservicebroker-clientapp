@@ -33,6 +33,15 @@ const RegisterForm = props => {
     }
   };
 
+  const validateURL = fieldVal => {
+    const regexp = /https:\/\/.+/;
+    if (!regexp.test(fieldVal)) return 'must begin with https://';
+    for (let i = 0; i < brokers.length; i++)
+      if (brokers[i].inputs[0].url === fieldVal)
+        return 'This url is already used for another broker.';
+    return '';
+  };
+
   const confirmPassword = (fieldVal, formValues) => {
     if (formValues['password'] === '*******') return '';
     if (fieldVal !== formValues['password']) return 'passwords must match';
@@ -130,10 +139,7 @@ const RegisterForm = props => {
                   label='URL'
                   placeholder='Use https for secure connection. Ex: https://127.0.0.1:7009'
                   required
-                  validate={{
-                    regexp: /https:\/\/.+/,
-                    message: 'must begin with https://'
-                  }}
+                  validate={validateURL}
                 />
                 <FormField
                   name='username'
