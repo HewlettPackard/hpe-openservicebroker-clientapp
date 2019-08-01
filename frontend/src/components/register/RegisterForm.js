@@ -39,18 +39,20 @@ const RegisterForm = props => {
     return '';
   };
 
-  const handleSubmit = ({ name, url, username, password }) => {
+  const handleSubmit = ({ name, url, username, password, description }) => {
     let data = {
       name,
       url,
       username,
-      password
+      password,
+      description
     };
 
     var date = new Date();
 
     let broker = {
-      name: name,
+      name,
+      description,
       status: 'loading',
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
       inputs: [{ url }, { username }, { password }]
@@ -119,6 +121,11 @@ const RegisterForm = props => {
                   validate={validateName}
                 />
                 <FormField
+                  name='description'
+                  label='Description'
+                  placeholder='Optional broker description'
+                />
+                <FormField
                   name='url'
                   label='URL'
                   placeholder='Use https for secure connection. Ex: https://127.0.0.1:7009'
@@ -165,9 +172,10 @@ const RegisterForm = props => {
       </Layer>
     );
   else {
-    const name = broker.name;
+    const { name, description, status, time } = broker;
     const url = broker.inputs[0].url;
     const username = broker.inputs[1].username;
+    const password = broker.inputs[2].password;
 
     return (
       <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -203,7 +211,20 @@ const RegisterForm = props => {
               pad='medium'
               flex={false}
             >
-              <Form onSubmit={({ value }) => submitEdit(value)}>
+              <Form
+                onSubmit={({ value }) => {
+                  const { name, description } = value;
+                  submitEdit({
+                    name,
+                    description,
+                    status,
+                    time,
+                    url,
+                    username,
+                    password
+                  });
+                }}
+              >
                 <FormField
                   name='name'
                   label='Broker name'
@@ -212,33 +233,9 @@ const RegisterForm = props => {
                   validate={validateName}
                 />
                 <FormField
-                  name='url'
-                  label='URL'
-                  value={url}
-                  required
-                  validate={{
-                    regexp: /https:\/\/.+/,
-                    message: 'must begin with https://'
-                  }}
-                />
-                <FormField
-                  name='username'
-                  label='User name'
-                  value={username}
-                  required
-                />
-                <FormField
-                  name='password'
-                  label='Password'
-                  placeholder='*******'
-                  type='password'
-                  required
-                />
-                <FormField
-                  name='confirmedPassword'
-                  label='Confirm password'
-                  type='password'
-                  validate={confirmPassword}
+                  name='description'
+                  label='Optional broker description'
+                  value={description}
                 />
                 <Box align='center'>
                   <Button

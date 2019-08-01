@@ -10,9 +10,20 @@ class BrokerDetail extends Component {
     editing: false
   };
 
-  submitEdit = ({ name, url, username, password }) => {
+  submitEdit = ({
+    name,
+    description,
+    status,
+    time,
+    url,
+    username,
+    password
+  }) => {
     const updatedBroker = {
       name,
+      description,
+      status,
+      time,
       inputs: [{ url }, { username }, { password }]
     };
 
@@ -34,9 +45,7 @@ class BrokerDetail extends Component {
   render() {
     const { editing } = this.state;
     const { broker, brokers, toggleDetails } = this.props;
-    const name = broker.name;
-    const status = broker.status;
-    const description = broker.description;
+    const { name, status, description, time } = broker;
 
     let statusColor = 'status-warning';
     if (broker.status === 'loaded') statusColor = 'status-ok';
@@ -118,6 +127,24 @@ class BrokerDetail extends Component {
                       >
                         {status}
                       </Text>
+                    </Box>
+                  </Box>
+                  <Box>
+                    <Box>
+                      <Heading level='3'>
+                        <strong>Time Created</strong>
+                      </Heading>
+                    </Box>
+                    <Box background={{ color: 'accent-1' }} height='2px' />
+                    <Box direction='row' margin={{ top: 'small' }}>
+                      <Box flex justify='start'>
+                        <Text size='large'>Time and Date: </Text>
+                      </Box>
+                      <Box flex justify='start' align='start'>
+                        <Text size='large' wordBreak='break-all'>
+                          {time}
+                        </Text>
+                      </Box>
                     </Box>
                   </Box>
                   <Box className='broker-parameters-box'>

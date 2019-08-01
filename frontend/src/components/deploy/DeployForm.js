@@ -23,18 +23,13 @@ class DeployForm extends Component {
     parameterLabels: null,
     plans: [...this.props.service.plans],
     planLabel: '',
-    name: '',
     selectedPlan: {},
     canPress: true,
-    toDeployed: false,
-    sameNameError: false,
-    emptyValueError: false,
-    emptyNameError: false
+    toDeployed: false
   };
 
   setPlanMenuLabel = value => {
     let selectedPlan = {};
-
     this.state.plans.forEach(plan => {
       if (plan.name === value) selectedPlan = plan;
     });
@@ -43,7 +38,6 @@ class DeployForm extends Component {
 
   setParameterValue = (value, index) => {
     let newValues = [...this.state.parameterValues];
-
     if (newValues.length < index)
       while (newValues.length < index) newValues.push(undefined);
     newValues[index] = value;
@@ -67,18 +61,12 @@ class DeployForm extends Component {
     this.setState({ parameterValues: [...temp] });
   };
 
-  handleDeploy = name => {
+  handleDeploy = ({ name }) => {
     this.setState({
       canPress: false,
-      emptyNameError: false,
       emptyValueError: false,
       sameNameError: false
     });
-
-    if (this.state.name === '') {
-      this.setState({ emptyNameError: true, canPress: true });
-      return;
-    }
 
     const { instances } = this.props;
     for (let i = 0; i < instances.length; i++) {
@@ -283,16 +271,14 @@ class DeployForm extends Component {
                       </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
-                    <Form>
-                      <FormField label='Name' required>
-                        <TextInput
-                          placeholder='Name the instance'
-                          value={name}
-                          onChange={input => {
-                            this.setState({ name: input.target.value });
-                          }}
-                        />
-                      </FormField>
+                    <Form onSubmit>
+                      <FormField
+                        name='name'
+                        label='Name'
+                        required
+                        placeholder='Name the instance'
+                        value={name}
+                      />
                       {planProperties.map(property => {
                         const propertyName = property[Object.keys(property)[0]];
 
@@ -349,11 +335,11 @@ class DeployForm extends Component {
               <Form>
                 <Button
                   label='Deploy'
-                  icon={<Add />}
                   margin='medium'
+                  type='submit'
+                  icon={<Add />}
                   flex={false}
                   disabled={!canPress}
-                  onClick={() => this.handleDeploy(name)}
                 />
               </Form>
               {emptyNameError && (
