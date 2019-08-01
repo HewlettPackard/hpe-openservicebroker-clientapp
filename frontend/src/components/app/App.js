@@ -25,8 +25,8 @@ export default class App extends Component {
         description: 'grommet description',
         inputs: [
           { url: 'https://url' },
-          { uname: 'username' },
-          { pwd: 'password' }
+          { username: 'username' },
+          { password: 'password' }
         ],
         status: 'loaded'
       },
@@ -35,8 +35,8 @@ export default class App extends Component {
         description: 'devops description',
         inputs: [
           { url: 'https://url' },
-          { uname: 'username' },
-          { pwd: 'password' }
+          { username: 'username' },
+          { password: 'password' }
         ],
         status: 'loaded'
       }

@@ -33,12 +33,12 @@ const RegisterForm = props => {
     }
   };
 
-  const handleSubmit = ({ name, url, uname, pwd }) => {
+  const handleSubmit = ({ name, url, username, password }) => {
     let data = {
       name,
       url,
-      uname,
-      pwd
+      username,
+      password
     };
 
     var date = new Date();
@@ -47,7 +47,7 @@ const RegisterForm = props => {
       name: name,
       status: 'loading',
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
-      inputs: [{ url: url }, { uname: uname }, { pwd: pwd }]
+      inputs: [{ url }, { username }, { password }]
     };
 
     axios
@@ -123,13 +123,13 @@ const RegisterForm = props => {
                   }}
                 />
                 <FormField
-                  name='uname'
+                  name='username'
                   label='Username'
                   placeholder='Username used to login to broker'
                   required
                 />
                 <FormField
-                  name='pwd'
+                  name='password'
                   label='Password'
                   placeholder='Password used to login to broker'
                   required
@@ -153,8 +153,8 @@ const RegisterForm = props => {
   else {
     const name = broker.name;
     const url = broker.inputs[0].url;
-    const uname = broker.inputs[1].uname;
-    const pwd = broker.inputs[2].pwd;
+    const username = broker.inputs[1].username;
+    const password = broker.inputs[2].password;
 
     return (
       <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -209,15 +209,15 @@ const RegisterForm = props => {
                   }}
                 />
                 <FormField
-                  name='uname'
+                  name='username'
                   label='User name'
-                  value={uname}
+                  value={username}
                   required
                 />
                 <FormField
-                  name='pwd'
+                  name='password'
                   label='Password'
-                  value={pwd}
+                  value={password}
                   type='password'
                   required
                 />

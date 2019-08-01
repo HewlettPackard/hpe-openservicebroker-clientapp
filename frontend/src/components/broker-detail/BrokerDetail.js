@@ -10,10 +10,10 @@ class BrokerDetail extends Component {
     editing: false
   };
 
-  submitEdit = ({ name, url, uname, pwd }) => {
+  submitEdit = ({ name, url, username, password }) => {
     const updatedBroker = {
       name,
-      inputs: [{ url }, { uname }, { pwd }]
+      inputs: [{ url }, { username }, { password }]
     };
 
     this.props.updateBrokers('edit', this.props.broker, updatedBroker);
@@ -140,9 +140,15 @@ class BrokerDetail extends Component {
                             <Text size='large'>{detailName}:</Text>
                           </Box>
                           <Box flex justify='start' align='start'>
-                            <Text size='large' wordBreak='break-all'>
-                              {detailValue}
-                            </Text>
+                            {detailName === 'password' ? (
+                              <Text size='large' wordBreak='break-all'>
+                                {String(detailValue).replace(/.+/gi, '*******')}
+                              </Text>
+                            ) : (
+                              <Text size='large' wordBreak='break-all'>
+                                {detailValue}
+                              </Text>
+                            )}
                           </Box>
                         </Box>
                       );
