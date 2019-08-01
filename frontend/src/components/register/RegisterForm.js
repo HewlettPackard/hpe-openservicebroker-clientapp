@@ -167,7 +167,6 @@ const RegisterForm = props => {
     const name = broker.name;
     const url = broker.inputs[0].url;
     const username = broker.inputs[1].username;
-    const password = broker.inputs[2].password;
 
     return (
       <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -230,7 +229,7 @@ const RegisterForm = props => {
                 <FormField
                   name='password'
                   label='Password'
-                  value={password}
+                  value='*******'
                   type='password'
                   required
                 />
