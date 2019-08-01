@@ -34,6 +34,7 @@ const RegisterForm = props => {
   };
 
   const confirmPassword = (fieldVal, formValues) => {
+    if (formValues['password'] === '*******') return '';
     if (fieldVal !== formValues['password']) return 'passwords must match';
     return '';
   };
@@ -229,9 +230,15 @@ const RegisterForm = props => {
                 <FormField
                   name='password'
                   label='Password'
-                  value='*******'
+                  placeholder='*******'
                   type='password'
                   required
+                />
+                <FormField
+                  name='confirmedPassword'
+                  label='Confirm password'
+                  type='password'
+                  validate={confirmPassword}
                 />
                 <Box align='center'>
                   <Button
