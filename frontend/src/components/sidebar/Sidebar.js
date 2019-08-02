@@ -82,13 +82,9 @@ const Sidebar = props => (
         </Link>
       </Box>
       <Box>
-        <Link
-          to='/'
-          style={{ color: 'white', textDecoration: 'none' }}
-          onClick={() => props.setActivePath('/catalog')}
-        >
+        <a href='/' style={{ color: 'white', textDecoration: 'none' }}>
           <Text size='xlarge'>Logout</Text>
-        </Link>
+        </a>
       </Box>
     </Box>
     <Box flex justify='end' align='start'>
