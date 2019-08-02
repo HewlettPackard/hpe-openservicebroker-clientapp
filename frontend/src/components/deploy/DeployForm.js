@@ -55,23 +55,29 @@ class DeployForm extends Component {
     return false;
   }
 
+  validateName = fieldVal => {
+    const { instances } = this.props;
+    for (let i = 0; i < instances.length; i++)
+      if (instances[i].name === fieldVal)
+        return 'This name is already used for another instance.';
+    return '';
+  };
+
   handleInputChange = (input, index) => {
     let temp = [...this.state.parameterValues];
     temp[index] = input;
     this.setState({ parameterValues: [...temp] });
   };
 
-  handleDeploy = ({ name }) => {
-    this.setState({
-      canPress: false,
-      emptyValueError: false,
-      sameNameError: false
-    });
+  setCanPress = bool => {
+    this.setState({ canPress: bool });
+  };
 
+  handleDeploy = ({ name }) => {
     const { instances } = this.props;
     for (let i = 0; i < instances.length; i++) {
       if (instances[i].name === name) {
-        this.setState({ sameNameError: true, canPress: true });
+        this.setState({ canPress: true });
         return;
       }
     }
@@ -85,28 +91,22 @@ class DeployForm extends Component {
     instance.time = `${date.toTimeString()}  ${date.toLocaleDateString()}`;
     const inputs = [];
 
-    for (let index in this.state.parameterLabels) {
-      if (
-        this.state.parameterValues[index] === undefined ||
-        this.state.parameterValues[index] === ''
-      ) {
-        this.setState({ emptyValueError: true, canPress: true });
-        return;
-      }
-
+    for (let index in this.state.parameterLabels)
       inputs[index] = {
         label: this.state.parameterLabels[index],
         value: this.state.parameterValues[index]
       };
-    }
+
     instance.inputs = [...inputs];
     instance.maxPolling = this.props.service.maximum_polling_duration;
 
     //api call
+    console.log('service.id', this.props.service.id);
     let data = {
       service_id: this.props.service.id,
       plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
     };
+    console.log(`${config.apiUrl}/service_instances/${val}`);
     axios
       .put(`${config.apiUrl}/service_instances/${val}`, data, {
         headers: {
@@ -137,10 +137,7 @@ class DeployForm extends Component {
       name,
       selectedPlan,
       toDeployed,
-      canPress,
-      sameNameError,
-      emptyValueError,
-      emptyNameError
+      canPress
     } = this.state;
     const { toggleDeploy } = this.props;
     const planNames = plans.map(plan => plan.name);
@@ -271,12 +268,18 @@ class DeployForm extends Component {
                       </Heading>
                     </Box>
                     <Box background={{ color: 'accent-1' }} height='2px' />
-                    <Form onSubmit>
+                    <Form
+                      onSubmit={({ value }) => {
+                        this.handleDeploy(value);
+                        this.setCanPress(false);
+                      }}
+                    >
                       <FormField
+                        required
                         name='name'
                         label='Name'
-                        required
                         placeholder='Name the instance'
+                        validate={this.validateName}
                         value={name}
                       />
                       {planProperties.map(property => {
@@ -286,20 +289,18 @@ class DeployForm extends Component {
                           return (
                             <FormField
                               required
+                              plain
+                              name={Object.keys(property)[0]}
                               label={Object.keys(property)[0]}
                               key={Object.keys(property)[0]}
-                            >
-                              <TextInput
-                                plain
-                                placeholder={propertyName.description}
-                                onChange={input => {
-                                  this.handleInputChange(
-                                    input.target.value,
-                                    propertyName.index
-                                  );
-                                }}
-                              />
-                            </FormField>
+                              placeholder={propertyName.description}
+                              onChange={input => {
+                                this.handleInputChange(
+                                  input.target.value,
+                                  propertyName.index
+                                );
+                              }}
+                            />
                           );
                         } else if (propertyName.type === 'object') {
                           let label =
@@ -309,60 +310,38 @@ class DeployForm extends Component {
                           return (
                             <FormField
                               required
+                              plain
+                              component={Select}
+                              name={Object.keys(property)[0]}
                               label={Object.keys(property)[0]}
                               key={Object.keys(property)[0]}
-                            >
-                              <Select
-                                plain
-                                placeholder={propertyName.description}
-                                options={propertyName.allowedValues}
-                                onChange={option => {
-                                  this.setParameterValue(
-                                    option.value,
-                                    propertyName.index
-                                  );
-                                }}
-                                value={label}
-                              />
-                            </FormField>
+                              placeholder={propertyName.description}
+                              options={propertyName.allowedValues}
+                              onChange={option => {
+                                this.setParameterValue(
+                                  option.value,
+                                  propertyName.index
+                                );
+                              }}
+                              value={label}
+                            />
                           );
                         }
                       })}
+                      <Box align='center'>
+                        <Button
+                          label='Deploy'
+                          margin='medium'
+                          type='submit'
+                          icon={<Add />}
+                          flex={false}
+                          disabled={!canPress}
+                        />
+                      </Box>
                     </Form>
                   </Box>
                 )}
               </Box>
-              <Form>
-                <Button
-                  label='Deploy'
-                  margin='medium'
-                  type='submit'
-                  icon={<Add />}
-                  flex={false}
-                  disabled={!canPress}
-                />
-              </Form>
-              {emptyNameError && (
-                <Box>
-                  <Text wordBreak='break-all' color='status-error' size='large'>
-                    You must name the instance.
-                  </Text>
-                </Box>
-              )}
-              {sameNameError && (
-                <Box>
-                  <Text wordBreak='break-all' color='status-error' size='large'>
-                    This name is already used for another instance.
-                  </Text>
-                </Box>
-              )}
-              {emptyValueError && (
-                <Box>
-                  <Text wordBreak='break-all' color='status-error' size='large'>
-                    All fields must be filled.
-                  </Text>
-                </Box>
-              )}
             </Box>
           </Box>
         </Box>

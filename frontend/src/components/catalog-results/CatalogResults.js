@@ -94,16 +94,6 @@ class CatalogResults extends Component {
                   onChange={this.setValue}
                 />
               </Box>
-              <Button
-                label='refresh'
-                color='brand'
-                gap='small'
-                icon={<Sync size='medium' color='brand' />}
-                onClick={() => {
-                  alert('Udating Services');
-                  this.setState({});
-                }}
-              />
             </Box>
             <Grid gap='large' columns='small' rows='small'>
               {showList.map(service => (

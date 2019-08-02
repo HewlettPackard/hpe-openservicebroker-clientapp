@@ -22,16 +22,6 @@ export default class App extends Component {
     services: [],
     brokers: [
       {
-        name: 'grommet',
-        description: 'grommet description',
-        inputs: [
-          { url: 'https://url' },
-          { username: 'username' },
-          { password: 'password' }
-        ],
-        status: 'loaded'
-      },
-      {
         name: 'devops',
         description: 'devops description',
         inputs: [
