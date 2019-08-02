@@ -64,7 +64,7 @@ class CatalogResults extends Component {
       <Box pad='large' fill>
         {showEmptyMessage && (
           <Box className='empty-catalog-message' align='center' gap='medium'>
-            <Text size='xlarge' color='' textAlign='center'>
+            <Text size='xlarge'>
               You do not have any brokers registered. Register a broker to
               access services.
             </Text>
