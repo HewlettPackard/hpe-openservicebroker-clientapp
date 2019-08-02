@@ -40,11 +40,9 @@ class BrokerDetail extends Component {
 
   handleUpdate = () => {
     const { broker, toggleDetails, updateBrokers, updateServices } = this.props;
-    console.log('broker', broker);
     let updatedBroker = { ...broker };
-    console.log('updatedBroker', updatedBroker);
     axios
-      .get(`${broker.inputs[0].url}/catalog`, {
+      .get(`${broker.inputs[0].url}/v2/catalog`, {
         headers: {
           'X-Broker-API-Version': 2.14
         }
@@ -54,12 +52,12 @@ class BrokerDetail extends Component {
         updateServices(results.data.services);
       })
       .catch(error => {
+        console.log('error', error);
         updatedBroker.status = 'failed';
       })
       .then(() => {
         updateBrokers('edit', broker, updatedBroker);
         toggleDetails();
-        console.log('updatedBroker', updatedBroker);
       });
   };
 

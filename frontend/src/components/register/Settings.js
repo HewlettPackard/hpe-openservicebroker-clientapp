@@ -20,24 +20,6 @@ class Settings extends Component {
     this.setState({ borderColor: color });
   };
 
-  //update the list of brokers by calling the API
-  // componentDidMount() {
-  // 	axios
-  // 		.get(`${config.apiUrl}/catalog`, {
-  // 			headers: {
-  // 				"X-Broker-API-Version": 2.14
-  // 			}
-  // 		})
-  // 		.then(results => {
-  // 			this.setState({
-  // 				brokerList: [...results.data.services]
-  // 			});
-  // 		})
-  // 		.catch(error => {
-  // 			console.log(error);
-  // 		});
-  // }
-
   toggleDetails = broker => {
     this.setState({ detailsOpen: !this.state.detailsOpen, broker: broker });
   };
@@ -100,6 +82,7 @@ class Settings extends Component {
             broker={broker}
             brokers={brokers}
             updateBrokers={updateBrokers}
+            updateServices={updateServices}
           />
         )}
         {registerFormOpen && (

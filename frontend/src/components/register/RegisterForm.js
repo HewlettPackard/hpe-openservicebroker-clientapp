@@ -60,7 +60,7 @@ const RegisterForm = props => {
     };
 
     axios
-      .get(`${url}/catalog`, {
+      .get(`${url}/v2/catalog`, {
         headers: {
           'X-Broker-API-Version': 2.14
         }

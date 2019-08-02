@@ -111,9 +111,15 @@ export default class App extends Component {
   };
 
   updateServices = newServices => {
-    if (this.state.services.length > 0)
-      this.setState({ services: [this.state.services, ...newServices] });
-    else this.setState({ services: [...newServices] });
+    if (this.state.services.length > 0) {
+      let keptServices = newServices.filter(service => {
+        for (let i = 0; i < this.state.services.length; i++)
+          if (service.name !== this.state.services[i].name) return service;
+      });
+      this.setState({
+        services: [...this.state.services, ...keptServices]
+      });
+    } else this.setState({ services: [...newServices] });
   };
 
   componentDidMount() {
