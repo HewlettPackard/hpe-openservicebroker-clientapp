@@ -31,6 +31,8 @@ const DeployedDetail = props => {
   if (instance.status === 'loaded') statusColor = 'status-ok';
   if (instance.status === 'failed') statusColor = 'status-error';
 
+  const inputs = Object.entries(instance.inputs);
+
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
       <Box direction='row' fill>
@@ -124,7 +126,7 @@ const DeployedDetail = props => {
                 </Box>
               </Box>
             </Box>
-            {instance.inputs.length > 0 && (
+            {inputs.length > 0 && (
               <Box className='deployed-parameters-box'>
                 <Box>
                   <Heading level='3'>
@@ -132,9 +134,8 @@ const DeployedDetail = props => {
                   </Heading>
                 </Box>
                 <Box background={{ color: 'accent-1' }} height='2px' />
-                {instance.inputs.map(detail => {
-                  const detailName = detail.label;
-                  const detailValue = detail.value;
+                {inputs.map(input => {
+                  const [detailName, detailValue] = input;
                   return (
                     <Box
                       direction='row'

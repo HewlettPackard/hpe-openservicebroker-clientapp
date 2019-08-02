@@ -8,8 +8,7 @@ import {
   FormField,
   Heading,
   Select,
-  Text,
-  TextInput
+  Text
 } from 'grommet';
 import { Add, FormClose } from 'grommet-icons';
 import uuidv1 from 'uuid/v1';
@@ -19,8 +18,6 @@ import config from '../../config';
 //========================================= Deploy Form
 class DeployForm extends Component {
   state = {
-    parameterValues: [],
-    parameterLabels: null,
     plans: [...this.props.service.plans],
     planLabel: '',
     selectedPlan: {},
@@ -36,22 +33,8 @@ class DeployForm extends Component {
     this.setState({ planLabel: value, selectedPlan: selectedPlan });
   };
 
-  setParameterValue = (value, index) => {
-    let newValues = [...this.state.parameterValues];
-    if (newValues.length < index)
-      while (newValues.length < index) newValues.push(undefined);
-    newValues[index] = value;
-    this.setState({ parameterValues: [...newValues] });
-  };
-
-  setParameterLabels = labels => {
-    this.setState({ parameterLabels: [...labels] });
-  };
-
   isNotEmpty(obj) {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) return true;
-    }
+    for (var key in obj) if (obj.hasOwnProperty(key)) return true;
     return false;
   }
 
@@ -63,50 +46,30 @@ class DeployForm extends Component {
     return '';
   };
 
-  handleInputChange = (input, index) => {
-    let temp = [...this.state.parameterValues];
-    temp[index] = input;
-    this.setState({ parameterValues: [...temp] });
-  };
-
   setCanPress = bool => {
     this.setState({ canPress: bool });
   };
 
-  handleDeploy = ({ name }) => {
-    const { instances } = this.props;
-    for (let i = 0; i < instances.length; i++) {
-      if (instances[i].name === name) {
-        this.setState({ canPress: true });
-        return;
-      }
-    }
-
-    let instance = {};
+  handleSubmit = inputs => {
+    const { service, setActivePath, updateInstances } = this.props;
     let val = uuidv1();
-    instance.name = name;
-    instance.id = val;
-    instance.status = 'loading';
-    var date = new Date();
-    instance.time = `${date.toTimeString()}  ${date.toLocaleDateString()}`;
-    const inputs = [];
+    let date = new Date();
 
-    for (let index in this.state.parameterLabels)
-      inputs[index] = {
-        label: this.state.parameterLabels[index],
-        value: this.state.parameterValues[index]
-      };
-
-    instance.inputs = [...inputs];
-    instance.maxPolling = this.props.service.maximum_polling_duration;
+    let instance = {
+      name: inputs.name,
+      inputs,
+      id: val,
+      maxPolling: service.maximum_polling_duration,
+      time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
+      status: 'loading'
+    };
+    delete instance.inputs.name;
 
     //api call
-    console.log('service.id', this.props.service.id);
     let data = {
-      service_id: this.props.service.id,
+      service_id: service.id,
       plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
     };
-    console.log(`${config.apiUrl}/service_instances/${val}`);
     axios
       .put(`${config.apiUrl}/service_instances/${val}`, data, {
         headers: {
@@ -122,16 +85,14 @@ class DeployForm extends Component {
         instance.status = 'failed';
       })
       .then(() => {
-        this.props.updateInstances('add', instance);
-        this.props.setActivePath('/deployed');
+        updateInstances('add', instance);
+        setActivePath('/deployed');
         this.setState({ toDeployed: true });
       });
   };
 
   render() {
     const {
-      parameterValues,
-      parameterLabels,
       plans,
       planLabel,
       name,
@@ -149,12 +110,6 @@ class DeployForm extends Component {
         let obj = { [property]: properties[property] };
         planProperties[properties[property].index] = obj;
       }
-    }
-    if (parameterLabels === null) {
-      const propertyNames = planProperties.map(property => {
-        return Object.keys(property);
-      });
-      if (propertyNames.length > 0) this.setParameterLabels(propertyNames);
     }
 
     return (
@@ -270,7 +225,7 @@ class DeployForm extends Component {
                     <Box background={{ color: 'accent-1' }} height='2px' />
                     <Form
                       onSubmit={({ value }) => {
-                        this.handleDeploy(value);
+                        this.handleSubmit(value, name);
                         this.setCanPress(false);
                       }}
                     >
@@ -284,7 +239,6 @@ class DeployForm extends Component {
                       />
                       {planProperties.map(property => {
                         const propertyName = property[Object.keys(property)[0]];
-
                         if (propertyName.type === 'string') {
                           return (
                             <FormField
@@ -294,19 +248,9 @@ class DeployForm extends Component {
                               label={Object.keys(property)[0]}
                               key={Object.keys(property)[0]}
                               placeholder={propertyName.description}
-                              onChange={input => {
-                                this.handleInputChange(
-                                  input.target.value,
-                                  propertyName.index
-                                );
-                              }}
                             />
                           );
-                        } else if (propertyName.type === 'object') {
-                          let label =
-                            parameterValues !== undefined
-                              ? parameterValues[propertyName.index]
-                              : '';
+                        } else if (propertyName.type === 'object')
                           return (
                             <FormField
                               required
@@ -317,16 +261,8 @@ class DeployForm extends Component {
                               key={Object.keys(property)[0]}
                               placeholder={propertyName.description}
                               options={propertyName.allowedValues}
-                              onChange={option => {
-                                this.setParameterValue(
-                                  option.value,
-                                  propertyName.index
-                                );
-                              }}
-                              value={label}
                             />
                           );
-                        }
                       })}
                       <Box align='center'>
                         <Button
