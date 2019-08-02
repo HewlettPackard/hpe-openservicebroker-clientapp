@@ -52,14 +52,17 @@ class DeployForm extends Component {
 
   handleSubmit = inputs => {
     const { service, setActivePath, updateInstances } = this.props;
-    let val = uuidv1();
-    let date = new Date();
+    const val = uuidv1();
+    const date = new Date();
+    const maxPolling = service.maximum_polling_duration
+      ? service.maximum_polling_duration
+      : Infinity;
 
     let instance = {
-      name: inputs.name,
       inputs,
+      maxPolling,
+      name: inputs.name,
       id: val,
-      maxPolling: service.maximum_polling_duration,
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
       status: 'loading'
     };
@@ -68,7 +71,8 @@ class DeployForm extends Component {
     //api call
     let data = {
       service_id: service.id,
-      plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733'
+      plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733',
+      parameters: inputs
     };
     axios
       .put(`${config.apiUrl}/service_instances/${val}`, data, {

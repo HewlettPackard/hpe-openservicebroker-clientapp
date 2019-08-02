@@ -114,24 +114,26 @@ class BrokerDetail extends Component {
                   pad='medium'
                   flex={false}
                 >
-                  <Box className='deployed-description-box'>
-                    <Box>
-                      <Heading level='3'>
-                        <strong>Description</strong>
-                      </Heading>
-                    </Box>
-                    <Box background={{ color: 'accent-1' }} height='2px' />
-                    <Box direction='row' margin={{ top: 'small' }}>
-                      <Box flex justify='start'>
-                        <Text size='large'>Description: </Text>
+                  {description && (
+                    <Box className='deployed-description-box'>
+                      <Box>
+                        <Heading level='3'>
+                          <strong>Description</strong>
+                        </Heading>
                       </Box>
-                      <Box flex justify='start' align='start'>
-                        <Text size='large' wordBreak='break-all'>
-                          {description}
-                        </Text>
+                      <Box background={{ color: 'accent-1' }} height='2px' />
+                      <Box direction='row' margin={{ top: 'small' }}>
+                        <Box flex justify='start'>
+                          <Text size='large'>Description: </Text>
+                        </Box>
+                        <Box flex justify='start' align='start'>
+                          <Text size='large' wordBreak='break-all'>
+                            {description}
+                          </Text>
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
+                  )}
                   <Box>
                     <Heading level='3'>
                       <strong>Status</strong>
