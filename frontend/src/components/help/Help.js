@@ -48,19 +48,21 @@ const Help = () => (
         that journey, we provide the technology and solutions to help them
         succeed.
       </Paragraph>
-      <Text size='xlarge'>Links</Text>
-      <Anchor
-        href='https://www.hpe.com/us/en/home.html?chatsrc=ot-en&jumpid=ps_p2jm73rngz_aid-510455007&gclid=Cj0KCQjwyLDpBRCxARIsAEENsrKNSojVUoiPQiu8MaYkDXKLKwRk416kIHTyTQma9sj6IGnWz1gZCJMaAmxQEALw_wcB&gclsrc=aw.ds'
-        label='HPE Official Site'
-        size='xlarge'
-        color='brand'
-      />
-      <Anchor
-        href='https://developer.hpe.com'
-        label='HPE Developer Home'
-        size='xlarge'
-        color='brand'
-      />
+      <Box gap='small'>
+        <Text size='xlarge'>Links</Text>
+        <Anchor
+          href='https://www.hpe.com/us/en/home.html?chatsrc=ot-en&jumpid=ps_p2jm73rngz_aid-510455007&gclid=Cj0KCQjwyLDpBRCxARIsAEENsrKNSojVUoiPQiu8MaYkDXKLKwRk416kIHTyTQma9sj6IGnWz1gZCJMaAmxQEALw_wcB&gclsrc=aw.ds'
+          label='HPE Official Site'
+          size='xlarge'
+          color='brand'
+        />
+        <Anchor
+          href='https://developer.hpe.com'
+          label='HPE Developer Home'
+          size='xlarge'
+          color='brand'
+        />
+      </Box>
     </Box>
   </Box>
 );

@@ -13,6 +13,7 @@ const AppBar = props => {
         height='5rem'
         border={{ color: 'light-5', side: 'bottom', size: 'small' }}
         pad={{ vertical: 'small', horizontal: 'large' }}
+        elevation='xsmall'
       >
         {/* change text based on route */}
         <Switch>
