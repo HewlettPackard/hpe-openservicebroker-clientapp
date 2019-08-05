@@ -100,11 +100,14 @@ export default class App extends Component {
     }
   };
 
-  updateServices = newServices => {
+  updateServices = (newServices, url) => {
     if (this.state.services.length > 0) {
       let keptServices = newServices.filter(service => {
         for (let i = 0; i < this.state.services.length; i++)
-          if (service.name !== this.state.services[i].name) return service;
+          if (service.name !== this.state.services[i].name) {
+            service.url = url;
+            return service;
+          }
       });
       this.setState({
         services: [...this.state.services, ...keptServices]

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Box, Grid, Button, Text } from 'grommet';
 import { Add } from 'grommet-icons';
-import axios from 'axios';
 import BrokerCard from '../broker-card/BrokerCard';
 import BrokerDetail from '../broker-detail/BrokerDetail';
 import RegisterForm from './RegisterForm';
-import config from '../../config';
 
 //========================================= Settings
 class Settings extends Component {

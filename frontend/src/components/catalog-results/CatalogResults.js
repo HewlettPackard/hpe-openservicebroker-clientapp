@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Grid, Text, TextInput } from 'grommet';
-import { Sync } from 'grommet-icons';
+import { Box, Grid, Text, TextInput } from 'grommet';
 import Card from '../services-card/Card';
 import DeployForm from '../deploy/DeployForm';
-import config from '../../config';
-import axios from 'axios';
 
 //========================================= Catalog Results
 class CatalogResults extends Component {

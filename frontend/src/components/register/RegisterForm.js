@@ -67,7 +67,7 @@ const RegisterForm = props => {
       })
       .then(results => {
         broker.status = 'loaded';
-        updateServices(results.data.services);
+        updateServices(results.data.services, url);
       })
       .catch(error => {
         broker.status = 'failed';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Button, Heading, Layer, Text } from 'grommet';
 import { FormClose, Subtract } from 'grommet-icons';
-import config from '../../config';
 import axios from 'axios';
 
 //========================================= Deployed Service Detail
@@ -13,7 +12,7 @@ const DeployedDetail = props => {
       toggleDetails();
       updateInstances('delete', instance);
       axios
-        .delete(`${config.apiUrl}/catalog/service_instances/${instance.id}`, {
+        .delete(`${instance.url}/catalog/service_instances/${instance.id}`, {
           headers: {
             'X-Broker-API-Version': 2.14
           }

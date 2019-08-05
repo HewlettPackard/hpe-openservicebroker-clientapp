@@ -13,7 +13,6 @@ import {
 import { Add, FormClose } from 'grommet-icons';
 import uuidv1 from 'uuid/v1';
 import axios from 'axios';
-import config from '../../config';
 
 //========================================= Deploy Form
 class DeployForm extends Component {
@@ -62,6 +61,7 @@ class DeployForm extends Component {
       inputs,
       maxPolling,
       name: inputs.name,
+      url: service.id,
       id: val,
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
       status: 'loading'
@@ -75,7 +75,7 @@ class DeployForm extends Component {
       parameters: inputs
     };
     axios
-      .put(`${config.apiUrl}/service_instances/${val}`, data, {
+      .put(`${service.url}/service_instances/${val}`, data, {
         headers: {
           'Content-Type': 'application/json',
           'X-Broker-API-Version': 2.14

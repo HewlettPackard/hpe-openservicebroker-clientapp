@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Box, Grid, Text } from 'grommet';
 import Card from '../services-card/Card';
 import DeployedDetail from '../deployed-detail/DeployedDetail';
-import config from '../../config';
 import axios from 'axios';
 
 //========================================= Deployed List
@@ -39,7 +38,7 @@ export default class Deployments extends Component {
           this.pollingCounters[i]++;
           axios
             .get(
-              `${config.apiUrl}/service_instances/${
+              `${instances[i].url}/service_instances/${
                 instances[i].id
               }/last_operation`
             )
