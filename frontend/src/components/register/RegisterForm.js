@@ -68,14 +68,14 @@ const RegisterForm = props => {
       .then(results => {
         broker.status = 'loaded';
         updateServices(results.data.services, url);
+        updateBrokers('add', broker);
+        toggleRegisterForm();
       })
       .catch(error => {
         broker.status = 'failed';
+        alert('Failed to register');
       })
-      .then(() => {
-        updateBrokers('add', broker);
-        toggleRegisterForm();
-      });
+      .then(() => setCanPress(true));
   };
 
   if (!editing)
