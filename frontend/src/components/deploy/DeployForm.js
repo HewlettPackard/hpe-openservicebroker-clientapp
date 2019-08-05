@@ -75,7 +75,7 @@ class DeployForm extends Component {
       parameters: inputs
     };
     axios
-      .put(`${service.url}/v2/service_instances/${val}`, data, {
+      .put(`http://3.86.206.101:7099/v2/service_instances/${val}`, data, {
         headers: {
           'Content-Type': 'application/json',
           'X-Broker-API-Version': 2.14
@@ -83,16 +83,16 @@ class DeployForm extends Component {
       })
       .then(response => {
         console.log('successfully provisioning');
-      })
-      .catch(error => {
-        console.log('failed provisioning');
-        instance.status = 'failed';
-      })
-      .then(() => {
         updateInstances('add', instance);
         setActivePath('/deployed');
         this.setState({ toDeployed: true });
-      });
+      })
+      .catch(error => {
+        console.log('failed provisioning');
+        alert('The deployment failed');
+        instance.status = 'failed';
+      })
+      .then(() => this.setState({ canPress: true }));
   };
 
   render() {
