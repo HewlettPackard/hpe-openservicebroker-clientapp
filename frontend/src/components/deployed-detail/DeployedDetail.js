@@ -108,24 +108,6 @@ const DeployedDetail = props => {
                 </Box>
               </Box>
             </Box>
-            <Box>
-              <Box>
-                <Heading level='3'>
-                  <strong>Instance ID</strong>
-                </Heading>
-              </Box>
-              <Box background={{ color: 'accent-1' }} height='2px' />
-              <Box direction='row' margin={{ top: 'small' }}>
-                <Box flex justify='start'>
-                  <Text size='large'>ID given to broker: </Text>
-                </Box>
-                <Box flex justify='start' align='start'>
-                  <Text size='large' wordBreak='break-all'>
-                    {instance.id}
-                  </Text>
-                </Box>
-              </Box>
-            </Box>
             {inputs.length > 0 && (
               <Box className='deployed-parameters-box'>
                 <Box>
