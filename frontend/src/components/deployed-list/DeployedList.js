@@ -38,7 +38,7 @@ export default class Deployments extends Component {
           this.pollingCounters[i]++;
           axios
             .get(
-              `${instances[i].url}/service_instances/${
+              `${instances[i].url}/v2/service_instances/${
                 instances[i].id
               }/last_operation`
             )

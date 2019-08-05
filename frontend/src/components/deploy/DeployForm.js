@@ -75,7 +75,7 @@ class DeployForm extends Component {
       parameters: inputs
     };
     axios
-      .put(`${service.url}/service_instances/${val}`, data, {
+      .put(`${service.url}/v2/service_instances/${val}`, data, {
         headers: {
           'Content-Type': 'application/json',
           'X-Broker-API-Version': 2.14

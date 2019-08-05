@@ -12,7 +12,7 @@ const DeployedDetail = props => {
       toggleDetails();
       updateInstances('delete', instance);
       axios
-        .delete(`${instance.url}/catalog/service_instances/${instance.id}`, {
+        .delete(`${instance.url}/v2/catalog/service_instances/${instance.id}`, {
           headers: {
             'X-Broker-API-Version': 2.14
           }
