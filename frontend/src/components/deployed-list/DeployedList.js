@@ -35,16 +35,23 @@ export default class Deployments extends Component {
 
         this.timers[i] = setInterval(() => {
           this.pollingCounters[i]++;
+          console.log('instances[i].url', instances[i].url);
           axios
             .get(
               `${instances[i].url}/v2/service_instances/${
                 instances[i].id
-              }/last_operation`
+              }/last_operation`,
+              {
+                headers: {
+                  'X-Broker-API-Version': 2.14
+                }
+              }
             )
             .then(result => {
               console.log('last op result', result);
               if (result.data.state === 'succeeded') {
                 updateInstances('loaded', instances[i]);
+                clearInterval(this.timers[i]);
                 console.log(
                   `clear interval for timer[${i}] due to successful deployment`
                 );

@@ -112,7 +112,13 @@ export default class App extends Component {
       this.setState({
         services: [...this.state.services, ...keptServices]
       });
-    } else this.setState({ services: [...newServices] });
+    } else {
+      let newerServices = [...newServices];
+      for (let i = 0; i < newServices.length; i++) {
+        newerServices[i].url = url;
+      }
+      this.setState({ services: [...newerServices] });
+    }
   };
 
   componentDidMount() {

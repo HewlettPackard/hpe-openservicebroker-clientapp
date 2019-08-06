@@ -62,7 +62,7 @@ class DeployForm extends Component {
       inputs,
       maxPolling,
       name: inputs.name,
-      url: service.id,
+      url: service.url,
       id: val,
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
       status: 'loading'
@@ -91,9 +91,8 @@ class DeployForm extends Component {
       .catch(error => {
         console.log('failed provisioning');
         alert('The deployment failed');
-        instance.status = 'failed';
-        this.setState({ canPress: true });
-      });
+      })
+      .then(() => this.setState({ canPress: true }));
   };
 
   render() {
