@@ -29,7 +29,6 @@ export default class Deployments extends Component {
     for (let i = 0; i < instances.length; i++) {
       this.timers[i] = null;
       this.pollingCounters[i] = 0;
-      console.log(`instances[${i}]`, instances[i]);
 
       if (instances[i].status === 'loading') {
         console.log(`setting timer for instance[${i}]`);
@@ -58,17 +57,15 @@ export default class Deployments extends Component {
               }
             })
             .catch(error => {
-              // console.log(error);
               updateInstances('failed', instances[i]);
+              clearInterval(this.timers[i]);
               console.log(
                 `cleared interval for timer[${i}] due to error getting last op`
               );
             });
-          if (
-            this.pollingCounters[i] > instances[i].maxPolling &&
-            instances[i].maxPolling !== undefined
-          ) {
+          if (this.pollingCounters[i] > instances[i].maxPolling) {
             updateInstances('failed', instances[i]);
+            clearInterval(this.timers[i]);
             console.log(
               `clear interval for timer[${i}] due to maxiumum last op polling`
             );
@@ -78,15 +75,15 @@ export default class Deployments extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { instances } = this.props;
-    for (let i = 0; i < instances.length; i++) {
-      if (instances[i].status !== 'loading' && this.timers[i] !== null) {
-        clearInterval(this.timers[i]);
-        console.log(`cleared timer[${i}] because the instance has loaded`);
-      }
-    }
-  }
+  // componentDidUpdate() {
+  //   const { instances } = this.props;
+  //   for (let i = 0; i < instances.length; i++) {
+  //     if (instances[i].status !== 'loading' && this.timers[i] !== null) {
+  //       clearInterval(this.timers[i]);
+  //       console.log(`cleared timer[${i}] because the instance has loaded`);
+  //     }
+  //   }
+  // }
 
   render() {
     const { detailsOpen, instance } = this.state;

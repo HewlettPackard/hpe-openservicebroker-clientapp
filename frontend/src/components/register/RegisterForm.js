@@ -21,11 +21,13 @@ const RegisterForm = props => {
 
   const validateName = fieldVal => {
     if (broker === undefined) {
+      if (fieldVal === ' ') return 'required';
       for (let i = 0; i < brokers.length; i++)
         if (brokers[i].name === fieldVal)
           return 'This name is already used for another broker.';
       return '';
     } else {
+      if (fieldVal === ' ') return 'required';
       for (let i = 0; i < brokers.length; i++)
         if (brokers[i].name === fieldVal && broker.name !== fieldVal)
           return 'This name is already used for another broker.';

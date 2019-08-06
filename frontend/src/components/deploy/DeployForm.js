@@ -39,6 +39,7 @@ class DeployForm extends Component {
 
   validateName = fieldVal => {
     const { instances } = this.props;
+    if (fieldVal === ' ') return 'required';
     for (let i = 0; i < instances.length; i++)
       if (instances[i].name === fieldVal)
         return 'This name is already used for another instance.';
@@ -91,8 +92,8 @@ class DeployForm extends Component {
         console.log('failed provisioning');
         alert('The deployment failed');
         instance.status = 'failed';
-      })
-      .then(() => this.setState({ canPress: true }));
+        this.setState({ canPress: true });
+      });
   };
 
   render() {
