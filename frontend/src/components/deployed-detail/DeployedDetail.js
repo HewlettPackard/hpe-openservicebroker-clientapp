@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Heading, Layer, Text } from 'grommet';
 import { FormClose, Subtract } from 'grommet-icons';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import axios from 'axios';
 //========================================= Deployed Service Detail
 const DeployedDetail = props => {
   const { instance, toggleDetails, updateInstances } = props;
+  const [canPress, setCanPress] = useState(true);
 
   const handleDelete = confirmed => {
     if (confirmed) {
@@ -21,8 +22,10 @@ const DeployedDetail = props => {
           console.log('success deprovisioning');
         })
         .catch(error => {
+          alert('The deprovisioning failed');
           console.log('failed deprovisioning');
-        });
+        })
+        .then(() => setCanPress(true));
     }
   };
 
@@ -144,13 +147,14 @@ const DeployedDetail = props => {
               <Button
                 label='Delete'
                 icon={<Subtract />}
-                onClick={() =>
+                onClick={() => {
+                  setCanPress(false);
                   handleDelete(
                     window.confirm(
                       `Are you sure you want to delete ${instance.name} ?`
                     )
-                  )
-                }
+                  );
+                }}
               />
             </Box>
           </Box>
