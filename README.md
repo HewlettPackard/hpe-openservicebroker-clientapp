@@ -26,8 +26,10 @@ It was designed and developed by interns Kailash Ramakrishnan and Carson Stone, 
 
 ## Using the App:
 
-- login
+- login (authentication is not actually in place as of 8/7/2019, so just click log in button)
+  ![login page](readme-sample-images/login.png)
 - register a broker
+  ![login page](readme-sample-images/register.png)
 - select a service to use from the catalog
 - chose a plan and fill in required inputs for the service
 - deploy the instance of the selectd service
