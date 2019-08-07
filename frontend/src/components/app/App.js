@@ -21,16 +21,16 @@ export default class App extends Component {
     instances: [],
     services: [],
     brokers: [
-      {
-        name: 'devops',
-        description: 'devops description',
-        inputs: [
-          { url: 'https://url' },
-          { username: 'username' },
-          { password: 'password' }
-        ],
-        status: 'loaded'
-      }
+      // {
+      //   name: 'devops',
+      //   description: 'devops description',
+      //   inputs: [
+      //     { url: 'https://url' },
+      //     { username: 'username' },
+      //     { password: 'password' }
+      //   ],
+      //   status: 'loaded'
+      // }
     ],
     activePath: '/catalog'
   };

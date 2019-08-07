@@ -68,7 +68,6 @@ const RegisterForm = props => {
         toggleRegisterForm();
       })
       .catch(error => {
-        broker.status = 'failed';
         alert('Failed to register');
       })
       .then(() => setCanPress(true));
