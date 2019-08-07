@@ -31,11 +31,8 @@ export default class Deployments extends Component {
       this.pollingCounters[i] = 0;
 
       if (instances[i].status === 'loading') {
-        console.log(`setting timer for instance[${i}]`);
-
         this.timers[i] = setInterval(() => {
           this.pollingCounters[i]++;
-          console.log('instances[i].url', instances[i].url);
           axios
             .get(
               `${instances[i].url}/v2/service_instances/${
