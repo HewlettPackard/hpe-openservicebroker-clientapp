@@ -70,10 +70,11 @@ class DeployForm extends Component {
     };
     delete instance.inputs.name;
 
+    console.log('this.state.selectedPlan', this.state.selectedPlan);
     //api call
     let data = {
       service_id: service.id,
-      plan_id: '2a44ed0e-2c09-4be6-8a81-761ddba2f733',
+      plan_id: this.state.selectedPlan.id,
       parameters: inputs
     };
     axios
