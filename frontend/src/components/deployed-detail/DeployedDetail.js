@@ -30,7 +30,7 @@ const DeployedDetail = props => {
   if (instance.status === 'loaded') statusColor = 'status-ok';
   if (instance.status === 'failed') statusColor = 'status-error';
 
-  const inputs = Object.entries(instance.inputs);
+  const details = Object.entries(instance.returnedDetails);
 
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -107,35 +107,33 @@ const DeployedDetail = props => {
                 </Box>
               </Box>
             </Box>
-            {inputs.length > 0 && (
-              <Box className='deployed-parameters-box'>
-                <Box>
-                  <Heading level='3'>
-                    <strong>Inputs</strong>
-                  </Heading>
-                </Box>
-                <Box background={{ color: 'accent-1' }} height='2px' />
-                {inputs.map(input => {
-                  const [detailName, detailValue] = input;
-                  return (
-                    <Box
-                      direction='row'
-                      margin={{ top: 'small' }}
-                      key={detailName}
-                    >
-                      <Box flex justify='start'>
-                        <Text size='large'>{detailName}:</Text>
-                      </Box>
-                      <Box flex justify='start' align='start'>
-                        <Text size='large' wordBreak='break-all'>
-                          {detailValue}
-                        </Text>
-                      </Box>
-                    </Box>
-                  );
-                })}
+            <Box className='deployed-output-box'>
+              <Box>
+                <Heading level='3'>
+                  <strong>Access Details</strong>
+                </Heading>
               </Box>
-            )}
+              <Box background={{ color: 'accent-1' }} height='2px' />
+              {details.map(detail => {
+                const [detailName, detailValue] = detail;
+                return (
+                  <Box
+                    direction='row'
+                    margin={{ top: 'small' }}
+                    key={detailName}
+                  >
+                    <Box flex justify='start'>
+                      <Text size='large'>{detailName}:</Text>
+                    </Box>
+                    <Box flex justify='start' align='start'>
+                      <Text size='large' wordBreak='break-all'>
+                        {detailValue}
+                      </Text>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             <Box
               width='medium'
               align='center'

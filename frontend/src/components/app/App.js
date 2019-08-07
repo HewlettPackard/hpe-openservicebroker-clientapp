@@ -47,7 +47,7 @@ export default class App extends Component {
     this.setState({ activePath: path });
   };
 
-  updateInstances = (command, instance) => {
+  updateInstances = (command, instance, returnedData) => {
     if (command === 'add') {
       let newInstances = [...this.state.instances];
       newInstances.push(instance);
@@ -63,6 +63,7 @@ export default class App extends Component {
       let newInstances = [...this.state.instances];
       let newElement = newInstances.find(element => element.id === instance.id);
       newElement.status = 'loaded';
+      newElement.returnedData = returnedData;
       newInstances = newInstances.filter(element => element.id !== instance.id);
       newInstances.push(newElement);
       this.setState({ instances: [...newInstances] });

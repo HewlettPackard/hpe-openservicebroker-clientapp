@@ -65,7 +65,8 @@ class DeployForm extends Component {
       url: service.url,
       id: val,
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
-      status: 'loading'
+      status: 'loading',
+      returnedData: {}
     };
     delete instance.inputs.name;
 

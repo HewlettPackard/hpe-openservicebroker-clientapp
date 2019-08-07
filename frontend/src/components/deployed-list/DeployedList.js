@@ -50,7 +50,7 @@ export default class Deployments extends Component {
             .then(result => {
               console.log('last op result', result);
               if (result.data.state === 'succeeded') {
-                updateInstances('loaded', instances[i]);
+                updateInstances('loaded', instances[i], result.data);
                 clearInterval(this.timers[i]);
                 console.log(
                   `clear interval for timer[${i}] due to successful deployment`
