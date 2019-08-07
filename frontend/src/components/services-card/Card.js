@@ -38,9 +38,9 @@ class Card extends Component {
           <Box
             flex
             fill='horizontal'
-            pad={{ top: 'medium', horizonatl: 'medium' }}
+            pad={{ top: 'medium', horizontal: 'small' }}
           >
-            <Text size='38px' color='brand' truncate textAlign='center'>
+            <Text size='2em' color='brand' truncate textAlign='center'>
               {service.name}
             </Text>
           </Box>
@@ -72,8 +72,6 @@ class Card extends Component {
           elevation='medium'
           background={{ color: 'white' }}
           border={{ color: borderColor }}
-          justify='start'
-          align='center'
           width='small'
           height='small'
           onMouseOver={() => this.setBorder('accent-1')}
@@ -81,8 +79,12 @@ class Card extends Component {
           onClick={() => toggleDetails(instance)}
           style={{ cursor: 'pointer' }}
         >
-          <Box overflow={{ vertical: 'scroll' }} flex pad='medium'>
-            <Text size='38px' color='brand' wordBreak='break-all'>
+          <Box
+            flex
+            fill='horizontal'
+            pad={{ top: 'medium', horizontal: 'small' }}
+          >
+            <Text size='2em' color='brand' truncate textAlign='center'>
               {instance.name}
             </Text>
           </Box>

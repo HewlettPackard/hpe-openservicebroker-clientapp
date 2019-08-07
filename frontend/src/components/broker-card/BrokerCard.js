@@ -30,9 +30,9 @@ class BrokerCard extends Component {
         <Box
           flex
           fill='horizontal'
-          pad={{ top: 'medium', horizonatl: 'medium' }}
+          pad={{ top: 'medium', horizontal: 'small' }}
         >
-          <Text size='38px' color='brand' truncate textAlign='center'>
+          <Text size='2em' color='brand' truncate textAlign='center'>
             {broker.name}
           </Text>
         </Box>
