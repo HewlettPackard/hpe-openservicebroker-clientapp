@@ -44,12 +44,6 @@ const RegisterForm = props => {
     return '';
   };
 
-  const confirmPassword = (fieldVal, formValues) => {
-    if (formValues['password'] === '*******') return '';
-    if (fieldVal !== formValues['password']) return 'passwords must match';
-    return '';
-  };
-
   const handleSubmit = ({ name, url, username, password, description }) => {
     var date = new Date();
 
@@ -150,13 +144,6 @@ const RegisterForm = props => {
                   placeholder='Password used to login to broker'
                   type='password'
                   required
-                />
-                <FormField
-                  name='confirmedPassword'
-                  label='Confirm password'
-                  type='password'
-                  required
-                  validate={confirmPassword}
                 />
                 <Box align='center'>
                   <Button
