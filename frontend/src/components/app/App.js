@@ -110,8 +110,16 @@ export default class App extends Component {
             return service;
           }
       });
+      keptServices = [...this.state.services, ...keptServices];
+      keptServices = keptServices.filter(service => {
+        for (let i = 0; i < this.state.services.length; i++) {
+          if (this.state.services[i].name === service.name) return service;
+          if (this.state.services[i].url === service.url) return;
+          return service;
+        }
+      });
       this.setState({
-        services: [...this.state.services, ...keptServices]
+        services: [...keptServices]
       });
     } else {
       let newerServices = [...newServices];
