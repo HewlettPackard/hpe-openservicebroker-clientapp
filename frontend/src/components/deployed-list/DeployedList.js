@@ -54,21 +54,22 @@ export default class Deployments extends Component {
                 );
               }
               if (result.data.state === 'failed') {
-                updateInstances('failed', instances[i]);
+                updateInstances('delete', instances[i]);
+                clearInterval(this.timers[i]);
                 console.log(
                   `clear interval for timer[${i}] due to failed deployment`
                 );
               }
             })
             .catch(error => {
-              updateInstances('failed', instances[i]);
+              updateInstances('delete', instances[i]);
               clearInterval(this.timers[i]);
               console.log(
                 `cleared interval for timer[${i}] due to error getting last op`
               );
             });
           if (this.pollingCounters[i] > instances[i].maxPolling) {
-            updateInstances('failed', instances[i]);
+            updateInstances('delete', instances[i]);
             clearInterval(this.timers[i]);
             console.log(
               `clear interval for timer[${i}] due to maxiumum last op polling`
@@ -78,16 +79,6 @@ export default class Deployments extends Component {
       }
     }
   }
-
-  // componentDidUpdate() {
-  //   const { instances } = this.props;
-  //   for (let i = 0; i < instances.length; i++) {
-  //     if (instances[i].status !== 'loading' && this.timers[i] !== null) {
-  //       clearInterval(this.timers[i]);
-  //       console.log(`cleared timer[${i}] because the instance has loaded`);
-  //     }
-  //   }
-  // }
 
   render() {
     const { detailsOpen, instance } = this.state;

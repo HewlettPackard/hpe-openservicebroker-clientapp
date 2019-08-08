@@ -70,7 +70,6 @@ class DeployForm extends Component {
     };
     delete instance.inputs.name;
 
-    console.log('this.state.selectedPlan', this.state.selectedPlan);
     //api call
     let data = {
       service_id: service.id,

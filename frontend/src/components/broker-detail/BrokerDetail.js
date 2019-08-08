@@ -52,7 +52,7 @@ class BrokerDetail extends Component {
         updateServices(results.data.services);
       })
       .catch(error => {
-        console.log('error', error);
+        console.log('could not fetch catalog');
         updatedBroker.status = 'failed';
       })
       .then(() => {

@@ -34,7 +34,6 @@ const DeployedDetail = props => {
   if (instance.status === 'failed') statusColor = 'status-error';
 
   const details = Object.entries(instance.returnedDetails);
-  console.log('instance', instance);
 
   return (
     <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -120,7 +119,6 @@ const DeployedDetail = props => {
                 </Box>
                 <Box background={{ color: 'accent-1' }} height='2px' />
                 {details.map(detail => {
-                  console.log('details', details);
                   const [detailName, detailValue] = detail;
                   if (detailName === 'state') {
                     return;

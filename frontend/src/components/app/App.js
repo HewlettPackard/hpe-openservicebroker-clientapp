@@ -68,14 +68,14 @@ export default class App extends Component {
       newInstances.push(newElement);
       this.setState({ instances: [...newInstances] });
     }
-    if (command === 'failed') {
-      let newInstances = [...this.state.instances];
-      let newElement = newInstances.find(element => element.id === instance.id);
-      newElement.status = 'failed';
-      newInstances = newInstances.filter(element => element.id !== instance.id);
-      newInstances.push(newElement);
-      this.setState({ instances: [...newInstances] });
-    }
+    // if (command === 'failed') {
+    //   let newInstances = [...this.state.instances];
+    //   let newElement = newInstances.find(element => element.id === instance.id);
+    //   newElement.status = 'failed';
+    //   newInstances = newInstances.filter(element => element.id !== instance.id);
+    //   newInstances.push(newElement);
+    //   this.setState({ instances: [...newInstances] });
+    // }
   };
 
   updateBrokers = (command, broker, editedBroker) => {
