@@ -32,7 +32,7 @@ export default class Deployments extends Component {
 
       if (instances[i].status === 'loading') {
         this.timers[i] = setInterval(() => {
-          this.pollingCounters[i]++;
+          this.pollingCounters[i] = new Date().getTime() / 1000;
           axios
             .get(
               `${instances[i].url}/v2/service_instances/${
@@ -67,15 +67,21 @@ export default class Deployments extends Component {
               console.log(
                 `cleared interval for timer[${i}] due to error getting last op`
               );
+            })
+            .then(() => {
+              if (
+                new Date().getTime() / 1000 - this.pollingCounters[i] >
+                instances[i].maxPolling
+              ) {
+                updateInstances('delete', instances[i]);
+                clearInterval(this.timers[i]);
+                console.log(
+                  `clear interval for timer[${i}] due to maxiumum last op polling`
+                );
+              }
+              this.pollingCounters[i] = new Date().getTime() / 1000;
             });
-          if (this.pollingCounters[i] > instances[i].maxPolling) {
-            updateInstances('delete', instances[i]);
-            clearInterval(this.timers[i]);
-            console.log(
-              `clear interval for timer[${i}] due to maxiumum last op polling`
-            );
-          }
-        }, 5000);
+        }, 3000);
       }
     }
   }
