@@ -213,11 +213,6 @@ export default class App extends Component {
                   </Switch>
                 </Box>
               </Box>
-              {onLoginPage && (
-                <Box width='100%' background='light-2' align='center'>
-                  <Footer />
-                </Box>
-              )}
             </Box>
           </Box>
         </Grommet>

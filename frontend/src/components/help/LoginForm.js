@@ -1,46 +1,43 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Box, Button, Form, FormField, TextInput } from 'grommet';
+import { Box, Button, Form, FormField } from 'grommet';
 import { Login } from 'grommet-icons';
 import axios from 'axios';
 import hpeLogo from './../../assets/images/hpe_pri_grn_rev_rgb.png';
+import Footer from './../footer/Footer';
 
 //========================================= Login Form
 class LoginForm extends Component {
   state = {
-    uname: '',
-    pwd: '',
+    username: 'user',
+    password: 'password',
+    invalidError: '',
     toCatalog: false
   };
 
-  handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
+  handleSubmit = ({ username, password }) => {
+    const { logIn } = this.props;
 
-  handleSubmit = e => {
-    e.preventDefault();
-    let { logIn } = this.props;
-    this.setState(() => ({
-      toCatalog: true
-    }));
+    if (username === this.state.username && password === this.state.password) {
+      this.setState(() => ({
+        invalidError: '',
+        toCatalog: true
+      }));
+      logIn(this.state.uname);
+    } else this.setState({ invalidError: 'invalid username or password' });
 
-    let data = {
-      username: this.state.username,
-      password: this.state.password
-    };
-
-    axios
-      .post('http://3.86.206.101:7099/login', data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    logIn(this.state.uname);
+    // let data = {
+    //   username: this.state.username,
+    //   password: this.state.password
+    // };
+    // axios
+    //   .post('http://', data)
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   componentWillMount() {
@@ -53,50 +50,57 @@ class LoginForm extends Component {
     }
 
     return (
-      <Box
-        pad='large'
-        justify='center'
-        align='center'
-        fill
-        gap='large'
-        background={{ image: 'linear-gradient(210deg,grey 20%,black)' }}
-      >
-        <Box className='hpe-logo' height='100px' flex={false}>
-          <img src={hpeLogo} alt='logo' height='100px' />
-        </Box>
+      <Box fill>
         <Box
-          animation='fadeIn'
-          elevation='medium'
-          border={{ color: 'light-5', size: 'small' }}
-          background={{ color: 'white' }}
-          justify='center'
+          fill
+          pad='large'
+          gap='large'
           align='center'
-          gap='medium'
-          width='medium'
-          height='medium'
-          flex={false}
+          justify='center'
+          overflow={{ vertical: 'auto' }}
+          background={{ image: 'linear-gradient(210deg,grey 20%,black)' }}
         >
-          <Form>
-            <FormField label='Username:'>
-              <TextInput id='uname' onChange={this.handleChange} />
-            </FormField>
-            <FormField label='Password:'>
-              <TextInput
-                type='password'
-                id='pwd'
-                onChange={this.handleChange}
+          <Box className='hpe-logo' height='100px' flex={false}>
+            <img src={hpeLogo} alt='logo' height='100px' />
+          </Box>
+          <Box
+            flex={false}
+            gap='medium'
+            width='medium'
+            align='center'
+            height='medium'
+            justify='center'
+            animation='fadeIn'
+            elevation='medium'
+            background={{ color: 'white' }}
+            border={{ color: 'light-5', size: 'small' }}
+          >
+            <Form onSubmit={({ value }) => this.handleSubmit({ ...value })}>
+              <FormField
+                label='Username:'
+                name='username'
+                error={this.state.invalidError}
               />
-            </FormField>
-          </Form>
-          <Link to='/catalog'>
-            <Button
-              color='brand'
-              label='Login'
-              gap='xsmall'
-              icon={<Login size='medium' color='brand' />}
-              onClick={this.handleSubmit}
-            />
-          </Link>
+              <FormField
+                label='Password:'
+                type='password'
+                name='password'
+                error={this.state.invalidError}
+              />
+              <Box align='center'>
+                <Button
+                  color='brand'
+                  label='Log In'
+                  margin='medium'
+                  type='submit'
+                  icon={<Login size='medium' color='brand' />}
+                />
+              </Box>
+            </Form>
+          </Box>
+        </Box>
+        <Box width='100%' background='light-2' align='center' flex={false}>
+          <Footer />
         </Box>
       </Box>
     );

@@ -154,7 +154,6 @@ const RegisterForm = props => {
                   />
                 </Box>
               </Form>
-              <Box align='center' />
             </Box>
           </Box>
         </Box>
