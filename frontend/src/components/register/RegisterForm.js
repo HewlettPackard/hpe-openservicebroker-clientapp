@@ -52,7 +52,7 @@ const RegisterForm = props => {
       description,
       status: 'loading',
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
-      inputs: [{ url }, { username }, { password }]
+      inputs: [{ url }, { username }]
     };
 
     axios
@@ -164,7 +164,6 @@ const RegisterForm = props => {
     const { name, description, status, time } = broker;
     const url = broker.inputs[0].url;
     const username = broker.inputs[1].username;
-    const password = broker.inputs[2].password;
 
     return (
       <Layer full plain onEsc={toggleDetails} animate={false}>
@@ -209,8 +208,7 @@ const RegisterForm = props => {
                     status,
                     time,
                     url,
-                    username,
-                    password
+                    username
                   });
                 }}
               >

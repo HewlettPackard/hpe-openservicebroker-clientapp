@@ -192,15 +192,9 @@ class BrokerDetail extends Component {
                             <Text size='large'>{detailName}:</Text>
                           </Box>
                           <Box flex justify='start' align='start'>
-                            {detailName === 'password' ? (
-                              <Text size='large' wordBreak='break-all'>
-                                {'*******'}
-                              </Text>
-                            ) : (
-                              <Text size='large' wordBreak='break-all'>
-                                {detailValue}
-                              </Text>
-                            )}
+                            <Text size='large' wordBreak='break-all'>
+                              {detailValue}
+                            </Text>
                           </Box>
                         </Box>
                       );
