@@ -77,30 +77,30 @@ class CatalogResults extends Component {
           </Box>
         )}
         {!showEmptyMessage && (
-          <Box gap='large'>
+          <Box gap='large' fill>
             <Box
-              className='search-area'
+              flex={false}
+              width='medium'
+              border={{ size: 'xsmall', color: 'light-5' }}
               alignSelf='center'
-              direction='row'
-              gap='small'
             >
-              <Box width='medium' border={{ size: 'xsmall', color: 'light-5' }}>
-                <TextInput
-                  placeholder='search'
-                  value={value}
-                  onChange={this.setValue}
-                />
-              </Box>
+              <TextInput
+                placeholder='search'
+                value={value}
+                onChange={this.setValue}
+              />
             </Box>
-            <Grid gap='large' columns='small' rows='small'>
-              {showList.map(service => (
-                <Card
-                  service={service}
-                  key={service.name}
-                  toggleDeploy={this.toggleDeploy}
-                />
-              ))}
-            </Grid>
+            <Box>
+              <Grid gap='large' columns='small' rows='small'>
+                {showList.map(service => (
+                  <Card
+                    service={service}
+                    key={service.name}
+                    toggleDeploy={this.toggleDeploy}
+                  />
+                ))}
+              </Grid>
+            </Box>
           </Box>
         )}
         {deployFormOpen && (
