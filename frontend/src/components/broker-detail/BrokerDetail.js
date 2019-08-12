@@ -10,21 +10,14 @@ class BrokerDetail extends Component {
     editing: false
   };
 
-  submitEdit = ({
-    name,
-    description,
-    status,
-    time,
-    url,
-    username,
-    password
-  }) => {
+  submitEdit = ({ name, description, status, time, url, username }) => {
     const updatedBroker = {
       name,
       description,
       status,
       time,
-      inputs: [{ url }, { username }, { password }]
+      url,
+      inputs: [{ username }]
     };
 
     this.props.updateBrokers('edit', this.props.broker, updatedBroker);
@@ -33,8 +26,15 @@ class BrokerDetail extends Component {
 
   handleDelete = confirmed => {
     if (confirmed) {
-      this.props.updateBrokers('delete', this.props.broker);
-      this.props.toggleDetails();
+      const {
+        updateBrokers,
+        broker,
+        updateServices,
+        toggleDetails
+      } = this.props;
+      updateBrokers('delete', broker);
+      updateServices([], broker.url);
+      toggleDetails();
     }
   };
 
@@ -42,17 +42,18 @@ class BrokerDetail extends Component {
     const { broker, toggleDetails, updateBrokers, updateServices } = this.props;
     let updatedBroker = { ...broker };
     axios
-      .get(`${broker.inputs[0].url}/v2/catalog`, {
+      .get(`${broker.url}/v2/catalog`, {
         headers: {
           'X-Broker-API-Version': 2.14
         }
       })
       .then(results => {
         updatedBroker.status = 'loaded';
-        updateServices(results.data.services);
+        updateServices(results.data.services, broker.url);
       })
       .catch(error => {
-        console.log('could not fetch catalog');
+        console.log('error', error);
+        alert('Failed to fetch catalog');
         updatedBroker.status = 'failed';
       })
       .then(() => {
@@ -68,7 +69,7 @@ class BrokerDetail extends Component {
   render() {
     const { editing } = this.state;
     const { broker, brokers, toggleDetails } = this.props;
-    const { name, status, description, time } = broker;
+    const { name, status, description, time, url } = broker;
 
     let statusColor = 'status-warning';
     if (broker.status === 'loaded') statusColor = 'status-ok';
@@ -155,6 +156,22 @@ class BrokerDetail extends Component {
                     </Box>
                   </Box>
                   <Box>
+                    <Heading level='3'>
+                      <strong>URL</strong>
+                    </Heading>
+                  </Box>
+                  <Box background={{ color: 'accent-1' }} height='2px' />
+                  <Box direction='row' margin={{ top: 'small' }}>
+                    <Box flex justify='start'>
+                      <Text size='large'>Broker address:</Text>
+                    </Box>
+                    <Box flex justify='start' align='start'>
+                      <Text size='large' wordBreak='break-all'>
+                        {url}
+                      </Text>
+                    </Box>
+                  </Box>
+                  <Box>
                     <Box>
                       <Heading level='3'>
                         <strong>Time Created</strong>
@@ -171,34 +188,6 @@ class BrokerDetail extends Component {
                         </Text>
                       </Box>
                     </Box>
-                  </Box>
-                  <Box className='broker-parameters-box'>
-                    <Box>
-                      <Heading level='3'>
-                        <strong>Inputs</strong>
-                      </Heading>
-                    </Box>
-                    <Box background={{ color: 'accent-1' }} height='2px' />
-                    {broker.inputs.map(detail => {
-                      const detailName = Object.keys(detail)[0];
-                      const detailValue = detail[detailName];
-                      return (
-                        <Box
-                          direction='row'
-                          margin={{ top: 'small' }}
-                          key={detailName}
-                        >
-                          <Box flex justify='start'>
-                            <Text size='large'>{detailName}:</Text>
-                          </Box>
-                          <Box flex justify='start' align='start'>
-                            <Text size='large' wordBreak='break-all'>
-                              {detailValue}
-                            </Text>
-                          </Box>
-                        </Box>
-                      );
-                    })}
                   </Box>
                 </Box>
                 <Box margin='small' align='center' flex={false}>

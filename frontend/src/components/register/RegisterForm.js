@@ -50,11 +50,13 @@ const RegisterForm = props => {
     let broker = {
       name,
       description,
+      url,
       status: 'loading',
       time: `${date.toTimeString()}  ${date.toLocaleDateString()}`,
-      inputs: [{ url }, { username }]
+      inputs: [{ username }]
     };
 
+    const serviceUrl = url;
     axios
       .get(`${url}/v2/catalog`, {
         headers: {
@@ -63,7 +65,7 @@ const RegisterForm = props => {
       })
       .then(results => {
         broker.status = 'loaded';
-        updateServices(results.data.services, url);
+        updateServices(results.data.services, serviceUrl);
         updateBrokers('add', broker);
         toggleRegisterForm();
       })
@@ -161,8 +163,8 @@ const RegisterForm = props => {
     );
   else {
     const { name, description, status, time } = broker;
-    const url = broker.inputs[0].url;
-    const username = broker.inputs[1].username;
+    const url = broker.url;
+    const username = broker.inputs[0].username;
 
     return (
       <Layer full plain onEsc={toggleDetails} animate={false}>

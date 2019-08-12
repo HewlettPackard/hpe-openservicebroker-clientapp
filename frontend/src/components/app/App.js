@@ -20,18 +20,7 @@ export default class App extends Component {
     onLoginPage: false,
     instances: [],
     services: [],
-    brokers: [
-      // {
-      //   name: 'devops',
-      //   description: 'devops description',
-      //   inputs: [
-      //     { url: 'https://url' },
-      //     { username: 'username' },
-      //     { password: 'password' }
-      //   ],
-      //   status: 'loaded'
-      // }
-    ],
+    brokers: [],
     activePath: '/catalog'
   };
 
@@ -68,14 +57,6 @@ export default class App extends Component {
       newInstances.push(newElement);
       this.setState({ instances: [...newInstances] });
     }
-    // if (command === 'failed') {
-    //   let newInstances = [...this.state.instances];
-    //   let newElement = newInstances.find(element => element.id === instance.id);
-    //   newElement.status = 'failed';
-    //   newInstances = newInstances.filter(element => element.id !== instance.id);
-    //   newInstances.push(newElement);
-    //   this.setState({ instances: [...newInstances] });
-    // }
   };
 
   updateBrokers = (command, broker, editedBroker) => {
@@ -102,22 +83,25 @@ export default class App extends Component {
   };
 
   updateServices = (newServices, url) => {
+    let keptServices = [];
+
+    //delete services if broker is deleted (will pass 0 new services in)
+    if (newServices.length === 0) {
+      for (let i = 0; i < this.state.services.length; i++)
+        if (this.state.services[i].url !== url)
+          keptServices.push(this.state.services[i]);
+      this.setState({
+        services: [...keptServices]
+      });
+      return;
+    }
+    //add services
     if (this.state.services.length > 0) {
-      let keptServices = newServices.filter(service => {
-        for (let i = 0; i < this.state.services.length; i++)
-          if (service.name !== this.state.services[i].name) {
-            service.url = url;
-            return service;
-          }
-      });
-      keptServices = [...this.state.services, ...keptServices];
-      keptServices = keptServices.filter(service => {
-        for (let i = 0; i < this.state.services.length; i++) {
-          if (this.state.services[i].name === service.name) return service;
-          if (this.state.services[i].url === service.url) return;
-          return service;
-        }
-      });
+      for (let i = 0; i < this.state.services.length; i++)
+        if (this.state.services[i].url !== url)
+          keptServices.push(this.state.services[i]);
+      for (let i = 0; i < newServices.length; i++) newServices[i].url = url;
+      keptServices.push(...newServices);
       this.setState({
         services: [...keptServices]
       });
