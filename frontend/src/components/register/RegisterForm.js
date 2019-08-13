@@ -56,10 +56,14 @@ const RegisterForm = props => {
       inputs: [{ username }]
     };
 
+    const base64encodedData = new Buffer(username + ':' + password).toString(
+      'base64'
+    );
     const serviceUrl = url;
     axios
       .get(`${url}/v2/catalog`, {
         headers: {
+          Authorization: 'Basic ' + base64encodedData,
           'X-Broker-API-Version': 2.14
         }
       })
