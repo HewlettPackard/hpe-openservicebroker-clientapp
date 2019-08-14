@@ -35,7 +35,7 @@ It was designed and developed by interns Kailash Ramakrishnan and Carson Stone, 
   ![login page](readme-sample-images/catalog.png)
 - chose a plan and fill in required inputs for the service
   ![login page](readme-sample-images/deploy.png)
-- deploy the instance of the selectd service
+- deploy the instance of the selected service
 - access the service instance's details
   ![login page](readme-sample-images/details.png)
 - after using the service, delete the service instance
