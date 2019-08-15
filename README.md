@@ -1,6 +1,6 @@
 # Open Service Broker Client App
 
-This project is a client platform for accessing services via the _Open Service Broker API_ [https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md](https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md).
+This project is a client platform for accessing services via the [_Open Service Broker API_](https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md).
 
 Exposing services via service brokers is an easy and abstracted way of accessing service providers' offerings. This app and the OSB API hide the implementations happening behind the scenes. A service broker is a program that acts as a middleman between the service provider and the user for this abstraction. This app will be able to access and implement the services offered by any valid service broker.
 
