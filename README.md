@@ -14,7 +14,7 @@ It was designed and developed by interns Kailash Ramakrishnan and Carson Stone, 
 
 - move to the frontend directory:
 
-  `cd osb-intern-project/frontend/`
+  `cd hpe-openservicebroker-clientapp/frontend/`
 
 - install dependencies (listed in frontend/package.json):
 
