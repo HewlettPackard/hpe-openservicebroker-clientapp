@@ -10,7 +10,7 @@ It was designed and developed by interns Kailash Ramakrishnan and Carson Stone, 
 
 - clone the repo:
 
-  `git clone https://github.hpe.com/hpe-design/osb-intern-project.git`
+  `git clone https://github.com/HewlettPackard/hpe-openservicebroker-clientapp`
 
 - move to the frontend directory:
 
